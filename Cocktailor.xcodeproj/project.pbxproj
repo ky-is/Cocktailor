@@ -15,6 +15,7 @@
 		240B519B2381B46F00FA1D02 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 240B519A2381B46F00FA1D02 /* Preview Assets.xcassets */; };
 		240B51A62381DCFE00FA1D02 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240B51A52381DCFE00FA1D02 /* DataModel.swift */; };
 		240B51AD2381E07600FA1D02 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 240B51AB2381E07600FA1D02 /* LaunchScreen.storyboard */; };
+		247D970C2389C1C90008C22F /* IngredientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247D970B2389C1C90008C22F /* IngredientModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		240B519F2381B47000FA1D02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		240B51A52381DCFE00FA1D02 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		240B51AC2381E07600FA1D02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Cocktailor/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
+		247D970B2389C1C90008C22F /* IngredientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 			children = (
 				240B51A52381DCFE00FA1D02 /* DataModel.swift */,
 				240B51922381B46C00FA1D02 /* Cocktailor.xcdatamodeld */,
+				247D970B2389C1C90008C22F /* IngredientModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 			files = (
 				240B518F2381B46C00FA1D02 /* AppDelegate.swift in Sources */,
 				240B51912381B46C00FA1D02 /* SceneDelegate.swift in Sources */,
+				247D970C2389C1C90008C22F /* IngredientModel.swift in Sources */,
 				240B51962381B46C00FA1D02 /* ContentView.swift in Sources */,
 				240B51942381B46C00FA1D02 /* Cocktailor.xcdatamodeld in Sources */,
 				240B51A62381DCFE00FA1D02 /* DataModel.swift in Sources */,
