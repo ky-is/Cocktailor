@@ -21,9 +21,9 @@ struct CocktailDetail: View {
 					HStack {
 						Text(ingredientAndQuantity.ingredient.name)
 						Spacer()
-						Text(ingredientAndQuantity.parts.description)
+						Text(ingredientAndQuantity.quantity.value.description)
 						+
-						Text(" parts")
+						Text(" \(ingredientAndQuantity.quantity.type.rawValue)")
 							.foregroundColor(.secondary)
 					}
 				}

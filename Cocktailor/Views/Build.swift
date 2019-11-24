@@ -16,7 +16,7 @@ struct Build: View {
 	@ObservedObject private var observedIngredients = ObservableIngredients.active
 
 	var body: some View {
-		let availableIngredientEntries = ingredientEntries.filter { $0.owned }
+		let availableIngredientEntries = ingredientEntries.filter { $0.owned && IngredientData.keyValues[$0.id] != nil }
 		let availableIDs = availableIngredientEntries.map { $0.id }
 		var displayCocktails = CocktailData.keyValues.values.filter { cocktail in
 			for iq in cocktail.ingredients {

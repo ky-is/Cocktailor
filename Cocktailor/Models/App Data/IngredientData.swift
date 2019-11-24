@@ -5,20 +5,20 @@ enum IngredientTag: String {
 final class IngredientData: Hashable, Identifiable {
 	static let keyValues: [String: IngredientData] = {
 		let items = [
-			absinthe,
-			agave,
-			amaretto,
+//			absinthe,
+//			agave,
+//			amaretto,
 			bitters,
 			aperol,
-			apple,
+//			apple,
 			brandy,
 			brandyApple,
 			brandyApricot,
 			brandyCognac,
 			cachaca,
 			campari,
-			champagne,
-			cherryMaraschino,
+//			champagne,
+//			cherryMaraschino,
 			coconutCream,
 			coffee,
 			cream,
@@ -106,20 +106,20 @@ struct Substitute {
 	let score: Double
 }
 
-let absinthe = IngredientData(id: "absinthe", name: "absinthe", alcohol: 0.60, wikipedia: "Absinthe")
-let agave = IngredientData(id: "agave", name: "agave nectar")
-let amaretto = IngredientData(id: "amaretto", name: "amaretto", alcohol: 0.24, region: "Italy", wikipedia: "Amaretto")
-let bitters = IngredientData(id: "bitters", name: "Angostura bitters", nicknames: ["bitters"], alcohol: 0.447, region: "Trinidad and Tobago", wikipedia: "Angostura_bitters")
+//let absinthe = IngredientData(id: "absinthe", name: "absinthe", alcohol: 0.60, wikipedia: "Absinthe")
+//let agave = IngredientData(id: "agave", name: "agave nectar")
+//let amaretto = IngredientData(id: "amaretto", name: "amaretto", alcohol: 0.24, region: "Italy", wikipedia: "Amaretto")
 let aperol = IngredientData(id: "aperol", name: "aperol", alcohol: 0.11, region: "Italy", wikipedia: "Aperol")
-let apple = IngredientData(id: "apple", name: "apple")
+let bitters = IngredientData(id: "bitters", name: "bitters", nicknames: ["Angostura bitters"], alcohol: 0.447, region: "Trinidad and Tobago", wikipedia: "Angostura_bitters")
+//let apple = IngredientData(id: "apple", name: "apple")
 let brandy = IngredientData(id: "brandy", name: "brandy", nicknames: ["eau de vie"], alcohol: 0.40, region: "worldwide", wikipedia: "Brandy")
 let brandyApple = IngredientData(id: "brandyApple", name: "apple brandy", alcohol: 0.40, wikipedia: "Apple_brandy")
 let brandyApricot = IngredientData(id: "brandyApricot", name: "apricot brandy", alcohol: 0.40, wikipedia: "Apricot_brandy")
 let brandyCognac = IngredientData(id: "brandyCognac", name: "Cognac", alcohol: 0.40, region: "France", wikipedia: "Cognac")
 let cachaca = IngredientData(id: "cachaca", name: "cachaça", alcohol: 0.40, region: "Brazil", wikipedia: "Cachaca")
 let campari = IngredientData(id: "campari", name: "campari", alcohol: 0.25, region: "Italy", wikipedia: "Cachaca")
-let champagne = IngredientData(id: "champagne", name: "champagne", alcohol: 0.12, region: "France (Champagne)", wikipedia: "Champagne")
-let cherryMaraschino = IngredientData(id: "cherryCocktail", name: "Maraschino cherry", nicknames: ["cocktail cherry"], wikipedia: "Maraschino_cherry")
+//let champagne = IngredientData(id: "champagne", name: "champagne", alcohol: 0.12, region: "France (Champagne)", wikipedia: "Champagne")
+//let cherryMaraschino = IngredientData(id: "cherryCocktail", name: "Maraschino cherry", nicknames: ["cocktail cherry"], wikipedia: "Maraschino_cherry")
 let coconutCream = IngredientData(id: "coconutCream", name: "cream of coconut", wikipedia: "Coconut_milk#Cream_of_coconut")
 let coffee = IngredientData(id: "coffee", name: "coffee", wikipedia: "Coffee")
 let cream = IngredientData(id: "cream", name: "cream", wikipedia: "Cream")
@@ -127,8 +127,10 @@ let creamHeavy = IngredientData(id: "creamHeavy", name: "heavy cream", nicknames
 let egg = IngredientData(id: "egg", name: "egg")
 let gin = IngredientData(id: "gin", name: "gin", alcohol: 0.40, region: "Worldwide", wikipedia: "Gin")
 let gingerBeer = IngredientData(id: "gingerBeer", name: "ginger beer")
+let herbMint = IngredientData(id: "herbMint", name: "mint", wikipedia: "Mint")
 let irishCream = IngredientData(id: "irishCream", name: "Irish cream", alcohol: 0.175, region: "Ireland", wikipedia: "Apricot_brandy")
 let juiceCranberry = IngredientData(id: "juiceCranberry", name: "cranberry juice")
+let juiceOrange = IngredientData(id: "juiceOrange", name: "orange juice")
 let lemon = IngredientData(id: "lemon", name: "lemon")
 let lime = IngredientData(id: "lime", name: "lime")
 let liqueurRasberry = IngredientData(id: "liquerRasberry", name: "rasberry liqueur", nicknames: ["chambour"], alcohol: 0.20, region: "France", wikipedia: "Chambord_(liqueur)")
@@ -149,6 +151,7 @@ let sugar = IngredientData(id: "sugar", name: "sugar", wikipedia: "Sugar")
 let sugarBrown = IngredientData(id: "sugarBrown", name: "brown sugar", wikipedia: "Brown_sugar")
 let syrupMaple = IngredientData(id: "syrupMaple", name: "maple syrup")
 let syrupSimple = IngredientData(id: "syrupSimple", name: "simple syrup")
+let syrupAlmond = IngredientData(id: "syrupAlmond", name: "almond syrup", nicknames: ["Orgeat syrup"], wikipedia: "Orgeat_syrup")
 let tequila = IngredientData(id: "tequila", name: "tequila", alcohol: 0.40, region: "Mexico", wikipedia: "Tequila")
 let vermouthDry = IngredientData(id: "vermouthDry", name: "dry vermouth", alcohol: 0.18, region: "Italy", wikipedia: "Vermouth")
 let vermouthSweet = IngredientData(id: "vermouthSweet", name: "sweet vermouth", alcohol: 0.165, region: "Italy", wikipedia: "Vermouth")
@@ -162,7 +165,7 @@ let vodka = IngredientData(id: "vodka", name: "vodka", alcohol: 0.40, region: "R
 let substitutions: [String: [Substitute]] = {
 	let substitutes = [
 		(lemon, lime, 0.5),
-		(agave, syrupMaple, 0.5),
+//		(agave, syrupMaple, 0.5),
 		(brandy, brandyApple, 0.5),
 		(brandy, brandyCognac, 0.5),
 		(cream, creamHeavy, 0.5),
@@ -171,7 +174,7 @@ let substitutions: [String: [Substitute]] = {
 //		(rumLight, cachaca, 0.2),
 		(liqueurBlackberry, liqueurBlackcurrant, 0.5),
 		(sugar, sugarBrown, 0.8),
-		(champagne, prosecco, 0.8),
+//		(champagne, prosecco, 0.8),
 		(whiskey, whiskeyBourbon, 0.8),
 		(whiskey, whiskeyIrish, 0.8),
 		(whiskey, whiskeyRye, 0.8),
