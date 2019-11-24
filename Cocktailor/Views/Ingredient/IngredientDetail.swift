@@ -36,7 +36,7 @@ struct IngredientDetail: View {
 
 struct IngredientDetail_Previews: PreviewProvider {
 	static var previews: some View {
-		let data = IngredientData(id: "test", name: "test ingredient", nicknames: ["testy", "tasty"], alcohol: 0.42, region: "France")
+		let data = IngredientData(id: "test", name: "test ingredient", nicknames: ["testy", "tasty"], category: .wine, alcohol: 0.42, region: "France")
 		return IngredientDetail(data: data, entry: .constant(nil))
 	}
 }
