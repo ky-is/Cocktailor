@@ -12,19 +12,31 @@ final class ObservableIngredients: ObservableObject {
 }
 
 struct Build: View {
-	let displayCocktails: [CocktailData]
-
 	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)]) private var ingredientEntries: FetchedResults<IngredientEntry>
 	@ObservedObject private var observedIngredients = ObservableIngredients.active
 
 	init() {
-		self.displayCocktails = Array(cocktails.values)
+
 	}
 
 	var body: some View {
-		var ingredientEntriesByID = [String: IngredientEntry]()
-		for ingredientEntry in ingredientEntries {
-			ingredientEntriesByID[ingredientEntry.id] = ingredientEntry
+		var displayCocktails = Array(cocktails.values)
+		if let selectedIngredients = observedIngredients.selected {
+			displayCocktails = displayCocktails.filter { cocktail in
+				for selectedIngredient in selectedIngredients {
+					var foundIngredient = false
+					for cocktailIngredientQuantity in cocktail.ingredients {
+						if cocktailIngredientQuantity.ingredient.id == selectedIngredient {
+							foundIngredient = true
+							break
+						}
+					}
+					if !foundIngredient {
+						return false
+					}
+				}
+				return true
+			}
 		}
 		let availableIngredients = ingredientEntries.filter { $0.owned }
 		return NavigationView {
