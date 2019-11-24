@@ -19,7 +19,7 @@
 		243F4027238A4C04001C89FA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F4026238A4C04001C89FA /* Extensions.swift */; };
 		243F4029238A5318001C89FA /* IngredientDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F4028238A5318001C89FA /* IngredientDetail.swift */; };
 		243F402C238A53F9001C89FA /* IngredientButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F402B238A53F9001C89FA /* IngredientButtons.swift */; };
-		247D970C2389C1C90008C22F /* IngredientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247D970B2389C1C90008C22F /* IngredientModel.swift */; };
+		247D970C2389C1C90008C22F /* IngredientData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247D970B2389C1C90008C22F /* IngredientData.swift */; };
 		247D970F2389EDEB0008C22F /* MyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247D970E2389EDEB0008C22F /* MyBar.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +38,7 @@
 		243F4026238A4C04001C89FA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		243F4028238A5318001C89FA /* IngredientDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientDetail.swift; sourceTree = "<group>"; };
 		243F402B238A53F9001C89FA /* IngredientButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientButtons.swift; sourceTree = "<group>"; };
-		247D970B2389C1C90008C22F /* IngredientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientModel.swift; sourceTree = "<group>"; };
+		247D970B2389C1C90008C22F /* IngredientData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientData.swift; sourceTree = "<group>"; };
 		247D970E2389EDEB0008C22F /* MyBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,10 +93,8 @@
 		240B51A72381DF2800FA1D02 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				240B51A52381DCFE00FA1D02 /* DataModel.swift */,
-				240B51922381B46C00FA1D02 /* Cocktailor.xcdatamodeld */,
-				247D970B2389C1C90008C22F /* IngredientModel.swift */,
-				243F4021238A4A85001C89FA /* IngredientEntry.swift */,
+				24EC8D43238A5A8F0004CF42 /* App Data */,
+				24EC8D42238A5A660004CF42 /* CoreData */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -153,6 +151,24 @@
 				247D970E2389EDEB0008C22F /* MyBar.swift */,
 			);
 			path = "My Bar";
+			sourceTree = "<group>";
+		};
+		24EC8D42238A5A660004CF42 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				240B51A52381DCFE00FA1D02 /* DataModel.swift */,
+				240B51922381B46C00FA1D02 /* Cocktailor.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		24EC8D43238A5A8F0004CF42 /* App Data */ = {
+			isa = PBXGroup;
+			children = (
+				247D970B2389C1C90008C22F /* IngredientData.swift */,
+				243F4021238A4A85001C89FA /* IngredientEntry.swift */,
+			);
+			path = "App Data";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,7 +246,7 @@
 				243F4027238A4C04001C89FA /* Extensions.swift in Sources */,
 				240B51912381B46C00FA1D02 /* SceneDelegate.swift in Sources */,
 				247D970F2389EDEB0008C22F /* MyBar.swift in Sources */,
-				247D970C2389C1C90008C22F /* IngredientModel.swift in Sources */,
+				247D970C2389C1C90008C22F /* IngredientData.swift in Sources */,
 				243F4029238A5318001C89FA /* IngredientDetail.swift in Sources */,
 				240B51962381B46C00FA1D02 /* ContentView.swift in Sources */,
 				243F4023238A4A85001C89FA /* IngredientEntry.swift in Sources */,
