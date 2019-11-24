@@ -3,11 +3,7 @@ import SwiftUI
 struct MyBar: View {
 	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)]) private var ingredientEntries: FetchedResults<IngredientEntry>
 
-	let displayIngredients: [IngredientData]
-
-	init() {
-		self.displayIngredients = ingredients.values.filter { $0.showSeparateFromParent }
-	}
+	let displayIngredients = IngredientData.keyValues.values.filter { $0.showSeparateFromParent }
 
 	var body: some View {
 		var ingredientEntriesByID = [String: IngredientEntry]()

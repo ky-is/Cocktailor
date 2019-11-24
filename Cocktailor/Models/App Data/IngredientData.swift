@@ -3,6 +3,69 @@ enum IngredientTag: String {
 }
 
 final class IngredientData: Hashable, Identifiable {
+	static let keyValues: [String: IngredientData] = {
+		let items = [
+			absinthe,
+			agave,
+			amaretto,
+			bitters,
+			aperol,
+			apple,
+			brandy,
+			brandyApple,
+			brandyApricot,
+			brandyCognac,
+			cachaca,
+			campari,
+			champagne,
+			cherryMaraschino,
+			coconutCream,
+			coffee,
+			cream,
+			creamHeavy,
+			egg,
+			gin,
+			gingerBeer,
+//			IngredientData(id: "eggyolk", name: "egg yolk", parent: egg, showSeparateFromParent: false),
+//			IngredientData(id: "eggwhite", name: "egg white", parent: egg, showSeparateFromParent: false),
+			irishCream,
+			juiceCranberry,
+			lemon,
+			lime,
+			liqueurRasberry,
+			liqueurBlackberry,
+			liqueurBlackcurrant,
+			liqueurChocolate,
+			liqueurCoffee,
+			liqueurOrange,
+			mezcal,
+			prosecco,
+			rumLight,
+			rumGold,
+			rumDark,
+			sodaClub,
+			sodaCola,
+			sugar,
+			sugarBrown,
+			syrupMaple,
+			syrupSimple,
+			tequila,
+			vermouthDry,
+			vermouthSweet,
+			whiskey,
+			whiskeyBourbon,
+			whiskeyIrish,
+			whiskeyRye,
+			whiskeyScotch,
+			vodka,
+		]
+		var results = [String: IngredientData]()
+		for item in items {
+			results[item.id] = item
+		}
+		return results
+	}()
+
 	let id: String
 	let name: String
 	let nicknames: [String]
@@ -95,69 +158,6 @@ let whiskeyIrish = IngredientData(id: "whiskeyIrish", name: "Irish whiskey", alc
 let whiskeyRye = IngredientData(id: "whiskeyRye", name: "rye whiskey", alcohol: 0.40, region: "United States", wikipedia: "Rye_whiskey")
 let whiskeyScotch = IngredientData(id: "whiskeyScotch", name: "Scotch whiskey", alcohol: 0.40, region: "Scotland", wikipedia: "Scotch_whisky")
 let vodka = IngredientData(id: "vodka", name: "vodka", alcohol: 0.40, region: "Russia", wikipedia: "Vodka")
-
-let ingredients: [String: IngredientData] = {
-	let items = [
-		absinthe,
-		agave,
-		amaretto,
-		bitters,
-		aperol,
-		apple,
-		brandy,
-		brandyApple,
-		brandyApricot,
-		brandyCognac,
-		cachaca,
-		campari,
-		champagne,
-		cherryMaraschino,
-		coconutCream,
-		coffee,
-		cream,
-		creamHeavy,
-		egg,
-		gin,
-		gingerBeer,
-//		IngredientData(id: "eggyolk", name: "egg yolk", parent: egg, showSeparateFromParent: false),
-//		IngredientData(id: "eggwhite", name: "egg white", parent: egg, showSeparateFromParent: false),
-		irishCream,
-		juiceCranberry,
-		lemon,
-		lime,
-		liqueurRasberry,
-		liqueurBlackberry,
-		liqueurBlackcurrant,
-		liqueurChocolate,
-		liqueurCoffee,
-		liqueurOrange,
-		mezcal,
-		prosecco,
-		rumLight,
-		rumGold,
-		rumDark,
-		sodaClub,
-		sodaCola,
-		sugar,
-		sugarBrown,
-		syrupMaple,
-		syrupSimple,
-		tequila,
-		vermouthDry,
-		vermouthSweet,
-		whiskey,
-		whiskeyBourbon,
-		whiskeyIrish,
-		whiskeyRye,
-		whiskeyScotch,
-		vodka,
-	]
-	var results = [String: IngredientData]()
-	for item in items {
-		results[item.id] = item
-	}
-	return results
-}()
 
 let substitutions: [String: [Substitute]] = {
 	let substitutes = [

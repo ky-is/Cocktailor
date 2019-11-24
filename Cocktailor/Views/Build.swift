@@ -16,7 +16,16 @@ struct Build: View {
 	@ObservedObject private var observedIngredients = ObservableIngredients.active
 
 	var body: some View {
-		var displayCocktails = Array(cocktails.values)
+		let availableIngredientEntries = ingredientEntries.filter { $0.owned }
+		let availableIDs = availableIngredientEntries.map { $0.id }
+		var displayCocktails = CocktailData.keyValues.values.filter { cocktail in
+			for iq in cocktail.ingredients {
+				if !availableIDs.contains(iq.id) {
+					return false
+				}
+			}
+			return true
+		}
 		var possibleIngredients = Set<IngredientData>()
 		if let selectedIngredients = observedIngredients.selected {
 			displayCocktails = displayCocktails.filter { cocktail in
@@ -29,8 +38,7 @@ struct Build: View {
 				return false
 			}
 		}
-		let availableIngredientEntries = ingredientEntries.filter { $0.owned }
-		let hasFilteredCocktail = displayCocktails.count < cocktails.values.count
+		let hasFilteredCocktail = displayCocktails.count < CocktailData.keyValues.values.count
 		return GeometryReader { geometry in
 			if geometry.size.width > 1024 {
 				BuildDouble(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, displayCocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
@@ -132,7 +140,7 @@ private struct BuildIngredients: View {
 
 	var body: some View {
 		ForEach(availableIngredientEntries) { entry in
-			IngredientListEntry(data: ingredients[entry.id]!, entry: .constant(entry), observededIngredients: self.observedIngredients, hasCocktail: self.possibleIngredients?.contains(ingredients[entry.id]!) ?? true) //TODO filter []! != nil
+			IngredientListEntry(data: IngredientData.keyValues[entry.id]!, entry: .constant(entry), observededIngredients: self.observedIngredients, hasCocktail: self.possibleIngredients?.contains(IngredientData.keyValues[entry.id]!) ?? true) //TODO filter []! != nil
 		}
 	}
 }
