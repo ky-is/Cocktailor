@@ -77,7 +77,7 @@ private struct BuildDouble: View {
 						.isDetailLink(true)
 				}
 					.navigationBarTitle("Cocktails")
-				Text("Toggle ingredients or select a cocktail")
+				BuildCocktailPlaceholder()
 			}
 		}
 	}
@@ -113,7 +113,7 @@ private struct BuildSingle: View {
 							Text("")
 						}
 							.navigationBarTitle("Cocktails")
-						Text("Toggle ingredients or select a cocktail")
+						BuildCocktailPlaceholder()
 					}
 				}
 					.transition(.slide)
@@ -130,6 +130,13 @@ private struct BuildSingle: View {
 				.labelsHidden()
 				.pickerStyle(SegmentedPickerStyle())
 		}
+	}
+}
+
+private struct BuildCocktailPlaceholder: View {
+	var body: some View {
+		Text("Toggle ingredients or select a cocktail")
+			.foregroundColor(.secondary)
 	}
 }
 

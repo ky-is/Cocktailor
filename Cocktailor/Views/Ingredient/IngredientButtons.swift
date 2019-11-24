@@ -69,7 +69,7 @@ struct ButtonOwnedContent: View {
 		Group {
 			Image(systemName: selected ? "checkmark" : "circle")
 				.frame(width: 28)
-				.foregroundColor(selected ? .accentColor : .secondary)
+				.foregroundColor(selected ? .accentColor : .tertiary)
 			Text(data.name.localizedCapitalized)
 				.foregroundColor(hasCocktail ? .primary : .secondary)
 		}

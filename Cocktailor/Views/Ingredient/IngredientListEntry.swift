@@ -33,7 +33,7 @@ struct IngredientListEntry: View {
 				self.showInfo.toggle()
 			}) {
 				Image(systemName: "info.circle")
-					.foregroundColor(.secondary)
+					.foregroundColor(.tertiary)
 					.frame(width: 28)
 			}
 				.buttonStyle(BorderlessButtonStyle())

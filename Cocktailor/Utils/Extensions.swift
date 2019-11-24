@@ -11,3 +11,7 @@ extension String {
 		return "\(count) \(self)\(count == 1 ? "" : "s")"
 	}
 }
+
+extension Color {
+	static let tertiary = Self(UIColor.tertiaryLabel)
+}
