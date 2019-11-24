@@ -16,49 +16,13 @@ struct MyBar: View {
 		}
 		return NavigationView {
 			List {
-				ForEach(displayIngredients) { ingredientData in
-					IngredientListEntry(data: ingredientData, entry: .constant(ingredientEntriesByID[ingredientData.id]))
+				ForEach(displayIngredients) { data in
+					IngredientListEntry(data: data, entry: .constant(ingredientEntriesByID[data.id]), observededIngredients: ObservableIngredients.inactive)
 				}
 			}
 				.navigationBarTitle("My Bar")
 		}
 			.navigationViewStyle(StackNavigationViewStyle())
-	}
-}
-
-private struct IngredientListEntry: View {
-	let data: IngredientData
-	@Binding var entry: IngredientEntry?
-
-	@State private var showInfo = false
-
-	@Environment(\.managedObjectContext) private var managedObjectContext
-
-	var body: some View {
-		HStack {
-			ButtonOwned(data: data, entry: $entry) {
-				HStack {
-					Text(self.data.name.localizedCapitalized)
-						.foregroundColor(.primary)
-					Spacer()
-				}
-			}
-				.buttonStyle(BorderlessButtonStyle())
-			ButtonFavorite(data: data, entry: $entry)
-				.buttonStyle(BorderlessButtonStyle())
-				.frame(width: 28)
-			Button(action: {
-				self.showInfo.toggle()
-			}) {
-				Image(systemName: "info.circle")
-					.foregroundColor(.secondary)
-					.frame(width: 28)
-			}
-				.buttonStyle(BorderlessButtonStyle())
-		}
-			.sheet(isPresented: $showInfo) {
-				IngredientDetail(data: self.data, entry: self.$entry)
-			}
 	}
 }
 

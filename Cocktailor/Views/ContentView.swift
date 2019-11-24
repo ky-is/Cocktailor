@@ -8,11 +8,7 @@ struct ContentView: View {
 					Image(systemName: "squares.below.rectangle")
 					Text("My Bar")
 				}
-			NavigationView {
-				Text("")
-					.navigationBarTitle("Build")
-			}
-				.navigationViewStyle(StackNavigationViewStyle())
+			Build()
 				.tabItem {
 					Image(systemName: "wand.and.stars")
 					Text("Build")

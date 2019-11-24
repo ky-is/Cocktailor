@@ -54,12 +54,22 @@ struct ButtonOwned<Content>: View where Content: View {
 	}
 
 	var body: some View {
-		let owned = entry?.owned ?? false
-		return Button(action: toggleOwned) {
-			Image(systemName: owned ? "checkmark" : "circle")
-				.foregroundColor(owned ? .blue : .secondary)
-				.frame(width: 24)
+		Button(action: toggleOwned) {
 			content?()
+		}
+	}
+}
+
+struct ButtonOwnedContent: View {
+	let data: IngredientData
+	let selected: Bool
+
+	var body: some View {
+		Group {
+			Image(systemName: selected ? "checkmark" : "circle")
+				.frame(width: 28)
+			Text(data.name.localizedCapitalized)
+				.foregroundColor(.primary)
 		}
 	}
 }
