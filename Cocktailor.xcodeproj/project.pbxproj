@@ -15,6 +15,7 @@
 		240B519B2381B46F00FA1D02 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 240B519A2381B46F00FA1D02 /* Preview Assets.xcassets */; };
 		240B51A62381DCFE00FA1D02 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240B51A52381DCFE00FA1D02 /* DataModel.swift */; };
 		240B51AD2381E07600FA1D02 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 240B51AB2381E07600FA1D02 /* LaunchScreen.storyboard */; };
+		243F4027238A4C04001C89FA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F4026238A4C04001C89FA /* Extensions.swift */; };
 		247D970C2389C1C90008C22F /* IngredientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247D970B2389C1C90008C22F /* IngredientModel.swift */; };
 		247D970F2389EDEB0008C22F /* MyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247D970E2389EDEB0008C22F /* MyBar.swift */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 		240B519F2381B47000FA1D02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		240B51A52381DCFE00FA1D02 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		240B51AC2381E07600FA1D02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Cocktailor/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
+		243F4026238A4C04001C89FA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		247D970B2389C1C90008C22F /* IngredientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientModel.swift; sourceTree = "<group>"; };
 		247D970E2389EDEB0008C22F /* MyBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -64,6 +66,7 @@
 		240B518D2381B46C00FA1D02 /* Cocktailor */ = {
 			isa = PBXGroup;
 			children = (
+				243F4025238A4BFC001C89FA /* Utils */,
 				240B51A82381DFA300FA1D02 /* Scene */,
 				240B51A72381DF2800FA1D02 /* Models */,
 				240B51A92381DFB200FA1D02 /* Views */,
@@ -117,6 +120,14 @@
 				240B519F2381B47000FA1D02 /* Info.plist */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		243F4025238A4BFC001C89FA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				243F4026238A4C04001C89FA /* Extensions.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		247D970D2389EDDF0008C22F /* My Bar */ = {
@@ -199,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				240B518F2381B46C00FA1D02 /* AppDelegate.swift in Sources */,
+				243F4027238A4C04001C89FA /* Extensions.swift in Sources */,
 				240B51912381B46C00FA1D02 /* SceneDelegate.swift in Sources */,
 				247D970F2389EDEB0008C22F /* MyBar.swift in Sources */,
 				247D970C2389C1C90008C22F /* IngredientModel.swift in Sources */,
