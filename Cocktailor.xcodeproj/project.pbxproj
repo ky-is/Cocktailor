@@ -24,6 +24,7 @@
 		24EC8D45238A5AD70004CF42 /* CocktailData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC8D44238A5AD70004CF42 /* CocktailData.swift */; };
 		24EC8D47238A5DEC0004CF42 /* Build.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC8D46238A5DEC0004CF42 /* Build.swift */; };
 		24EC8D49238A62070004CF42 /* IngredientListEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC8D48238A62070004CF42 /* IngredientListEntry.swift */; };
+		24EC8D4C238A74DA0004CF42 /* CocktailDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC8D4B238A74DA0004CF42 /* CocktailDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		24EC8D44238A5AD70004CF42 /* CocktailData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailData.swift; sourceTree = "<group>"; };
 		24EC8D46238A5DEC0004CF42 /* Build.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Build.swift; sourceTree = "<group>"; };
 		24EC8D48238A62070004CF42 /* IngredientListEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientListEntry.swift; sourceTree = "<group>"; };
+		24EC8D4B238A74DA0004CF42 /* CocktailDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				247D970E2389EDEB0008C22F /* MyBar.swift */,
 				24EC8D46238A5DEC0004CF42 /* Build.swift */,
 				243F402A238A53E7001C89FA /* Ingredient */,
+				24EC8D4A238A74CD0004CF42 /* Cocktail */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -170,6 +173,14 @@
 				24EC8D44238A5AD70004CF42 /* CocktailData.swift */,
 			);
 			path = "App Data";
+			sourceTree = "<group>";
+		};
+		24EC8D4A238A74CD0004CF42 /* Cocktail */ = {
+			isa = PBXGroup;
+			children = (
+				24EC8D4B238A74DA0004CF42 /* CocktailDetail.swift */,
+			);
+			path = Cocktail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,6 +256,7 @@
 			files = (
 				240B518F2381B46C00FA1D02 /* AppDelegate.swift in Sources */,
 				24EC8D47238A5DEC0004CF42 /* Build.swift in Sources */,
+				24EC8D4C238A74DA0004CF42 /* CocktailDetail.swift in Sources */,
 				243F4027238A4C04001C89FA /* Extensions.swift in Sources */,
 				240B51912381B46C00FA1D02 /* SceneDelegate.swift in Sources */,
 				247D970F2389EDEB0008C22F /* MyBar.swift in Sources */,

@@ -34,12 +34,18 @@ struct Build: View {
 				}
 			}
 				.navigationBarTitle("Build")
-			List {
-				ForEach(displayCocktails) { data in
-					Text(data.name)
+			NavigationView {
+				List {
+					ForEach(displayCocktails) { data in
+						NavigationLink(destination: CocktailDetail(data: data)) {
+							Text(data.name)
+						}
+							.isDetailLink(false)
+					}
 				}
 			}
 		}
+			.padding(0.25) //BUILD 13.2.2: required workaround to force master/detail to both show
 	}
 }
 

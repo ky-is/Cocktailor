@@ -56,12 +56,17 @@ final class CocktailData: Identifiable {
 	}
 }
 
+let bramble = CocktailData(id: "bramble", name: "Bramble", alcohol: 0.22, ingredients: [IQ(gin, 2), IQ(lemon, 3/4), IQ(syrupSimple, 1/2), IQ(liqueurBlackberry, 3/4)], glass: .oldFashioned, equipment: [.barspoon], wikipedia: "Bramble_(cocktail)", related: [])
+let darkAndStormy = CocktailData(id: "darkAndStormy", name: "Dark and Stormy", alcohol: 0.12, ingredients: [IQ(rumDark, 3), IQ(gingerBeer, 5)], ice: .cube, glass: .collins, equipment: [.barspoon], wikipedia: "Dark_%27n%27_Stormy", related: [])
+let margarita = CocktailData(id: "margarita", name: "Margarita", alcohol: 0.30, ingredients: [IQ(tequila, 1.75), IQ(liqueurOrange, 1), IQ(lime, 3/4)], glass: .margarita, equipment: [.shaker, .strainer], wikipedia: "Margarita", related: [])
+let moscowMule = CocktailData(id: "moscowMule", name: "Moscow mule", alcohol: 0.09, ingredients: [IQ(vodka, 2.25), IQ(lime, 1/4), IQ(gingerBeer, 6)], glass: .collins, equipment: [.barspoon], wikipedia: "Moscow_mule", related: [])
+
 let cocktails: [String: CocktailData] = {
 	let items = [
-		CocktailData(id: "bramble", name: "Bramble", alcohol: 0.22, ingredients: [IQ(gin, 2), IQ(lemon, 3/4), IQ(syrupSimple, 1/2), IQ(liqueurBlackberry, 3/4)], glass: .oldFashioned, equipment: [.barspoon], wikipedia: "Bramble_(cocktail)", related: []),
-		CocktailData(id: "darkAndStormy", name: "Dark and Stormy", alcohol: 0.12, ingredients: [IQ(rumDark, 3), IQ(gingerBeer, 5)], ice: .cube, glass: .collins, equipment: [.barspoon], wikipedia: "Dark_%27n%27_Stormy", related: []),
-		CocktailData(id: "margarita", name: "Margarita", alcohol: 0.30, ingredients: [IQ(tequila, 1.75), IQ(liqueurOrange, 1), IQ(lime, 3/4)], glass: .margarita, equipment: [.shaker, .strainer], wikipedia: "Margarita", related: []),
-		CocktailData(id: "moscowMule", name: "Moscow mule", alcohol: 0.09, ingredients: [IQ(vodka, 2.25), IQ(lime, 1/4), IQ(gingerBeer, 6)], glass: .collins, equipment: [.barspoon], wikipedia: "Moscow_mule", related: []),
+		bramble,
+		darkAndStormy,
+		margarita,
+		moscowMule,
 	]
 	var results = [String: CocktailData]()
 	for item in items {
