@@ -69,6 +69,7 @@ private struct BuildDouble: View {
 				}
 					.navigationBarTitle("Ingredients")
 			}
+				.frame(width: 321)
 			NavigationView {
 				List(displayCocktails) { cocktailData in
 					NavigationLink(destination: CocktailDetail(data: cocktailData)) {
