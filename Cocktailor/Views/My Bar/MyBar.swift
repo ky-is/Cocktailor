@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MyBar: View {
-	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)]) var ingredientEntries: FetchedResults<IngredientEntry>
+	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)]) private var ingredientEntries: FetchedResults<IngredientEntry>
 
 	let displayIngredients: [IngredientData]
 
@@ -32,58 +32,21 @@ private struct IngredientListEntry: View {
 
 	@State private var showInfo = false
 
-	@Environment(\.managedObjectContext) var managedObjectContext
-
-	private func toggleOwned() {
-		if let entry = entry {
-			managedObjectContext.perform {
-				entry.owned.toggle()
-				try? self.managedObjectContext.save()
-			}
-		} else {
-			managedObjectContext.perform {
-				let entry = IngredientEntry(context: self.managedObjectContext)
-				entry.id = self.data.id
-				entry.owned = true
-				try? self.managedObjectContext.save()
-			}
-		}
-	}
-
-	private func toggleFavorite() {
-		if let entry = entry {
-			managedObjectContext.perform {
-				entry.favorite.toggle()
-				DataModel.saveContext()
-			}
-		} else {
-			managedObjectContext.perform {
-				let entry = IngredientEntry(context: self.managedObjectContext)
-				entry.id = self.data.id
-				entry.favorite = true
-				DataModel.saveContext()
-			}
-		}
-	}
+	@Environment(\.managedObjectContext) private var managedObjectContext
 
 	var body: some View {
-		let owned = entry?.owned ?? false
-		return HStack {
-			Image(systemName: owned ? "checkmark" : "circle")
-				.foregroundColor(owned ? .blue : .secondary)
-				.frame(width: 24)
-			Button(action: toggleOwned) {
-				Text(data.name.localizedCapitalized)
-					.foregroundColor(.primary)
-				Spacer()
+		HStack {
+			ButtonOwned(data: data, entry: $entry) {
+				HStack {
+					Text(self.data.name.localizedCapitalized)
+						.foregroundColor(.primary)
+					Spacer()
+				}
 			}
 				.buttonStyle(BorderlessButtonStyle())
-			Button(action: toggleFavorite) {
-				Image(systemName: entry?.favorite ?? false ? "star.fill" : "star")
-					.foregroundColor(.yellow)
-					.frame(width: 28)
-			}
+			ButtonFavorite(data: data, entry: $entry)
 				.buttonStyle(BorderlessButtonStyle())
+				.frame(width: 28)
 			Button(action: {
 				self.showInfo.toggle()
 			}) {
@@ -94,7 +57,7 @@ private struct IngredientListEntry: View {
 				.buttonStyle(BorderlessButtonStyle())
 		}
 			.sheet(isPresented: $showInfo) {
-				Text("!")
+				IngredientDetail(data: self.data, entry: self.$entry)
 			}
 	}
 }
