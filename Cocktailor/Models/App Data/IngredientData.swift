@@ -1,10 +1,8 @@
-import Foundation
-
 enum IngredientTag: String {
 	case aperitif
 }
 
-final class IngredientData: Identifiable {
+final class IngredientData: Hashable, Identifiable {
 	let id: String
 	let name: String
 	let nicknames: [String]
@@ -29,6 +27,14 @@ final class IngredientData: Identifiable {
 		if parent != nil {
 			parent?.children.append(self)
 		}
+	}
+
+	static func == (lhs: IngredientData, rhs: IngredientData) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	func hash(into hasher: inout Hasher) {
+		hasher.combine(id)
 	}
 }
 

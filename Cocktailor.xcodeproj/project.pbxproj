@@ -25,6 +25,7 @@
 		24EC8D47238A5DEC0004CF42 /* Build.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC8D46238A5DEC0004CF42 /* Build.swift */; };
 		24EC8D49238A62070004CF42 /* IngredientListEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC8D48238A62070004CF42 /* IngredientListEntry.swift */; };
 		24EC8D4C238A74DA0004CF42 /* CocktailDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC8D4B238A74DA0004CF42 /* CocktailDetail.swift */; };
+		24EC8D4E238B0FA10004CF42 /* UIViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC8D4D238B0FA10004CF42 /* UIViewRepresentable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		24EC8D46238A5DEC0004CF42 /* Build.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Build.swift; sourceTree = "<group>"; };
 		24EC8D48238A62070004CF42 /* IngredientListEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientListEntry.swift; sourceTree = "<group>"; };
 		24EC8D4B238A74DA0004CF42 /* CocktailDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailDetail.swift; sourceTree = "<group>"; };
+		24EC8D4D238B0FA10004CF42 /* UIViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewRepresentable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				243F4026238A4C04001C89FA /* Extensions.swift */,
+				24EC8D4D238B0FA10004CF42 /* UIViewRepresentable.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				247D970C2389C1C90008C22F /* IngredientData.swift in Sources */,
 				24EC8D45238A5AD70004CF42 /* CocktailData.swift in Sources */,
 				24EC8D49238A62070004CF42 /* IngredientListEntry.swift in Sources */,
+				24EC8D4E238B0FA10004CF42 /* UIViewRepresentable.swift in Sources */,
 				243F4029238A5318001C89FA /* IngredientDetail.swift in Sources */,
 				240B51962381B46C00FA1D02 /* ContentView.swift in Sources */,
 				243F4023238A4A85001C89FA /* IngredientEntry.swift in Sources */,

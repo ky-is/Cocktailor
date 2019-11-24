@@ -14,19 +14,33 @@ enum IceStyle {
 	case cube
 }
 
-struct IngredientQuantity {
+struct IngredientQuantity: Hashable, Identifiable {
+	let id: String
 	let ingredient: IngredientData
 	let parts: Double
 
 	init(_ ingredient: IngredientData, _ parts: Double) {
+		self.id = ingredient.id
 		self.ingredient = ingredient
 		self.parts = parts
+	}
+
+	static func == (lhs: IngredientQuantity, rhs: IngredientQuantity) -> Bool {
+		lhs.id == rhs.id
 	}
 }
 
 private typealias IQ = IngredientQuantity
 
-final class CocktailData: Identifiable {
+final class CocktailData: Hashable, Identifiable {
+	static func == (lhs: CocktailData, rhs: CocktailData) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	func hash(into hasher: inout Hasher) {
+		hasher.combine(id)
+	}
+
 	let id: String
 	let name: String
 	let nicknames: [String]

@@ -4,6 +4,7 @@ struct IngredientListEntry: View {
 	let data: IngredientData
 	@Binding var entry: IngredientEntry?
 	@ObservedObject var observededIngredients: ObservableIngredients
+	let hasCocktail: Bool
 
 	@State private var showInfo = false
 
@@ -19,12 +20,12 @@ struct IngredientListEntry: View {
 						self.observededIngredients.selected!.insert(self.data.id)
 					}
 				}) {
-					ButtonOwnedContent(data: data, selected: observededIngredients.selected!.contains(self.data.id))
+					ButtonOwnedContent(data: data, selected: observededIngredients.selected!.contains(self.data.id), hasCocktail: hasCocktail)
 				}
 					.buttonStyle(BorderlessButtonStyle())
 			} else {
 				ButtonOwned(data: data, entry: $entry) {
-					ButtonOwnedContent(data: self.data, selected: self.entry?.owned ?? false)
+					ButtonOwnedContent(data: self.data, selected: self.entry?.owned ?? false, hasCocktail: self.hasCocktail)
 				}
 					.buttonStyle(BorderlessButtonStyle())
 			}
@@ -52,14 +53,14 @@ struct IngredientListEntry_Previews: PreviewProvider {
 		Group {
 			NavigationView {
 				List {
-					IngredientListEntry(data: ingredients["lemon"]!, entry: .constant(nil), observededIngredients: ObservableIngredients.inactive)
+					IngredientListEntry(data: ingredients["lemon"]!, entry: .constant(nil), observededIngredients: ObservableIngredients.inactive, hasCocktail: true)
 						.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
 				}
 					.navigationBarTitle("My Bar")
 			}
 			NavigationView {
 				List {
-					IngredientListEntry(data: ingredients["lemon"]!, entry: .constant(nil), observededIngredients: ObservableIngredients.active)
+					IngredientListEntry(data: ingredients["lemon"]!, entry: .constant(nil), observededIngredients: ObservableIngredients.active, hasCocktail: true)
 						.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
 				}
 					.navigationBarTitle("Build")

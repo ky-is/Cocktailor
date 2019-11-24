@@ -30,6 +30,7 @@ struct IngredientDetail: View {
 					}
 				)
 		}
+			.navigationViewStyle(StackNavigationViewStyle())
 	}
 }
 

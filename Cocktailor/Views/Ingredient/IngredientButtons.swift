@@ -63,13 +63,15 @@ struct ButtonOwned<Content>: View where Content: View {
 struct ButtonOwnedContent: View {
 	let data: IngredientData
 	let selected: Bool
+	let hasCocktail: Bool
 
 	var body: some View {
 		Group {
 			Image(systemName: selected ? "checkmark" : "circle")
 				.frame(width: 28)
+				.foregroundColor(selected ? .accentColor : .secondary)
 			Text(data.name.localizedCapitalized)
-				.foregroundColor(.primary)
+				.foregroundColor(hasCocktail ? .primary : .secondary)
 		}
 	}
 }

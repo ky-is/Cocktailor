@@ -15,10 +15,8 @@ struct MyBar: View {
 			ingredientEntriesByID[ingredientEntry.id] = ingredientEntry
 		}
 		return NavigationView {
-			List {
-				ForEach(displayIngredients) { data in
-					IngredientListEntry(data: data, entry: .constant(ingredientEntriesByID[data.id]), observededIngredients: ObservableIngredients.inactive)
-				}
+			List(displayIngredients) { data in
+				IngredientListEntry(data: data, entry: .constant(ingredientEntriesByID[data.id]), observededIngredients: ObservableIngredients.inactive, hasCocktail: true)
 			}
 				.navigationBarTitle("My Bar")
 		}
