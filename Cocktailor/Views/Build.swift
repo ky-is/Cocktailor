@@ -15,10 +15,6 @@ struct Build: View {
 	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)]) private var ingredientEntries: FetchedResults<IngredientEntry>
 	@ObservedObject private var observedIngredients = ObservableIngredients.active
 
-	init() {
-
-	}
-
 	var body: some View {
 		var displayCocktails = Array(cocktails.values)
 		if let selectedIngredients = observedIngredients.selected {
@@ -38,26 +34,43 @@ struct Build: View {
 				return true
 			}
 		}
-		let availableIngredients = ingredientEntries.filter { $0.owned }
 		return NavigationView {
-			List {
-				ForEach(availableIngredients, id: \.self) { entry in
-					IngredientListEntry(data: ingredients[entry.id]!, entry: .constant(entry), observededIngredients: self.observedIngredients) //TODO filter []! != nil
-				}
-			}
+			BuildIngredients(ingredientEntries: ingredientEntries, observedIngredients: observedIngredients)
 				.navigationBarTitle("Build")
-			NavigationView {
-				List {
-					ForEach(displayCocktails) { data in
-						NavigationLink(destination: CocktailDetail(data: data)) {
-							Text(data.name)
-						}
-							.isDetailLink(false)
+			BuildCocktails(displayCocktails: displayCocktails)
+		}
+			.padding(0.25) //BUILD 13.2.2: required workaround to force master/detail to both show
+	}
+}
+
+private struct BuildIngredients: View {
+	let ingredientEntries: FetchedResults<IngredientEntry>
+	let observedIngredients: ObservableIngredients
+
+	var body: some View {
+		let availableIngredients = ingredientEntries.filter { $0.owned }
+		return List {
+			ForEach(availableIngredients, id: \.self) { entry in
+				IngredientListEntry(data: ingredients[entry.id]!, entry: .constant(entry), observededIngredients: self.observedIngredients) //TODO filter []! != nil
+			}
+		}
+	}
+}
+
+private struct BuildCocktails: View {
+	let displayCocktails: [CocktailData]
+
+	var body: some View {
+		NavigationView {
+			List {
+				ForEach(displayCocktails) { data in
+					NavigationLink(destination: CocktailDetail(data: data)) {
+						Text(data.name)
 					}
+						.isDetailLink(false)
 				}
 			}
 		}
-			.padding(0.25) //BUILD 13.2.2: required workaround to force master/detail to both show
 	}
 }
 
