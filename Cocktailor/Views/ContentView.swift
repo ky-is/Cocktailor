@@ -3,10 +3,7 @@ import SwiftUI
 struct ContentView: View {
 	var body: some View {
 		TabView {
-			NavigationView {
-				Text("")
-					.navigationBarTitle("My Bar")
-			}
+			MyBar()
 				.tabItem {
 					Image(systemName: "squares.below.rectangle")
 					Text("My Bar")
