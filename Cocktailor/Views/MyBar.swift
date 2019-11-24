@@ -6,7 +6,7 @@ struct MyBar: View {
 	let displayIngredients: [IngredientData]
 
 	init() {
-		self.displayIngredients = ingredients.values.filter { $0.showSeparateFromParent }.sorted { $0.id < $1.id }
+		self.displayIngredients = ingredients.values.filter { $0.showSeparateFromParent }
 	}
 
 	var body: some View {
@@ -64,7 +64,7 @@ private struct IngredientListEntry: View {
 
 struct MyBar_Previews: PreviewProvider {
 	static var previews: some View {
-		ContentView()
+		MyBar()
 			.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
 	}
 }

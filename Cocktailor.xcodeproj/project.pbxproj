@@ -114,7 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				240B51952381B46C00FA1D02 /* ContentView.swift */,
-				247D970D2389EDDF0008C22F /* My Bar */,
+				247D970E2389EDEB0008C22F /* MyBar.swift */,
 				243F402A238A53E7001C89FA /* Ingredient */,
 			);
 			path = Views;
@@ -145,14 +145,6 @@
 				243F402B238A53F9001C89FA /* IngredientButtons.swift */,
 			);
 			path = Ingredient;
-			sourceTree = "<group>";
-		};
-		247D970D2389EDDF0008C22F /* My Bar */ = {
-			isa = PBXGroup;
-			children = (
-				247D970E2389EDEB0008C22F /* MyBar.swift */,
-			);
-			path = "My Bar";
 			sourceTree = "<group>";
 		};
 		24EC8D42238A5A660004CF42 /* CoreData */ = {
