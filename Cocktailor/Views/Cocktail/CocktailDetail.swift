@@ -3,6 +3,8 @@ import SwiftUI
 struct CocktailDetail: View {
 	let data: CocktailData
 
+	@State private var selectedIngredient: IngredientData?
+
 	var body: some View {
 		VStack {
 			HStack {
@@ -18,15 +20,19 @@ struct CocktailDetail: View {
 			}
 			VStack {
 				ForEach(data.ingredients) { ingredientAndQuantity in
-					HStack {
-						IngredientIcon(data: ingredientAndQuantity.ingredient)
-						Text(ingredientAndQuantity.ingredient.name.localizedCapitalized)
-							.padding(.trailing)
-						Spacer()
-						Text(ingredientAndQuantity.quantity.value.description)
-						+
-						Text(" \(ingredientAndQuantity.quantity.type.rawValue)")
-							.foregroundColor(.secondary)
+					Button(action: {
+						self.selectedIngredient = ingredientAndQuantity.ingredient
+					}) {
+						HStack {
+							IngredientIcon(data: ingredientAndQuantity.ingredient)
+							Text(ingredientAndQuantity.ingredient.name.localizedCapitalized)
+								.padding(.trailing)
+							Spacer()
+							Text(ingredientAndQuantity.quantity.value.description)
+								+
+								Text(" \(ingredientAndQuantity.quantity.type.rawValue)")
+									.foregroundColor(.secondary)
+						}
 					}
 				}
 			}
@@ -34,6 +40,10 @@ struct CocktailDetail: View {
 				.frame(maxWidth: 360)
 		}
 			.navigationBarTitle(data.name)
+			.sheet(item: $selectedIngredient) { selectedIngredient in
+				IngredientEntryDetail(data: selectedIngredient)
+					.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
+			}
 	}
 }
 

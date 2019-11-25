@@ -60,6 +60,24 @@ struct IngredientDetail: View {
 	}
 }
 
+struct IngredientEntryDetail: View {
+	let data: IngredientData
+
+	@FetchRequest private var ingredientEntries: FetchedResults<IngredientEntry>
+
+	init(data: IngredientData) {
+		self.data = data
+		let sortDescriptor = NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)
+		let predicate = NSPredicate(format: "id == %@", data.id)
+		self._ingredientEntries = FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [sortDescriptor], predicate: predicate)
+	}
+
+	var body: some View {
+		IngredientDetail(data: data, entry: .constant(ingredientEntries.first))
+	}
+}
+
+
 struct IngredientDetail_Previews: PreviewProvider {
 	static var previews: some View {
 		return IngredientDetail(data: lime, entry: .constant(nil))
