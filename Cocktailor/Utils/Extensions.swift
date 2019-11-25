@@ -15,4 +15,5 @@ extension String {
 extension Color {
 	static let tertiary = Self(UIColor.tertiaryLabel)
 	static let brown = Self(UIColor.brown)
+	static let secondarySystemBackground = Self(UIColor.secondarySystemBackground)
 }

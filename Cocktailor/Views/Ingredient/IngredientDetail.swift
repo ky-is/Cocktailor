@@ -6,7 +6,7 @@ struct IngredientDetail: View {
 
 	var body: some View {
 		NavigationView {
-			VStack(alignment: .leading) {
+			VStack {
 				HStack {
 					ForEach(data.nicknames, id: \.self) {
 						Text($0)
@@ -18,7 +18,33 @@ struct IngredientDetail: View {
 				if data.region != nil {
 					Text("Region: \(data.region!)")
 				}
+				ScrollView(.horizontal) {
+					HStack {
+						ForEach(data.getCocktails()) { cocktail in
+							ZStack {
+								Capsule(style: .continuous)
+									.fill(Color.secondarySystemBackground)
+									.shadow(color: Color.black.opacity(0.1), radius: 3, y: 2)
+								VStack {
+									Text(cocktail.name)
+										.fixedSize()
+									HStack {
+										ForEach(cocktail.ingredients) { ingredientQuantity in
+											NavigationLink(destination: CocktailDetail(data: cocktail)) {
+												IngredientIcon(data: ingredientQuantity.ingredient)
+											}
+										}
+									}
+										.padding(.horizontal, 8)
+								}
+							}
+								.frame(minWidth: 128, maxHeight: 96)
+						}
+					}
+						.padding()
+				}
 			}
+				.padding()
 				.navigationBarTitle(data.name.localizedCapitalized)
 				.navigationBarItems(trailing:
 					HStack {
@@ -36,7 +62,6 @@ struct IngredientDetail: View {
 
 struct IngredientDetail_Previews: PreviewProvider {
 	static var previews: some View {
-		let data = IngredientData(id: "test", name: "test ingredient", nicknames: ["testy", "tasty"], category: .wine, alcohol: 0.42, color: .blue, region: "France")
-		return IngredientDetail(data: data, entry: .constant(nil))
+		return IngredientDetail(data: lime, entry: .constant(nil))
 	}
 }

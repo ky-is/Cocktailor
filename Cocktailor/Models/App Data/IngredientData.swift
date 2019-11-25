@@ -132,6 +132,12 @@ final class IngredientData: Hashable, Identifiable {
 	var substitutionIDs: [String] {
 		return substitutions.map { $0.ingredient.id }
 	}
+
+	func getCocktails() -> [CocktailData] {
+		return CocktailData.keyValues.values.filter { cocktail in
+			return cocktail.ingredients.contains { $0.ingredient.id == id }
+		}
+	}
 }
 
 enum IngredientCategory: String {

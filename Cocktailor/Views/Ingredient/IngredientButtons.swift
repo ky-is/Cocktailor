@@ -70,6 +70,7 @@ struct ButtonOwnedContent: View {
 			Image(systemName: selected ? "checkmark" : "circle")
 				.frame(width: 28)
 				.foregroundColor(selected ? .accentColor : .tertiary)
+			IngredientIcon(data: data)
 			Text(data.name.localizedCapitalized)
 				.foregroundColor(hasCocktail ? .primary : .secondary)
 		}
@@ -78,6 +79,25 @@ struct ButtonOwnedContent: View {
 
 struct IngredientButtons_Previews: PreviewProvider {
 	static var previews: some View {
-		IngredientDetail(data: IngredientData(id: "test", name: "test", category: .mixer, color: .red), entry: .constant(nil))
+		let data = IngredientData(id: "test", name: "test", category: .mixer, color: .white)
+		return VStack {
+			ButtonFavorite(data: data, entry: .constant(nil))
+			ButtonOwned(data: data, entry: .constant(nil)) {
+				ButtonOwnedContent(data: data, selected: true, hasCocktail: true)
+			}
+		}
+	}
+}
+
+struct IngredientIcon: View {
+	let data: IngredientData
+
+	var body: some View {
+		Circle()
+			.stroke(Color.secondarySystemBackground, lineWidth: 1)
+			.overlay(
+				Circle().fill(data.color.opacity(0.5))
+		)
+			.frame(width: 24, height: 24)
 	}
 }

@@ -19,7 +19,9 @@ struct CocktailDetail: View {
 			VStack {
 				ForEach(data.ingredients) { ingredientAndQuantity in
 					HStack {
-						Text(ingredientAndQuantity.ingredient.name)
+						IngredientIcon(data: ingredientAndQuantity.ingredient)
+						Text(ingredientAndQuantity.ingredient.name.localizedCapitalized)
+							.padding(.trailing)
 						Spacer()
 						Text(ingredientAndQuantity.quantity.value.description)
 						+
@@ -29,13 +31,16 @@ struct CocktailDetail: View {
 				}
 			}
 				.padding()
-				.frame(maxWidth: 256)
+				.frame(maxWidth: 360)
 		}
+			.navigationBarTitle(data.name)
 	}
 }
 
 struct CocktailDetail_Previews: PreviewProvider {
 	static var previews: some View {
-		return CocktailDetail(data: bramble)
+		NavigationView {
+			CocktailDetail(data: bramble)
+		}
 	}
 }
