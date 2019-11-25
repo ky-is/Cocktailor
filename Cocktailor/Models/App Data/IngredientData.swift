@@ -1,3 +1,5 @@
+import SwiftUI
+
 struct Substitute {
 	let ingredient: IngredientData
 	let score: Double
@@ -93,6 +95,7 @@ final class IngredientData: Hashable, Identifiable {
 	let nicknames: [String]
 	let category: IngredientCategory
 	let alcohol: Double
+	let color: Color
 	let region: String?
 	let wikipedia: String?
 	let parent: IngredientData?
@@ -101,12 +104,13 @@ final class IngredientData: Hashable, Identifiable {
 	var tags: [String]
 	var substitutions: [Substitute] = []
 
-	init(id: String, name: String, nicknames: [String]? = nil, category: IngredientCategory, alcohol: Double = 0, region: String? = nil, wikipedia: String? = nil, parent: IngredientData? = nil, showSeparateFromParent: Bool = true, tags: [String]? = nil) {
+	init(id: String, name: String, nicknames: [String]? = nil, category: IngredientCategory, alcohol: Double = 0, color: Color, region: String? = nil, wikipedia: String? = nil, parent: IngredientData? = nil, showSeparateFromParent: Bool = true, tags: [String]? = nil) {
 		self.id = id
 		self.name = name
 		self.nicknames = nicknames ?? []
 		self.category = category
 		self.alcohol = alcohol
+		self.color = color
 		self.region = region
 		self.wikipedia = wikipedia
 		self.parent = parent
@@ -137,55 +141,55 @@ enum IngredientCategory: String {
 //let absinthe = IngredientData(id: "absinthe", name: "absinthe", alcohol: 0.60, wikipedia: "Absinthe")
 //let agave = IngredientData(id: "agave", name: "agave nectar", category: .sweetener)
 //let amaretto = IngredientData(id: "amaretto", name: "amaretto", category: .aperitif, alcohol: 0.24, region: "Italy", wikipedia: "Amaretto"])
-let aperol = IngredientData(id: "aperol", name: "aperol", category: .aperitif, alcohol: 0.11, region: "Italy", wikipedia: "Aperol")
-let bitters = IngredientData(id: "bitters", name: "bitters", nicknames: ["Angostura bitters"], category: .aperitif, alcohol: 0.447, region: "Trinidad and Tobago", wikipedia: "Angostura_bitters")
-//let apple = IngredientData(id: "apple", category: .fruit, name: "apple")
-let brandy = IngredientData(id: "brandy", name: "brandy", nicknames: ["eau de vie"], category: .liquor, alcohol: 0.40, region: "worldwide", wikipedia: "Brandy")
-let brandyApple = IngredientData(id: "brandyApple", name: "apple brandy", category: .liquor, alcohol: 0.40, wikipedia: "Apple_brandy")
-let brandyApricot = IngredientData(id: "brandyApricot", name: "apricot brandy", category: .liquor, alcohol: 0.40, wikipedia: "Apricot_brandy")
-let brandyCognac = IngredientData(id: "brandyCognac", name: "Cognac", category: .liquor, alcohol: 0.40, region: "France", wikipedia: "Cognac")
-let cachaca = IngredientData(id: "cachaca", name: "cachaça", category: .liquor, alcohol: 0.40, region: "Brazil", wikipedia: "Cachaca")
-let campari = IngredientData(id: "campari", name: "campari", category: .aperitif, alcohol: 0.25, region: "Italy", wikipedia: "Campari")
-//let champagne = IngredientData(id: "champagne", name: "champagne", alcohol: 0.12, region: "France (Champagne)", wikipedia: "Champagne")
-//let cherryMaraschino = IngredientData(id: "cherryCocktail", name: "Maraschino cherry", nicknames: ["cocktail cherry"], wikipedia: "Maraschino_cherry")
-let coconutCream = IngredientData(id: "coconutCream", name: "cream of coconut", category: .juice, wikipedia: "Coconut_milk#Cream_of_coconut")
-let coffee = IngredientData(id: "coffee", name: "coffee", category: .mixer, wikipedia: "Coffee") //TODO cat
-let cream = IngredientData(id: "cream", name: "cream", category: .dairy, wikipedia: "Cream")
-let creamHeavy = IngredientData(id: "creamHeavy", name: "heavy cream", nicknames: ["whipping cream"], category: .dairy, wikipedia: "Cream#Types")
-let egg = IngredientData(id: "egg", name: "egg", category: .dairy)
-let gin = IngredientData(id: "gin", name: "gin", category: .liquor, alcohol: 0.40, region: "Worldwide", wikipedia: "Gin")
-let gingerBeer = IngredientData(id: "gingerBeer", name: "ginger beer", category: .mixer)
-let herbMint = IngredientData(id: "herbMint", name: "mint", category: .garnish, wikipedia: "Mint")
-let irishCream = IngredientData(id: "irishCream", name: "Irish cream", category: .liqueur, alcohol: 0.175, region: "Ireland", wikipedia: "Irish_cream")
-let juiceCranberry = IngredientData(id: "juiceCranberry", name: "cranberry juice", category: .juice)
-let juiceOrange = IngredientData(id: "juiceOrange", name: "orange juice", category: .juice)
-let lemon = IngredientData(id: "lemon", name: "lemon", category: .fruit)
-let lime = IngredientData(id: "lime", name: "lime", category: .fruit)
-let liqueurRasberry = IngredientData(id: "liquerRasberry", name: "rasberry liqueur", nicknames: ["chambour"], category: .liqueur, alcohol: 0.20, region: "France", wikipedia: "Chambord_(liqueur)")
-let liqueurBlackberry = IngredientData(id: "liquerBlackberry", name: "blackberry liqueur", nicknames: ["crème de mûre"], category: .liqueur, alcohol: 0.20, region: "France", wikipedia: "Crème_liqueur")
-let liqueurBlackcurrant = IngredientData(id: "liquerBlackcurrant", name: "blackcurrant liqueur", nicknames: ["crème de cassis"], category: .liqueur, alcohol: 0.20, region: "France (Burgundy)", wikipedia: "Crème_de_cassis")
+let aperol = IngredientData(id: "aperol", name: "aperol", category: .aperitif, alcohol: 0.11, color: .red, region: "Italy", wikipedia: "Aperol")
+let bitters = IngredientData(id: "bitters", name: "bitters", nicknames: ["Angostura bitters"], category: .aperitif, alcohol: 0.447, color: .brown, region: "Trinidad and Tobago", wikipedia: "Angostura_bitters")
+//let apple = IngredientData(id: "apple", category: .fruit, name: "apple", color: .red)
+let brandy = IngredientData(id: "brandy", name: "brandy", nicknames: ["eau de vie"], category: .liquor, alcohol: 0.40, color: .white, region: "worldwide", wikipedia: "Brandy")
+let brandyApple = IngredientData(id: "brandyApple", name: "apple brandy", category: .liquor, alcohol: 0.40, color: .brown, wikipedia: "Apple_brandy")
+let brandyApricot = IngredientData(id: "brandyApricot", name: "apricot brandy", category: .liquor, alcohol: 0.40, color: .red, wikipedia: "Apricot_brandy")
+let brandyCognac = IngredientData(id: "brandyCognac", name: "Cognac", category: .liquor, alcohol: 0.40, color: .brown, region: "France", wikipedia: "Cognac")
+let cachaca = IngredientData(id: "cachaca", name: "cachaça", category: .liquor, alcohol: 0.40, color: .yellow, region: "Brazil", wikipedia: "Cachaca")
+let campari = IngredientData(id: "campari", name: "campari", category: .aperitif, alcohol: 0.25, color: .red, region: "Italy", wikipedia: "Campari")
+//let champagne = IngredientData(id: "champagne", name: "champagne", alcohol: 0.12, color: .yellow, region: "France (Champagne)", wikipedia: "Champagne")
+//let cherryMaraschino = IngredientData(id: "cherryCocktail", name: "Maraschino cherry", nicknames: ["cocktail cherry"], color: .red, wikipedia: "Maraschino_cherry")
+let coconutCream = IngredientData(id: "coconutCream", name: "cream of coconut", category: .juice, color: .white, wikipedia: "Coconut_milk#Cream_of_coconut")
+let coffee = IngredientData(id: "coffee", name: "coffee", category: .mixer, color: .black, wikipedia: "Coffee") //TODO cat
+let cream = IngredientData(id: "cream", name: "cream", category: .dairy, color: .white, wikipedia: "Cream")
+let creamHeavy = IngredientData(id: "creamHeavy", name: "heavy cream", nicknames: ["whipping cream"], category: .dairy, color: .white, wikipedia: "Cream#Types")
+let egg = IngredientData(id: "egg", name: "egg", category: .dairy, color: .white)
+let gin = IngredientData(id: "gin", name: "gin", category: .liquor, alcohol: 0.40, color: .green, region: "Worldwide", wikipedia: "Gin")
+let gingerBeer = IngredientData(id: "gingerBeer", name: "ginger beer", category: .mixer, color: .green)
+let herbMint = IngredientData(id: "herbMint", name: "mint", category: .garnish, color: .green, wikipedia: "Mint")
+let irishCream = IngredientData(id: "irishCream", name: "Irish cream", category: .liqueur, alcohol: 0.175, color: .black, region: "Ireland", wikipedia: "Irish_cream")
+let juiceCranberry = IngredientData(id: "juiceCranberry", name: "cranberry juice", category: .juice, color: .red)
+let juiceOrange = IngredientData(id: "juiceOrange", name: "orange juice", category: .juice, color: .orange)
+let lemon = IngredientData(id: "lemon", name: "lemon", category: .fruit, color: .yellow)
+let lime = IngredientData(id: "lime", name: "lime", category: .fruit, color: .green)
+let liqueurRasberry = IngredientData(id: "liquerRasberry", name: "rasberry liqueur", nicknames: ["chambour"], category: .liqueur, alcohol: 0.20, color: .red, region: "France", wikipedia: "Chambord_(liqueur)")
+let liqueurBlackberry = IngredientData(id: "liquerBlackberry", name: "blackberry liqueur", nicknames: ["crème de mûre"], category: .liqueur, alcohol: 0.20, color: .purple, region: "France", wikipedia: "Crème_liqueur")
+let liqueurBlackcurrant = IngredientData(id: "liquerBlackcurrant", name: "blackcurrant liqueur", nicknames: ["crème de cassis"], category: .liqueur, alcohol: 0.20, color: .black, region: "France (Burgundy)", wikipedia: "Crème_de_cassis")
 //let liqueurCherry = IngredientData(id: "liqueurCherry", name: "cherry liqueur", category: .liqueur, alcohol: 0.24)
-let liqueurChocolate = IngredientData(id: "liqueurChocolate", name: "chocolate liqueur", nicknames: ["crème de cacao"], category: .liqueur, alcohol: 0.25)
-let liqueurCoffee = IngredientData(id: "liqueurCoffee", name: "coffee liqueur", nicknames: ["Kahlúa"], category: .liqueur, alcohol: 0.20, region: "Mexico")
-let liqueurOrange = IngredientData(id: "liqueurOrange", name: "orange liqueur", nicknames: ["Curaçao", "Triple Sec", "Cointreau", "Grand Marnier"], category: .liqueur, alcohol: 0.40, region: "Netherlands/France")
-let mezcal = IngredientData(id: "mezcal", name: "mezcal", category: .liquor, alcohol: 0.40, region: "Mexico", wikipedia: "Mezcal")
-let prosecco = IngredientData(id: "prosecco", name: "prosecco", category: .wine, alcohol: 0.11, region: "Italy", wikipedia: "Prosecco")
-let rumLight = IngredientData(id: "rumLight", name: "light rum", nicknames: ["silver rum", "white rum"], category: .liquor, alcohol: 0.40, wikipedia: "Rum")
-let rumGold = IngredientData(id: "rumGold", name: "gold rum", nicknames: ["silver rum", "light rum"], category: .liquor, alcohol: 0.40, wikipedia: "Rum")
-let rumDark = IngredientData(id: "rumDark", name: "dark rum", nicknames: ["silver rum", "light rum"], category: .liquor, alcohol: 0.40, wikipedia: "Rum")
-let sodaClub = IngredientData(id: "sodaClub", name: "club soda", category: .mixer, wikipedia: "Club_soda")
-let sodaCola = IngredientData(id: "sodaCola", name: "cola soda", category: .mixer, wikipedia: "Cola")
-let sugar = IngredientData(id: "sugar", name: "sugar", category: .sweetener, wikipedia: "Sugar")
-let sugarBrown = IngredientData(id: "sugarBrown", name: "brown sugar", category: .sweetener, wikipedia: "Brown_sugar")
-let syrupMaple = IngredientData(id: "syrupMaple", name: "maple syrup", category: .sweetener)
-let syrupSimple = IngredientData(id: "syrupSimple", name: "simple syrup", category: .sweetener)
-let syrupAlmond = IngredientData(id: "syrupAlmond", name: "almond syrup", nicknames: ["Orgeat syrup"], category: .sweetener, wikipedia: "Orgeat_syrup")
-let tequila = IngredientData(id: "tequila", name: "tequila", category: .liquor, alcohol: 0.40, region: "Mexico", wikipedia: "Tequila")
-let vermouthDry = IngredientData(id: "vermouthDry", name: "dry vermouth", category: .liquor, alcohol: 0.18, region: "Italy", wikipedia: "Vermouth")
-let vermouthSweet = IngredientData(id: "vermouthSweet", name: "sweet vermouth", category: .wine, alcohol: 0.165, region: "Italy", wikipedia: "Vermouth")
-let whiskey = IngredientData(id: "whiskey", name: "whiskey", category: .liquor, alcohol: 0.40, region: "Worldwide", wikipedia: "Whiskey")
-let whiskeyBourbon = IngredientData(id: "whiskeyBourbon", name: "Bourbon", category: .liquor, alcohol: 0.40, region: "United States (Kentucky)", wikipedia: "Bourbon")
-let whiskeyIrish = IngredientData(id: "whiskeyIrish", name: "Irish whiskey", category: .liquor, alcohol: 0.40, region: "Ireland", wikipedia: "Irish_whiskey")
-let whiskeyRye = IngredientData(id: "whiskeyRye", name: "rye whiskey", category: .liquor, alcohol: 0.40, region: "United States", wikipedia: "Rye_whiskey")
-let whiskeyScotch = IngredientData(id: "whiskeyScotch", name: "Scotch whiskey", category: .liquor, alcohol: 0.40, region: "Scotland", wikipedia: "Scotch_whisky")
-let vodka = IngredientData(id: "vodka", name: "vodka", category: .liquor, alcohol: 0.40, region: "Russia", wikipedia: "Vodka")
+let liqueurChocolate = IngredientData(id: "liqueurChocolate", name: "chocolate liqueur", nicknames: ["crème de cacao"], category: .liqueur, alcohol: 0.25, color: .brown)
+let liqueurCoffee = IngredientData(id: "liqueurCoffee", name: "coffee liqueur", nicknames: ["Kahlúa"], category: .liqueur, alcohol: 0.20, color: .black, region: "Mexico")
+let liqueurOrange = IngredientData(id: "liqueurOrange", name: "orange liqueur", nicknames: ["Curaçao", "Triple Sec", "Cointreau", "Grand Marnier"], category: .liqueur, alcohol: 0.40, color: .orange, region: "Netherlands/France")
+let mezcal = IngredientData(id: "mezcal", name: "mezcal", category: .liquor, alcohol: 0.40, color: .brown, region: "Mexico", wikipedia: "Mezcal")
+let prosecco = IngredientData(id: "prosecco", name: "prosecco", category: .wine, alcohol: 0.11, color: .clear, region: "Italy", wikipedia: "Prosecco")
+let rumLight = IngredientData(id: "rumLight", name: "light rum", nicknames: ["silver rum", "white rum"], category: .liquor, alcohol: 0.40, color: .clear, wikipedia: "Rum")
+let rumGold = IngredientData(id: "rumGold", name: "gold rum", nicknames: ["silver rum", "light rum"], category: .liquor, alcohol: 0.40, color: .orange, wikipedia: "Rum")
+let rumDark = IngredientData(id: "rumDark", name: "dark rum", nicknames: ["silver rum", "light rum"], category: .liquor, alcohol: 0.40, color: .brown, wikipedia: "Rum")
+let sodaClub = IngredientData(id: "sodaClub", name: "club soda", category: .mixer, color: .clear, wikipedia: "Club_soda")
+let sodaCola = IngredientData(id: "sodaCola", name: "cola soda", category: .mixer, color: .brown, wikipedia: "Cola")
+let sugar = IngredientData(id: "sugar", name: "sugar", category: .sweetener, color: .white, wikipedia: "Sugar")
+let sugarBrown = IngredientData(id: "sugarBrown", name: "brown sugar", category: .sweetener, color: .brown, wikipedia: "Brown_sugar")
+let syrupMaple = IngredientData(id: "syrupMaple", name: "maple syrup", category: .sweetener, color: .brown)
+let syrupSimple = IngredientData(id: "syrupSimple", name: "simple syrup", category: .sweetener, color: .clear)
+let syrupAlmond = IngredientData(id: "syrupAlmond", name: "almond syrup", nicknames: ["Orgeat syrup"], category: .sweetener, color: .brown, wikipedia: "Orgeat_syrup")
+let tequila = IngredientData(id: "tequila", name: "tequila", category: .liquor, alcohol: 0.40, color: .clear, region: "Mexico", wikipedia: "Tequila")
+let vermouthDry = IngredientData(id: "vermouthDry", name: "dry vermouth", category: .liquor, alcohol: 0.18, color: .green, region: "Italy", wikipedia: "Vermouth")
+let vermouthSweet = IngredientData(id: "vermouthSweet", name: "sweet vermouth", category: .wine, alcohol: 0.165, color: .purple, region: "Italy", wikipedia: "Vermouth")
+let whiskey = IngredientData(id: "whiskey", name: "whiskey", category: .liquor, alcohol: 0.40, color: .brown, region: "Worldwide", wikipedia: "Whiskey")
+let whiskeyBourbon = IngredientData(id: "whiskeyBourbon", name: "Bourbon", category: .liquor, alcohol: 0.40, color: .brown, region: "United States (Kentucky)", wikipedia: "Bourbon")
+let whiskeyIrish = IngredientData(id: "whiskeyIrish", name: "Irish whiskey", category: .liquor, alcohol: 0.40, color: .brown, region: "Ireland", wikipedia: "Irish_whiskey")
+let whiskeyRye = IngredientData(id: "whiskeyRye", name: "rye whiskey", category: .liquor, alcohol: 0.40, color: .brown, region: "United States", wikipedia: "Rye_whiskey")
+let whiskeyScotch = IngredientData(id: "whiskeyScotch", name: "Scotch whiskey", category: .liquor, alcohol: 0.40, color: .brown, region: "Scotland", wikipedia: "Scotch_whisky")
+let vodka = IngredientData(id: "vodka", name: "vodka", category: .liquor, alcohol: 0.40, color: .clear, region: "Russia", wikipedia: "Vodka")

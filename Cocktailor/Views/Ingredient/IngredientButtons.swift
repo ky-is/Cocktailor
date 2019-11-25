@@ -78,6 +78,6 @@ struct ButtonOwnedContent: View {
 
 struct IngredientButtons_Previews: PreviewProvider {
 	static var previews: some View {
-		IngredientDetail(data: IngredientData(id: "test", name: "test", category: .mixer), entry: .constant(nil))
+		IngredientDetail(data: IngredientData(id: "test", name: "test", category: .mixer, color: .red), entry: .constant(nil))
 	}
 }
