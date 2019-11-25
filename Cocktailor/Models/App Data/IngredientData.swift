@@ -1,5 +1,31 @@
+struct Substitute {
+	let ingredient: IngredientData
+	let score: Double
+}
+
 final class IngredientData: Hashable, Identifiable {
 	static let keyValues: [String: IngredientData] = {
+		[
+			(lemon, lime, 0.5),
+			//	(agave, syrupMaple, 0.5),
+			(brandy, brandyApple, 0.5),
+			(brandy, brandyCognac, 0.5),
+			(cream, creamHeavy, 0.5),
+			(rumLight, rumGold, 0.5),
+			(rumGold, rumDark, 0.5),
+			//	(rumLight, cachaca, 0.2),
+			(liqueurBlackberry, liqueurBlackcurrant, 0.5),
+			(sugar, sugarBrown, 0.8),
+			//	(champagne, prosecco, 0.8),
+			(whiskey, whiskeyBourbon, 0.8),
+			(whiskey, whiskeyIrish, 0.8),
+			(whiskey, whiskeyRye, 0.8),
+			(whiskey, whiskeyScotch, 0.8),
+			(whiskeyIrish, whiskeyScotch, 0.8),
+		].forEach { (first, second, score) in
+			first.substitutions.append(Substitute(ingredient: second, score: score))
+			second.substitutions.append(Substitute(ingredient: first, score: score))
+		}
 		let items = [
 //			absinthe,
 //			agave,
@@ -73,6 +99,7 @@ final class IngredientData: Hashable, Identifiable {
 	let showSeparateFromParent: Bool
 	var children: [IngredientData] = []
 	var tags: [String]
+	var substitutions: [Substitute] = []
 
 	init(id: String, name: String, nicknames: [String]? = nil, category: IngredientCategory, alcohol: Double = 0, region: String? = nil, wikipedia: String? = nil, parent: IngredientData? = nil, showSeparateFromParent: Bool = true, tags: [String]? = nil) {
 		self.id = id
@@ -96,6 +123,10 @@ final class IngredientData: Hashable, Identifiable {
 
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(id)
+	}
+
+	var substitutionIDs: [String] {
+		return substitutions.map { $0.ingredient.id }
 	}
 }
 
@@ -158,39 +189,3 @@ let whiskeyIrish = IngredientData(id: "whiskeyIrish", name: "Irish whiskey", cat
 let whiskeyRye = IngredientData(id: "whiskeyRye", name: "rye whiskey", category: .liquor, alcohol: 0.40, region: "United States", wikipedia: "Rye_whiskey")
 let whiskeyScotch = IngredientData(id: "whiskeyScotch", name: "Scotch whiskey", category: .liquor, alcohol: 0.40, region: "Scotland", wikipedia: "Scotch_whisky")
 let vodka = IngredientData(id: "vodka", name: "vodka", category: .liquor, alcohol: 0.40, region: "Russia", wikipedia: "Vodka")
-
-struct Substitute {
-	let ingredient: IngredientData
-	let score: Double
-}
-
-let substitutions: [String: [Substitute]] = {
-	let substitutes = [
-		(lemon, lime, 0.5),
-//		(agave, syrupMaple, 0.5),
-		(brandy, brandyApple, 0.5),
-		(brandy, brandyCognac, 0.5),
-		(cream, creamHeavy, 0.5),
-		(rumLight, rumGold, 0.5),
-		(rumGold, rumDark, 0.5),
-//		(rumLight, cachaca, 0.2),
-		(liqueurBlackberry, liqueurBlackcurrant, 0.5),
-		(sugar, sugarBrown, 0.8),
-//		(champagne, prosecco, 0.8),
-		(whiskey, whiskeyBourbon, 0.8),
-		(whiskey, whiskeyIrish, 0.8),
-		(whiskey, whiskeyRye, 0.8),
-		(whiskey, whiskeyScotch, 0.8),
-		(whiskeyIrish, whiskeyScotch, 0.8),
-	]
-	var results = [String: [Substitute]]()
-	substitutes.forEach { (first, second, score) in
-		if results[first.id] == nil {
-			results[first.id] = []
-			results[second.id] = []
-		}
-		results[first.id]!.append(Substitute(ingredient: second, score: score))
-		results[second.id]!.append(Substitute(ingredient: first, score: score))
-	}
-	return results
-}()

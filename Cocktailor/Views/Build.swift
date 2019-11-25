@@ -19,9 +19,19 @@ struct Build: View {
 		let availableIngredientEntries = ingredientEntries.filter { $0.owned && IngredientData.keyValues[$0.id] != nil }
 		let availableIDs = availableIngredientEntries.map { $0.id }
 		var displayCocktails = CocktailData.keyValues.values.filter { cocktail in
-			for iq in cocktail.ingredients {
-				if !availableIDs.contains(iq.id) {
-					return false
+			for ingredientQuantity in cocktail.ingredients {
+				let ingredientID = ingredientQuantity.id
+				if !availableIDs.contains(ingredientID) {
+					var hasSubstitute = false
+					for substitutionID in ingredientQuantity.ingredient.substitutionIDs {
+						if availableIDs.contains(substitutionID) {
+							hasSubstitute = true
+							break
+						}
+					}
+					if !hasSubstitute {
+						return false
+					}
 				}
 			}
 			return true
@@ -29,10 +39,31 @@ struct Build: View {
 		var possibleIngredients = Set<IngredientData>()
 		if let selectedIngredients = observedIngredients.selected {
 			displayCocktails = displayCocktails.filter { cocktail in
-				var missingIngredients = Set(selectedIngredients)
-				cocktail.ingredients.forEach { missingIngredients.remove($0.ingredient.id) }
-				if missingIngredients.isEmpty {
-					cocktail.ingredients.forEach { possibleIngredients.insert($0.ingredient) }
+				var missingSelectedIngredients = Set(selectedIngredients)
+				var foundIngredients = [IngredientData]()
+				for ingredientQuantity in cocktail.ingredients {
+					let ingredient = ingredientQuantity.ingredient
+					if missingSelectedIngredients.contains(ingredient.id) {
+						missingSelectedIngredients.remove(ingredient.id)
+						foundIngredients.append(ingredient)
+					} else {
+						var hasSubstitute = false
+						for substitution in ingredient.substitutions {
+							let substituteIngredient = missingSelectedIngredients.remove(substitution.ingredient.id)
+							if substituteIngredient != nil {
+								hasSubstitute = true
+								missingSelectedIngredients.remove(ingredient.id)
+								foundIngredients.append(substitution.ingredient)
+								break
+							}
+						}
+						if !hasSubstitute {
+							foundIngredients.append(ingredient)
+						}
+					}
+				}
+				if missingSelectedIngredients.isEmpty {
+					foundIngredients.forEach { possibleIngredients.insert($0) }
 					return true
 				}
 				return false
