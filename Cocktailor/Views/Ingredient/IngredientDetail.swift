@@ -31,7 +31,7 @@ struct IngredientDetail: View {
 									HStack {
 										ForEach(cocktail.ingredients) { ingredientQuantity in
 											NavigationLink(destination: CocktailDetail(data: cocktail)) {
-												IngredientIcon(data: ingredientQuantity.ingredient)
+												IngredientImage(data: ingredientQuantity.ingredient)
 											}
 										}
 									}

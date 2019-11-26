@@ -24,7 +24,7 @@ struct CocktailDetail: View {
 						self.selectedIngredient = ingredientAndQuantity.ingredient
 					}) {
 						HStack {
-							IngredientIcon(data: ingredientAndQuantity.ingredient)
+							IngredientImage(data: ingredientAndQuantity.ingredient)
 							Text(ingredientAndQuantity.ingredient.name.localizedCapitalized)
 								.padding(.trailing)
 							Spacer()
