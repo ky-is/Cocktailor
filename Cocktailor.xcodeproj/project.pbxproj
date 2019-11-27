@@ -21,6 +21,8 @@
 		243F402C238A53F9001C89FA /* IngredientButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F402B238A53F9001C89FA /* IngredientButtons.swift */; };
 		247D970C2389C1C90008C22F /* IngredientData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247D970B2389C1C90008C22F /* IngredientData.swift */; };
 		247D970F2389EDEB0008C22F /* MyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247D970E2389EDEB0008C22F /* MyBar.swift */; };
+		24DA426E238DF3B400402159 /* CocktailButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DA426D238DF3B400402159 /* CocktailButtons.swift */; };
+		24DA4270238E0F8700402159 /* Ingredients.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24DA426F238E0F8700402159 /* Ingredients.xcassets */; };
 		24EC8D45238A5AD70004CF42 /* CocktailData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC8D44238A5AD70004CF42 /* CocktailData.swift */; };
 		24EC8D47238A5DEC0004CF42 /* Build.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC8D46238A5DEC0004CF42 /* Build.swift */; };
 		24EC8D49238A62070004CF42 /* IngredientListEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC8D48238A62070004CF42 /* IngredientListEntry.swift */; };
@@ -45,6 +47,8 @@
 		243F402B238A53F9001C89FA /* IngredientButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientButtons.swift; sourceTree = "<group>"; };
 		247D970B2389C1C90008C22F /* IngredientData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientData.swift; sourceTree = "<group>"; };
 		247D970E2389EDEB0008C22F /* MyBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBar.swift; sourceTree = "<group>"; };
+		24DA426D238DF3B400402159 /* CocktailButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailButtons.swift; sourceTree = "<group>"; };
+		24DA426F238E0F8700402159 /* Ingredients.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Ingredients.xcassets; sourceTree = "<group>"; };
 		24EC8D44238A5AD70004CF42 /* CocktailData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailData.swift; sourceTree = "<group>"; };
 		24EC8D46238A5DEC0004CF42 /* Build.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Build.swift; sourceTree = "<group>"; };
 		24EC8D48238A62070004CF42 /* IngredientListEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientListEntry.swift; sourceTree = "<group>"; };
@@ -87,7 +91,6 @@
 				240B51A92381DFB200FA1D02 /* Views */,
 				243F4025238A4BFC001C89FA /* Utils */,
 				240B51AA2381DFC700FA1D02 /* Assets */,
-				240B51992381B46F00FA1D02 /* Preview Content */,
 			);
 			path = Cocktailor;
 			sourceTree = "<group>";
@@ -135,7 +138,9 @@
 			children = (
 				240B51AB2381E07600FA1D02 /* LaunchScreen.storyboard */,
 				240B51972381B46F00FA1D02 /* Assets.xcassets */,
+				24DA426F238E0F8700402159 /* Ingredients.xcassets */,
 				240B519F2381B47000FA1D02 /* Info.plist */,
+				240B51992381B46F00FA1D02 /* Preview Content */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -182,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				24EC8D4B238A74DA0004CF42 /* CocktailDetail.swift */,
+				24DA426D238DF3B400402159 /* CocktailButtons.swift */,
 			);
 			path = Cocktail;
 			sourceTree = "<group>";
@@ -244,6 +250,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24DA4270238E0F8700402159 /* Ingredients.xcassets in Resources */,
 				240B51AD2381E07600FA1D02 /* LaunchScreen.storyboard in Resources */,
 				240B519B2381B46F00FA1D02 /* Preview Assets.xcassets in Resources */,
 				240B51982381B46F00FA1D02 /* Assets.xcassets in Resources */,
@@ -264,6 +271,7 @@
 				240B51912381B46C00FA1D02 /* SceneDelegate.swift in Sources */,
 				247D970F2389EDEB0008C22F /* MyBar.swift in Sources */,
 				247D970C2389C1C90008C22F /* IngredientData.swift in Sources */,
+				24DA426E238DF3B400402159 /* CocktailButtons.swift in Sources */,
 				24EC8D45238A5AD70004CF42 /* CocktailData.swift in Sources */,
 				24EC8D49238A62070004CF42 /* IngredientListEntry.swift in Sources */,
 				24EC8D4E238B0FA10004CF42 /* UIViewRepresentable.swift in Sources */,
