@@ -6,8 +6,8 @@ enum BarEquipment {
 	case barspoon, mixingGlass, muddler, shaker, strainer
 }
 
-enum BarGlasses {
-	case cocktail, collins, highball, irishCoffee, margarita, oldFashioned
+enum BarGlasses: String {
+	case cocktail, collins, highball, hurricane, irishCoffee, margarita, oldFashioned
 }
 
 enum IceStyle {
@@ -82,6 +82,7 @@ final class CocktailData: Hashable, Identifiable {
 	let wikipedia: String?
 	var related: [CocktailData]
 	var tags: [CocktailTag]
+	let totalQuantity: Double
 
 	init(id: String, name: String, nicknames: [String]? = nil, alcohol: Double, ingredients: [IngredientQuantity], ice: IceStyle? = nil,glass: BarGlasses, equipment: [BarEquipment], region: String? = nil, wikipedia: String? = nil, related: [CocktailData] = [], tags: [CocktailTag]? = nil) {
 		self.id = id
@@ -96,6 +97,7 @@ final class CocktailData: Hashable, Identifiable {
 		self.wikipedia = wikipedia
 		self.related = related
 		self.tags = tags ?? []
+		self.totalQuantity = ingredients.reduce(0) { $0 + $1.quantity.value }
 	}
 }
 

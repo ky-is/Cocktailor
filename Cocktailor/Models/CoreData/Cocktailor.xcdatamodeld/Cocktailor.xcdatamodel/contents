@@ -3,7 +3,8 @@
     <entity name="CocktailEntry" representedClassName="CocktailEntry" syncable="YES" codeGenerationType="class">
         <attribute name="dateFavorited" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateViewed" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="makings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CocktailMade" inverseName="cocktailEntry" inverseEntity="CocktailMade"/>
+        <attribute name="id" attributeType="String" defaultValueString=""/>
+        <relationship name="makings" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CocktailMade" inverseName="cocktailEntry" inverseEntity="CocktailMade"/>
     </entity>
     <entity name="CocktailMade" representedClassName="CocktailMade" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -16,8 +17,8 @@
         <attribute name="owned" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="IngredientEntry" positionX="-63" positionY="-18" width="128" height="88"/>
-        <element name="CocktailEntry" positionX="-63" positionY="9" width="128" height="88"/>
+        <element name="CocktailEntry" positionX="-63" positionY="9" width="128" height="103"/>
         <element name="CocktailMade" positionX="-54" positionY="36" width="128" height="88"/>
+        <element name="IngredientEntry" positionX="-63" positionY="-18" width="128" height="88"/>
     </elements>
 </model>
