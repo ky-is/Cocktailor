@@ -38,8 +38,12 @@ enum BarGlasses: String {
 	}
 }
 
+enum Garnish {
+	case lemon, lime, nutmeg
+}
+
 enum IceStyle {
-	case cube
+	case cube, crush
 }
 
 enum QuantityType: String {
@@ -81,6 +85,7 @@ final class CocktailData: Hashable, Identifiable {
 			margarita,
 			mojito,
 			moscowMule,
+			painkiller,
 			screwdriver,
 		]
 		var results = [String: CocktailData]()
@@ -104,6 +109,7 @@ final class CocktailData: Hashable, Identifiable {
 	let alcohol: Double
 	let ingredients: [IngredientQuantity]
 	let ice: IceStyle?
+	let garnish: Garnish?
 	let glass: BarGlasses
 	let equipment: [BarEquipment]
 	let region: String?
@@ -112,7 +118,7 @@ final class CocktailData: Hashable, Identifiable {
 	var tags: [CocktailTag]
 	let totalQuantity: Double
 
-	init(id: String, name: String, nicknames: [String]? = nil, alcohol: Double, ingredients: [IngredientQuantity], ice: IceStyle? = nil,glass: BarGlasses, equipment: [BarEquipment], region: String? = nil, wikipedia: String? = nil, related: [CocktailData] = [], tags: [CocktailTag]? = nil) {
+	init(id: String, name: String, nicknames: [String]? = nil, alcohol: Double, ingredients: [IngredientQuantity], ice: IceStyle? = nil, garnish: Garnish? = nil, glass: BarGlasses, equipment: [BarEquipment], region: String? = nil, wikipedia: String? = nil, related: [CocktailData] = [], tags: [CocktailTag]? = nil) {
 		self.id = id
 		self.name = name
 		self.nicknames = nicknames ?? []
@@ -120,6 +126,7 @@ final class CocktailData: Hashable, Identifiable {
 		self.ingredients = ingredients
 		self.glass = glass
 		self.ice = ice
+		self.garnish = garnish
 		self.equipment = equipment
 		self.region = region
 		self.wikipedia = wikipedia
@@ -135,7 +142,8 @@ let darkAndStormy = CocktailData(id: "darkAndStormy", name: "Dark and Stormy", a
 let irishCoffee = CocktailData(id: "irishCoffee", name: "Irish Coffee", alcohol: 0.09, ingredients: [IQ(whiskeyIrish, 4), IQ(sugarBrown, 2, .tsp), IQ(coffee, 9), IQ(cream, 3)], glass: .irishCoffee, equipment: [.barspoon], wikipedia: "Irish_coffee", related: [])
 let maiTai = CocktailData(id: "maiTai", name: "Mai Tai", alcohol: 0.26, ingredients: [IQ(rumLight, 4), IQ(rumDark, 2), IQ(liqueurOrange, 1.5), IQ(syrupAlmond, 1.5), IQ(lime, 1)], ice: .cube, glass: .collins, equipment: [.shaker, .strainer], wikipedia: "Mai_Tai", related: [])
 let manhattan = CocktailData(id: "manhattan", name: "Manhattan", alcohol: 0.27, ingredients: [IQ(whiskeyRye, 5), IQ(vermouthSweet, 2), IQ(bitters, 2, .dashes)], ice: .cube, glass: .cocktail, equipment: [.mixingGlass, .barspoon], region: "New York", wikipedia: "Manhattan_(cocktail)", related: [])
-let margarita = CocktailData(id: "margarita", name: "Margarita", alcohol: 0.30, ingredients: [IQ(tequila, 1.75), IQ(liqueurOrange, 1), IQ(lime, 3/4, .pieces)], glass: .margarita, equipment: [.shaker, .strainer], wikipedia: "Margarita", related: [])
+let margarita = CocktailData(id: "margarita", name: "Margarita", alcohol: 0.30, ingredients: [IQ(tequila, 1.75), IQ(liqueurOrange, 1), IQ(lime, 3/4, .pieces)], glass: .cocktail, equipment: [.shaker, .strainer], wikipedia: "Margarita", related: []) //TODO .margarita
 let mojito = CocktailData(id: "mojito", name: "Mojito", alcohol: 0.09, ingredients: [IQ(rumLight, 4), IQ(syrupSimple, 4, .tsp), IQ(lime, 3), IQ(sodaClub, 6), IQ(herbMint, 12, .pieces)], glass: .collins, equipment: [.muddler], region: "Cuba", wikipedia: "Mojito", related: [])
 let moscowMule = CocktailData(id: "moscowMule", name: "Moscow Mule", alcohol: 0.09, ingredients: [IQ(vodka, 2.25), IQ(lime, 1/4), IQ(gingerBeer, 6)], glass: .collins, equipment: [.barspoon], wikipedia: "Moscow_mule", related: [])
+let painkiller = CocktailData(id: "painkiller", name: "Painkiller", alcohol: 0.12, ingredients: [IQ(rumLight, 4), IQ(juicePineapple, 4), IQ(juiceOrange, 1), IQ(coconutCream, 1)], ice: .crush, garnish: .nutmeg, glass: .oldFashioned, equipment: [.shaker], wikipedia: "Painkiller_(cocktail)", related: []) //TODO .hurricane?
 let screwdriver = CocktailData(id: "screwdriver", name: "Screwdriver", alcohol: 0.10, ingredients: [IQ(vodka, 2), IQ(juiceOrange, 4)], ice: .cube, glass: .collins, equipment: [.barspoon], wikipedia: "Screwdriver_(cocktail)", related: [])
