@@ -70,8 +70,7 @@ struct IngredientButtonOwnedContent: View {
 			Image(systemName: selected ? "checkmark" : "circle")
 				.frame(width: 28)
 				.foregroundColor(selected ? .accentColor : .tertiary)
-			IngredientImage(data: data)
-				.frame(width: 32)
+			IngredientImage(data: data, size: 36)
 			Text(data.name.localizedCapitalized)
 				.foregroundColor(hasCocktail ? .primary : .secondary)
 		}
@@ -80,6 +79,7 @@ struct IngredientButtonOwnedContent: View {
 
 struct IngredientImage: View {
 	let data: IngredientData
+	let size: CGFloat
 
 	var body: some View {
 		ZStack {
@@ -92,6 +92,7 @@ struct IngredientImage: View {
 				.aspectRatio(contentMode: .fit)
 				.foregroundColor(Color.secondary)
 		}
+			.frame(height: size)
 	}
 }
 
@@ -103,7 +104,7 @@ struct IngredientButtons_Previews: PreviewProvider {
 			IngredientButtonOwned(data: data, entry: .constant(nil)) {
 				IngredientButtonOwnedContent(data: data, selected: true, hasCocktail: true)
 			}
-			IngredientImage(data: lime)
+			IngredientImage(data: lime, size: 128)
 		}
 	}
 }

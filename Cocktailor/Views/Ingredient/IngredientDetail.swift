@@ -12,8 +12,7 @@ struct IngredientDetail: View {
 						Text($0)
 					}
 				}
-				IngredientImage(data: data)
-					.frame(width: 64)
+				IngredientImage(data: data, size: 64)
 				if data.alcohol > 0 {
 					Text("Alcohol: \(NumberFormatter.localizedString(from: NSNumber(value: data.alcohol), number: .percent))")
 				}
@@ -33,8 +32,7 @@ struct IngredientDetail: View {
 									HStack {
 										ForEach(cocktail.ingredients) { ingredientQuantity in
 											NavigationLink(destination: CocktailDetail(data: cocktail)) {
-												IngredientImage(data: ingredientQuantity.ingredient)
-													.frame(height: 32)
+												IngredientImage(data: ingredientQuantity.ingredient, size: 32)
 											}
 										}
 									}
