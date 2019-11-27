@@ -20,12 +20,12 @@ struct IngredientListEntry: View {
 						self.observededIngredients.selected!.insert(self.data.id)
 					}
 				}) {
-					ButtonOwnedContent(data: data, selected: observededIngredients.selected!.contains(self.data.id), hasCocktail: hasCocktail)
+					IngredientButtonOwnedContent(data: data, selected: observededIngredients.selected!.contains(self.data.id), hasCocktail: hasCocktail)
 				}
 					.buttonStyle(BorderlessButtonStyle())
 			} else {
-				ButtonOwned(data: data, entry: $entry) {
-					ButtonOwnedContent(data: self.data, selected: self.entry?.owned ?? false, hasCocktail: self.hasCocktail)
+				IngredientButtonOwned(data: data, entry: $entry) {
+					IngredientButtonOwnedContent(data: self.data, selected: self.entry?.owned ?? false, hasCocktail: self.hasCocktail)
 				}
 					.buttonStyle(BorderlessButtonStyle())
 			}
@@ -38,7 +38,7 @@ struct IngredientListEntry: View {
 			}
 				.buttonStyle(BorderlessButtonStyle())
 			Spacer()
-			ButtonFavorite(data: data, entry: $entry)
+			IngredientButtonFavorite(data: data, entry: $entry)
 				.buttonStyle(BorderlessButtonStyle())
 				.frame(width: 28)
 		}

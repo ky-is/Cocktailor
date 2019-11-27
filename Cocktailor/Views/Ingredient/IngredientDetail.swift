@@ -12,6 +12,8 @@ struct IngredientDetail: View {
 						Text($0)
 					}
 				}
+				IngredientImage(data: data)
+					.frame(width: 64)
 				if data.alcohol > 0 {
 					Text("Alcohol: \(NumberFormatter.localizedString(from: NSNumber(value: data.alcohol), number: .percent))")
 				}
@@ -32,6 +34,7 @@ struct IngredientDetail: View {
 										ForEach(cocktail.ingredients) { ingredientQuantity in
 											NavigationLink(destination: CocktailDetail(data: cocktail)) {
 												IngredientImage(data: ingredientQuantity.ingredient)
+													.frame(height: 32)
 											}
 										}
 									}
@@ -49,8 +52,8 @@ struct IngredientDetail: View {
 				.navigationBarItems(trailing:
 					HStack {
 						Group {
-							ButtonFavorite(data: data, entry: $entry)
-							ButtonOwned<Text?>(data: data, entry: $entry, content: nil)
+							IngredientButtonFavorite(data: data, entry: $entry)
+							IngredientButtonOwned<Text?>(data: data, entry: $entry, content: nil)
 						}
 							.frame(width: 24)
 					}

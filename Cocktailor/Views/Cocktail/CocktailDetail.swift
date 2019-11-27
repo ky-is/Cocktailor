@@ -25,6 +25,7 @@ struct CocktailDetail: View {
 					}) {
 						HStack {
 							IngredientImage(data: ingredientAndQuantity.ingredient)
+								.frame(width: 32)
 							Text(ingredientAndQuantity.ingredient.name.localizedCapitalized)
 								.padding(.trailing)
 							Spacer()

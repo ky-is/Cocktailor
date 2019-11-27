@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ButtonFavorite: View {
+struct IngredientButtonFavorite: View {
 	let data: IngredientData
 	@Binding var entry: IngredientEntry?
 
@@ -30,7 +30,7 @@ struct ButtonFavorite: View {
 	}
 }
 
-struct ButtonOwned<Content>: View where Content: View {
+struct IngredientButtonOwned<Content: View>: View {
 	let data: IngredientData
 	@Binding var entry: IngredientEntry?
 	let content: (() -> Content)?
@@ -60,7 +60,7 @@ struct ButtonOwned<Content>: View where Content: View {
 	}
 }
 
-struct ButtonOwnedContent: View {
+struct IngredientButtonOwnedContent: View {
 	let data: IngredientData
 	let selected: Bool
 	let hasCocktail: Bool
@@ -71,6 +71,7 @@ struct ButtonOwnedContent: View {
 				.frame(width: 28)
 				.foregroundColor(selected ? .accentColor : .tertiary)
 			IngredientImage(data: data)
+				.frame(width: 32)
 			Text(data.name.localizedCapitalized)
 				.foregroundColor(hasCocktail ? .primary : .secondary)
 		}
@@ -84,12 +85,13 @@ struct IngredientImage: View {
 		ZStack {
 			Image(data.icon.rawValue)
 				.resizable()
+				.aspectRatio(contentMode: .fit)
 				.foregroundColor(data.color.opacity(0.5))
 			Image("\(data.icon.rawValue)-outline")
 				.resizable()
+				.aspectRatio(contentMode: .fit)
 				.foregroundColor(Color.secondary)
 		}
-			.frame(width: 32, height: 32)
 	}
 }
 
@@ -97,9 +99,9 @@ struct IngredientButtons_Previews: PreviewProvider {
 	static var previews: some View {
 		let data = lime
 		return VStack {
-			ButtonFavorite(data: data, entry: .constant(nil))
-			ButtonOwned(data: data, entry: .constant(nil)) {
-				ButtonOwnedContent(data: data, selected: true, hasCocktail: true)
+			IngredientButtonFavorite(data: data, entry: .constant(nil))
+			IngredientButtonOwned(data: data, entry: .constant(nil)) {
+				IngredientButtonOwnedContent(data: data, selected: true, hasCocktail: true)
 			}
 			IngredientImage(data: lime)
 		}
