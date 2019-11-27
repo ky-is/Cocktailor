@@ -62,19 +62,22 @@ struct CocktailImage: View {
 	let height: CGFloat
 
 	var body: some View {
-		ZStack(alignment: .top) {
+		let fillIngredients = data.ingredients.filter({ $0.quantity.type == .parts }).sorted(by: { $0.quantity.value < $1.quantity.value })
+		let ingredientSpacing: CGFloat = height >= 128 ? 1 : 0.5
+		let heightWithoutSpacing = height - ingredientSpacing * CGFloat(fillIngredients.count - 1)
+		return ZStack(alignment: .top) {
 			Image(data.glass.rawValue)
 				.resizable()
 				.aspectRatio(contentMode: .fit)
 				.foregroundColor(.secondary)
-			VStack(spacing: height >= 128 ? 1 : 0.5) {
-				ForEach(data.ingredients.filter({ $0.quantity.type == .parts }).sorted(by: { $0.quantity.value < $1.quantity.value })) { ingredientQuantity in
+			VStack(spacing: ingredientSpacing) {
+				ForEach(fillIngredients) { ingredientQuantity in
 					ZStack {
 						Color.secondarySystemBackground
 						ingredientQuantity.ingredient.color
 							.opacity(0.75)
 					}
-						.frame(height: CGFloat(ingredientQuantity.quantity.value / self.data.totalQuantity) * self.data.glass.heightProportion * self.height)
+						.frame(height: CGFloat(ingredientQuantity.quantity.value / self.data.totalQuantity) * self.data.glass.heightProportion * heightWithoutSpacing)
 				}
 			}
 				.background(Color.systemBackground)
