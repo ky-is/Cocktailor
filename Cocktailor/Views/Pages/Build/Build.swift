@@ -73,7 +73,7 @@ struct Build: View {
 		return GeometryReader { geometry in
 			if geometry.size.width > 1112 {
 				BuildDouble(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, displayCocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
-			} else if geometry.size.width > 960 {
+			} else if geometry.size.width > 960 { // Needed to fix SplitView behavior on narrow screens which hide master.
 				BuildDoubleManual(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, displayCocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
 			} else if geometry.size.width > 512 {
 				BuildDouble(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, displayCocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
@@ -85,117 +85,7 @@ struct Build: View {
 	}
 }
 
-private struct BuildDoubleManual: View {
-	let availableIngredientEntries: [IngredientEntry]
-	let observedIngredients: ObservableIngredients
-	let displayCocktails: [CocktailData]
-	let hasFilteredCocktail: Bool
-	let possibleIngredients: Set<IngredientData>?
-
-	@State private var selectedCocktail: CocktailData?
-
-	var body: some View {
-		HStack(spacing: 0) {
-			NavigationView {
-				BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: false)
-			}
-				.frame(width: 321)
-			NavigationView {
-				HStack(spacing: 0) {
-					BuildCocktailsManualList(displayCocktails: displayCocktails, selectedCocktail: $selectedCocktail)
-						.frame(width: 321)
-					Divider()
-					Group {
-						if selectedCocktail != nil {
-							CocktailDetail(data: selectedCocktail!)
-						} else {
-							BuildCocktailPlaceholder()
-								.navigationBarTitle("Cocktails")
-						}
-					}
-						.frame(maxWidth: .greatestFiniteMagnitude)
-				}
-			}
-				.navigationViewStyle(StackNavigationViewStyle())
-		}
-	}
-}
-
-private struct BuildDouble: View {
-	let availableIngredientEntries: [IngredientEntry]
-	let observedIngredients: ObservableIngredients
-	let displayCocktails: [CocktailData]
-	let hasFilteredCocktail: Bool
-	let possibleIngredients: Set<IngredientData>?
-
-	var body: some View {
-		HStack(spacing: 0) {
-			NavigationView {
-				BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: false)
-			}
-				.frame(width: 321)
-			NavigationView {
-				BuildCocktailsDetailList(displayCocktails: displayCocktails, insertBlank: false)
-				BuildCocktailPlaceholder()
-			}
-		}
-	}
-}
-
-private struct BuildSingle: View {
-	let availableIngredientEntries: [IngredientEntry]
-	@ObservedObject var observedIngredients: ObservableIngredients
-	let displayCocktails: [CocktailData]
-	let hasFilteredCocktail: Bool
-	let possibleIngredients: Set<IngredientData>?
-
-	@State private var showCocktails = true
-
-	var body: some View {
-		ZStack(alignment: .bottom) {
-			NavigationView {
-				Group {
-					if !showCocktails {
-						BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: true)
-					} else {
-						BuildCocktailsDetailList(displayCocktails: displayCocktails, insertBlank: true)
-						BuildCocktailPlaceholder()
-					}
-				}
-					.transition(.slide)
-			}
-			Picker("", selection: $showCocktails.animation()) {
-				Text(observedIngredients.selected!.count > 0 ? "Ingredient".pluralize(observedIngredients.selected!.count) : "Any Ingredients")
-					.tag(false)
-				Text(hasFilteredCocktail ? "Cocktail".pluralize(displayCocktails.count) : "All Cocktails")
-					.tag(true)
-			}
-				.padding(.horizontal)
-				.frame(height: 48)
-				.background(BlurView(style: .systemChromeMaterial))
-				.labelsHidden()
-				.pickerStyle(SegmentedPickerStyle())
-		}
-	}
-}
-
-private struct BuildCocktailsManualList: View {
-	let displayCocktails: [CocktailData]
-	@Binding var selectedCocktail: CocktailData?
-
-	var body: some View {
-		List(displayCocktails, selection: $selectedCocktail) { cocktailData in
-			Button(action: {
-				self.selectedCocktail = cocktailData
-			}) {
-				BuildCocktailListRowContent(data: cocktailData)
-			}
-				.tag(cocktailData as CocktailData?)
-		}
-	}
-}
-
-private struct BuildCocktailsDetailList: View {
+struct BuildCocktailsDetailList: View {
 	let displayCocktails: [CocktailData]
 	let insertBlank: Bool
 
@@ -215,7 +105,7 @@ private struct BuildCocktailsDetailList: View {
 	}
 }
 
-private struct BuildCocktailListRowContent: View {
+struct BuildCocktailListRowContent: View {
 	let data: CocktailData
 
 	var body: some View {
@@ -236,14 +126,14 @@ private struct BuildCocktailListRowContent: View {
 	}
 }
 
-private struct BuildCocktailPlaceholder: View {
+struct BuildCocktailPlaceholder: View {
 	var body: some View {
 		Text("Toggle ingredients or select a cocktail")
 			.foregroundColor(.secondary)
 	}
 }
 
-private struct BuildIngredients: View {
+struct BuildIngredients: View {
 	let availableIngredientEntries: [IngredientEntry]
 	let observedIngredients: ObservableIngredients
 	let possibleIngredients: Set<IngredientData>?

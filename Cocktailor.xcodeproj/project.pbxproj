@@ -21,6 +21,9 @@
 		243F402C238A53F9001C89FA /* IngredientButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F402B238A53F9001C89FA /* IngredientButtons.swift */; };
 		247D970C2389C1C90008C22F /* IngredientData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247D970B2389C1C90008C22F /* IngredientData.swift */; };
 		247D970F2389EDEB0008C22F /* MyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247D970E2389EDEB0008C22F /* MyBar.swift */; };
+		249B0B03238E4A840099BC72 /* BuildSingle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B0B02238E4A840099BC72 /* BuildSingle.swift */; };
+		249B0B05238E4AA30099BC72 /* BuildDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B0B04238E4AA30099BC72 /* BuildDouble.swift */; };
+		249B0B07238E4ACF0099BC72 /* BuildDoubleManual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B0B06238E4ACF0099BC72 /* BuildDoubleManual.swift */; };
 		24DA426E238DF3B400402159 /* CocktailButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DA426D238DF3B400402159 /* CocktailButtons.swift */; };
 		24DA4270238E0F8700402159 /* Ingredients.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24DA426F238E0F8700402159 /* Ingredients.xcassets */; };
 		24DA4274238E114300402159 /* Glasses.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24DA4273238E114300402159 /* Glasses.xcassets */; };
@@ -48,6 +51,9 @@
 		243F402B238A53F9001C89FA /* IngredientButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientButtons.swift; sourceTree = "<group>"; };
 		247D970B2389C1C90008C22F /* IngredientData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientData.swift; sourceTree = "<group>"; };
 		247D970E2389EDEB0008C22F /* MyBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBar.swift; sourceTree = "<group>"; };
+		249B0B02238E4A840099BC72 /* BuildSingle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSingle.swift; sourceTree = "<group>"; };
+		249B0B04238E4AA30099BC72 /* BuildDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildDouble.swift; sourceTree = "<group>"; };
+		249B0B06238E4ACF0099BC72 /* BuildDoubleManual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildDoubleManual.swift; sourceTree = "<group>"; };
 		24DA426D238DF3B400402159 /* CocktailButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailButtons.swift; sourceTree = "<group>"; };
 		24DA426F238E0F8700402159 /* Ingredients.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Ingredients.xcassets; sourceTree = "<group>"; };
 		24DA4273238E114300402159 /* Glasses.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Glasses.xcassets; sourceTree = "<group>"; };
@@ -126,9 +132,7 @@
 		240B51A92381DFB200FA1D02 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				240B51952381B46C00FA1D02 /* ContentView.swift */,
-				247D970E2389EDEB0008C22F /* MyBar.swift */,
-				24EC8D46238A5DEC0004CF42 /* Build.swift */,
+				249B0B01238E4A130099BC72 /* Pages */,
 				243F402A238A53E7001C89FA /* Ingredient */,
 				24EC8D4A238A74CD0004CF42 /* Cocktail */,
 			);
@@ -165,6 +169,35 @@
 				243F402B238A53F9001C89FA /* IngredientButtons.swift */,
 			);
 			path = Ingredient;
+			sourceTree = "<group>";
+		};
+		249B0B00238E49FA0099BC72 /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				24EC8D46238A5DEC0004CF42 /* Build.swift */,
+				249B0B02238E4A840099BC72 /* BuildSingle.swift */,
+				249B0B04238E4AA30099BC72 /* BuildDouble.swift */,
+				249B0B06238E4ACF0099BC72 /* BuildDoubleManual.swift */,
+			);
+			path = Build;
+			sourceTree = "<group>";
+		};
+		249B0B01238E4A130099BC72 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				240B51952381B46C00FA1D02 /* ContentView.swift */,
+				249B0B08238E4D7B0099BC72 /* My Bar */,
+				249B0B00238E49FA0099BC72 /* Build */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		249B0B08238E4D7B0099BC72 /* My Bar */ = {
+			isa = PBXGroup;
+			children = (
+				247D970E2389EDEB0008C22F /* MyBar.swift */,
+			);
+			path = "My Bar";
 			sourceTree = "<group>";
 		};
 		24EC8D42238A5A660004CF42 /* CoreData */ = {
@@ -277,7 +310,10 @@
 				247D970C2389C1C90008C22F /* IngredientData.swift in Sources */,
 				24DA426E238DF3B400402159 /* CocktailButtons.swift in Sources */,
 				24EC8D45238A5AD70004CF42 /* CocktailData.swift in Sources */,
+				249B0B05238E4AA30099BC72 /* BuildDouble.swift in Sources */,
 				24EC8D49238A62070004CF42 /* IngredientListEntry.swift in Sources */,
+				249B0B07238E4ACF0099BC72 /* BuildDoubleManual.swift in Sources */,
+				249B0B03238E4A840099BC72 /* BuildSingle.swift in Sources */,
 				24EC8D4E238B0FA10004CF42 /* UIViewRepresentable.swift in Sources */,
 				243F4029238A5318001C89FA /* IngredientDetail.swift in Sources */,
 				240B51962381B46C00FA1D02 /* ContentView.swift in Sources */,
