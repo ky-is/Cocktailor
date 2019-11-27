@@ -86,7 +86,7 @@ struct IngredientImage: View {
 			Image(data.icon.rawValue)
 				.resizable()
 				.aspectRatio(contentMode: .fit)
-				.foregroundColor(data.color.opacity(0.5))
+				.foregroundColor(data.color.opacity(0.75))
 			Image("\(data.icon.rawValue)-outline")
 				.resizable()
 				.aspectRatio(contentMode: .fit)

@@ -62,34 +62,43 @@ struct CocktailImage: View {
 	let height: CGFloat
 
 	var body: some View {
-		ZStack {
+		ZStack(alignment: .top) {
 			Image(data.glass.rawValue)
 				.resizable()
-			VStack {
-				ForEach(data.ingredients.filter { $0.quantity.type == .parts }) { ingredientQuantity in
-					ZStack {
-						ingredientQuantity.ingredient.color
-							.frame(height: CGFloat(ingredientQuantity.quantity.value / self.data.totalQuantity) * self.height)
-						Text(ingredientQuantity.ingredient.name)
-							.foregroundColor(.gray)
-					}
+				.aspectRatio(contentMode: .fit)
+				.foregroundColor(.secondary)
+			Image("\(data.glass.rawValue)-fill")
+				.resizable()
+				.aspectRatio(contentMode: .fit)
+				.foregroundColor(Color.tertiary.opacity(0.5))
+				.frame(height: height)
+			VStack(spacing: 0) {
+				ForEach(data.ingredients.filter({ $0.quantity.type == .parts }).sorted(by: { $0.quantity.value < $1.quantity.value })) { ingredientQuantity in
+					ingredientQuantity.ingredient.color
+						.opacity(0.75)
+						.frame(height: CGFloat(ingredientQuantity.quantity.value / self.data.totalQuantity) * self.data.glass.heightProportion * self.height)
 				}
 			}
-//			Image("\(data.glass.rawValue)-outline")
-//				.resizable()
-//				.foregroundColor(Color.secondary)
+				.position(x: height / 2, y: data.glass.offsetProportion * height + height * data.glass.heightProportion / 2)
+				.mask(
+					Image("\(data.glass.rawValue)-fill")
+						.resizable()
+						.aspectRatio(contentMode: .fit)
+						.foregroundColor(.black)
+						.frame(height: height)
+				)
 		}
-			.frame(height: height)
+			.frame(width: height, height: height)
 	}
 }
 
 struct CocktailButtons_Previews: PreviewProvider {
 	static var previews: some View {
-		let data = bramble
+		let data = moscowMule
 		return VStack {
 			CocktailButtonFavorite(data: data, entry: .constant(nil))
 			CocktailButtonMade(data: data, entry: .constant(nil))
-			CocktailImage(data: data, height: 128)
+			CocktailImage(data: data, height: 512)
 		}
 	}
 }

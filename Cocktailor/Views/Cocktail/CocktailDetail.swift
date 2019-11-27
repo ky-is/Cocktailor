@@ -6,40 +6,42 @@ struct CocktailDetail: View {
 	@State private var selectedIngredient: IngredientData?
 
 	var body: some View {
-		VStack {
-			HStack {
-				ForEach(data.nicknames, id: \.self) {
-					Text($0)
-				}
-			}
-			CocktailImage(data: data, height: 256)
-			if data.alcohol > 0 {
-				Text("Alcohol: \(NumberFormatter.localizedString(from: NSNumber(value: data.alcohol), number: .percent))")
-			}
-			if data.region != nil {
-				Text("Region: \(data.region!)")
-			}
+		GeometryReader { geometry in
 			VStack {
-				ForEach(data.ingredients) { ingredientAndQuantity in
-					Button(action: {
-						self.selectedIngredient = ingredientAndQuantity.ingredient
-					}) {
-						HStack {
-							IngredientImage(data: ingredientAndQuantity.ingredient)
-								.frame(width: 32)
-							Text(ingredientAndQuantity.ingredient.name.localizedCapitalized)
-								.padding(.trailing)
-							Spacer()
-							Text(ingredientAndQuantity.quantity.value.description)
-								+
-								Text(" \(ingredientAndQuantity.quantity.type.rawValue)")
-									.foregroundColor(.secondary)
+				HStack {
+					ForEach(self.data.nicknames, id: \.self) {
+						Text($0)
+					}
+				}
+				CocktailImage(data: self.data, height: geometry.size.width / 2)
+				if self.data.alcohol > 0 {
+					Text("Alcohol: \(NumberFormatter.localizedString(from: NSNumber(value: self.data.alcohol), number: .percent))")
+				}
+				if self.data.region != nil {
+					Text("Region: \(self.data.region!)")
+				}
+				VStack {
+					ForEach(self.data.ingredients) { ingredientAndQuantity in
+						Button(action: {
+							self.selectedIngredient = ingredientAndQuantity.ingredient
+						}) {
+							HStack {
+								IngredientImage(data: ingredientAndQuantity.ingredient)
+									.frame(width: 32)
+								Text(ingredientAndQuantity.ingredient.name.localizedCapitalized)
+									.padding(.trailing)
+								Spacer()
+								Text(ingredientAndQuantity.quantity.value.description)
+									+
+									Text(" \(ingredientAndQuantity.quantity.type.rawValue)")
+										.foregroundColor(.secondary)
+							}
 						}
 					}
 				}
+					.padding()
+					.frame(maxWidth: 360)
 			}
-				.padding()
-				.frame(maxWidth: 360)
 		}
 			.navigationBarTitle(data.name)
 			.sheet(item: $selectedIngredient) { selectedIngredient in

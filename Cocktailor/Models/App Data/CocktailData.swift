@@ -1,3 +1,5 @@
+import CoreGraphics
+
 enum CocktailTag: String {
 	case aperitif
 }
@@ -8,6 +10,32 @@ enum BarEquipment {
 
 enum BarGlasses: String {
 	case cocktail, collins, highball, hurricane, irishCoffee, margarita, oldFashioned
+
+	var offsetProportion: CGFloat {
+		switch self {
+		case .cocktail:
+			return 114 / 1024
+		case .collins:
+			return 173 / 1024
+		case .oldFashioned:
+			return 357 / 1024
+		default:
+			return 0
+		}
+	}
+
+	var heightProportion: CGFloat {
+		switch self {
+		case .cocktail:
+			return 400 / 1024
+		case .collins:
+			return 678 / 1024
+		case .oldFashioned:
+			return 382 / 1024
+		default:
+			return 1
+		}
+	}
 }
 
 enum IceStyle {
@@ -97,7 +125,7 @@ final class CocktailData: Hashable, Identifiable {
 		self.wikipedia = wikipedia
 		self.related = related
 		self.tags = tags ?? []
-		self.totalQuantity = ingredients.reduce(0) { $0 + $1.quantity.value }
+		self.totalQuantity = ingredients.filter({ $0.quantity.type == .parts }).reduce(0) { $0 + $1.quantity.value }
 	}
 }
 
