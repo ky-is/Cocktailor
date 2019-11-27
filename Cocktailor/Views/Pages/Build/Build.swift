@@ -150,11 +150,15 @@ struct BuildIngredients: View {
 		}
 			.navigationBarTitle("Ingredients")
 			.navigationBarItems(trailing:
-				Button(action: {
-					self.observedIngredients.selected?.removeAll()
-				}, label: {
-					Text("Clear all")
-				})
+				Group {
+					if !(self.observedIngredients.selected?.isEmpty ?? true) {
+						Button(action: {
+							self.observedIngredients.selected?.removeAll()
+						}, label: {
+							Text("Clear ingredients")
+						})
+					}
+				}
 			)
 	}
 }
