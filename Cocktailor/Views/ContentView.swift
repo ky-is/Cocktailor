@@ -19,7 +19,7 @@ struct ContentView: View {
 			}
 				.navigationViewStyle(StackNavigationViewStyle())
 				.tabItem {
-					Image(systemName: "staroflife")
+					Image(systemName: "eyeglasses")
 					Text("Explore")
 				}
 		}

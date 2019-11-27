@@ -73,12 +73,50 @@ struct Build: View {
 		return GeometryReader { geometry in
 			if geometry.size.width > 1112 {
 				BuildDouble(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, displayCocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
-			} else if geometry.size.width > 640 {
+			} else if geometry.size.width > 960 {
+				BuildDoubleManual(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, displayCocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
+			} else if geometry.size.width > 512 {
 				BuildDouble(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, displayCocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
 					.navigationViewStyle(StackNavigationViewStyle())
 			} else {
 				BuildSingle(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, displayCocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
 			}
+		}
+	}
+}
+
+private struct BuildDoubleManual: View {
+	let availableIngredientEntries: [IngredientEntry]
+	let observedIngredients: ObservableIngredients
+	let displayCocktails: [CocktailData]
+	let hasFilteredCocktail: Bool
+	let possibleIngredients: Set<IngredientData>?
+
+	@State private var selectedCocktail: CocktailData?
+
+	var body: some View {
+		HStack(spacing: 0) {
+			NavigationView {
+				BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: false)
+			}
+				.frame(width: 321)
+			NavigationView {
+				HStack(spacing: 0) {
+					BuildCocktailsManualList(displayCocktails: displayCocktails, selectedCocktail: $selectedCocktail)
+						.frame(width: 321)
+					Divider()
+					Group {
+						if selectedCocktail != nil {
+							CocktailDetail(data: selectedCocktail!)
+						} else {
+							BuildCocktailPlaceholder()
+								.navigationBarTitle("Cocktails")
+						}
+					}
+						.frame(maxWidth: .greatestFiniteMagnitude)
+				}
+			}
+				.navigationViewStyle(StackNavigationViewStyle())
 		}
 	}
 }
@@ -97,9 +135,7 @@ private struct BuildDouble: View {
 			}
 				.frame(width: 321)
 			NavigationView {
-				List {
-					BuildCocktails(displayCocktails: displayCocktails)
-				}
+				BuildCocktailsDetailList(displayCocktails: displayCocktails, insertBlank: false)
 				BuildCocktailPlaceholder()
 			}
 		}
@@ -122,10 +158,7 @@ private struct BuildSingle: View {
 					if !showCocktails {
 						BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: true)
 					} else {
-						List {
-							BuildCocktails(displayCocktails: displayCocktails)
-							Text("")
-						}
+						BuildCocktailsDetailList(displayCocktails: displayCocktails, insertBlank: true)
 						BuildCocktailPlaceholder()
 					}
 				}
@@ -146,24 +179,60 @@ private struct BuildSingle: View {
 	}
 }
 
-private struct BuildCocktails: View {
+private struct BuildCocktailsManualList: View {
 	let displayCocktails: [CocktailData]
+	@Binding var selectedCocktail: CocktailData?
 
 	var body: some View {
-		ForEach(displayCocktails) { cocktailData in
-			NavigationLink(destination: CocktailDetail(data: cocktailData)) {
-				HStack {
-					Text(cocktailData.name)
-					HStack(spacing: 0) {
-						ForEach(cocktailData.ingredients) { ingredientQuantity in
-							IngredientImage(data: ingredientQuantity.ingredient, size: 32)
-						}
-					}
-				}
+		List(displayCocktails, selection: $selectedCocktail) { cocktailData in
+			Button(action: {
+				self.selectedCocktail = cocktailData
+			}) {
+				BuildCocktailListRowContent(data: cocktailData)
 			}
-				.isDetailLink(true)
+				.tag(cocktailData as CocktailData?)
+		}
+	}
+}
+
+private struct BuildCocktailsDetailList: View {
+	let displayCocktails: [CocktailData]
+	let insertBlank: Bool
+
+	var body: some View {
+		List {
+			ForEach(displayCocktails) { cocktailData in
+				NavigationLink(destination: CocktailDetail(data: cocktailData)) {
+					BuildCocktailListRowContent(data: cocktailData)
+				}
+					.isDetailLink(true)
+			}
+			if insertBlank {
+				Text("")
+			}
 		}
 			.navigationBarTitle("Cocktails")
+	}
+}
+
+private struct BuildCocktailListRowContent: View {
+	let data: CocktailData
+
+	var body: some View {
+		HStack {
+			HStack(spacing: 0) {
+				CocktailImage(data: data, height: 80)
+				Text(data.name)
+					.layoutPriority(0.5)
+			}
+			Spacer()
+			HStack(spacing: 0) {
+				ForEach(data.ingredients) { ingredientQuantity in
+					IngredientImage(data: ingredientQuantity.ingredient, size: 32)
+				}
+			}
+				.layoutPriority(1)
+		}
 	}
 }
 
