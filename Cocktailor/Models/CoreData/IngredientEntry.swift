@@ -1,7 +1,7 @@
 import CoreData
 
 @objc(IngredientEntry)
-public class IngredientEntry: NSManagedObject, Identifiable {
+public final class IngredientEntry: NSManagedObject, Identifiable {
 	@nonobjc public class func fetchRequest() -> NSFetchRequest<IngredientEntry> {
 		return NSFetchRequest<IngredientEntry>(entityName: "IngredientEntry")
 	}

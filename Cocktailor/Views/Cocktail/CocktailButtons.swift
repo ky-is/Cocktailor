@@ -59,13 +59,22 @@ struct CocktailButtonMade: View {
 
 struct CocktailImage: View {
 	let data: CocktailData
-	let height: CGFloat
+	let size: CGFloat
+
+	private let fillIngredients: [IngredientQuantity]
+	private let ingredientSpacing: CGFloat
+	private let liquidHeightWithoutSpacing: CGFloat
+
+	init(data: CocktailData, size: CGFloat) {
+		self.data = data
+		self.size = size
+		fillIngredients = data.ingredients.filter({ $0.quantity.type == .parts }).sorted(by: { $0.quantity.value < $1.quantity.value })
+		ingredientSpacing = size >= 128 ? 1 : 0.5
+		liquidHeightWithoutSpacing = size - ingredientSpacing * CGFloat(fillIngredients.count - 1)
+	}
 
 	var body: some View {
-		let fillIngredients = data.ingredients.filter({ $0.quantity.type == .parts }).sorted(by: { $0.quantity.value < $1.quantity.value })
-		let ingredientSpacing: CGFloat = height >= 128 ? 1 : 0.5
-		let heightWithoutSpacing = height - ingredientSpacing * CGFloat(fillIngredients.count - 1)
-		return ZStack(alignment: .top) {
+		ZStack(alignment: .top) {
 			Image(data.glass.rawValue)
 				.resizable()
 				.aspectRatio(contentMode: .fit)
@@ -77,20 +86,20 @@ struct CocktailImage: View {
 						ingredientQuantity.ingredient.color
 							.opacity(0.75)
 					}
-						.frame(height: CGFloat(ingredientQuantity.quantity.value / self.data.totalQuantity) * self.data.glass.heightProportion * heightWithoutSpacing)
+						.frame(height: CGFloat(ingredientQuantity.quantity.value / self.data.totalQuantity) * self.data.glass.liquidHeightProportion * self.liquidHeightWithoutSpacing)
 				}
 			}
 				.background(Color.systemBackground)
-				.position(x: height / 2, y: data.glass.offsetProportion * height + height * data.glass.heightProportion / 2)
+				.position(x: size / 2, y: size * data.glass.liquidOffsetProportion + size * data.glass.liquidHeightProportion / 2)
 				.mask(
 					Image("\(data.glass.rawValue)-fill")
 						.resizable()
 						.aspectRatio(contentMode: .fit)
 						.foregroundColor(.black)
-						.frame(height: height)
+						.frame(height: size)
 				)
 		}
-			.frame(width: height, height: height)
+			.frame(width: size, height: size)
 	}
 }
 
@@ -100,7 +109,7 @@ struct CocktailButtons_Previews: PreviewProvider {
 		return VStack {
 			CocktailButtonFavorite(data: data, entry: .constant(nil))
 			CocktailButtonMade(data: data, entry: .constant(nil))
-			CocktailImage(data: data, height: 512)
+			CocktailImage(data: data, size: 512)
 		}
 	}
 }

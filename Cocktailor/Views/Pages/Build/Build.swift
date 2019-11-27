@@ -111,7 +111,7 @@ struct BuildCocktailListRowContent: View {
 	var body: some View {
 		HStack {
 			HStack(spacing: 0) {
-				CocktailImage(data: data, height: 80)
+				CocktailImage(data: data, size: 80)
 				Text(data.name)
 					.layoutPriority(0.5)
 			}

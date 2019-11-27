@@ -11,7 +11,7 @@ enum BarEquipment {
 enum BarGlasses: String {
 	case cocktail, collins, highball, hurricane, irishCoffee, margarita, oldFashioned
 
-	var offsetProportion: CGFloat {
+	var liquidOffsetProportion: CGFloat {
 		switch self {
 		case .cocktail:
 			return 114 / 1024
@@ -24,7 +24,7 @@ enum BarGlasses: String {
 		}
 	}
 
-	var heightProportion: CGFloat {
+	var liquidHeightProportion: CGFloat {
 		switch self {
 		case .cocktail:
 			return 400 / 1024
@@ -55,7 +55,7 @@ struct Quantity: Hashable {
 	let type: QuantityType
 }
 
-struct IngredientQuantity: Hashable, Identifiable {
+final class IngredientQuantity: Hashable, Identifiable {
 	let id: String
 	let ingredient: IngredientData
 	let quantity: Quantity
@@ -68,6 +68,10 @@ struct IngredientQuantity: Hashable, Identifiable {
 
 	static func == (lhs: IngredientQuantity, rhs: IngredientQuantity) -> Bool {
 		lhs.id == rhs.id
+	}
+
+	func hash(into hasher: inout Hasher) {
+		hasher.combine(id)
 	}
 }
 
