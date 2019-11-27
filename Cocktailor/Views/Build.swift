@@ -93,10 +93,7 @@ private struct BuildDouble: View {
 	var body: some View {
 		HStack(spacing: 0) {
 			NavigationView {
-				List {
-					BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients)
-				}
-					.navigationBarTitle("Ingredients")
+				BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: false)
 			}
 				.frame(width: 321)
 			NavigationView {
@@ -123,11 +120,7 @@ private struct BuildSingle: View {
 			NavigationView {
 				Group {
 					if !showCocktails {
-						List {
-							BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients)
-							Text("")
-						}
-							.navigationBarTitle("Ingredients")
+						BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: true)
 					} else {
 						List {
 							BuildCocktails(displayCocktails: displayCocktails)
@@ -159,7 +152,14 @@ private struct BuildCocktails: View {
 	var body: some View {
 		ForEach(displayCocktails) { cocktailData in
 			NavigationLink(destination: CocktailDetail(data: cocktailData)) {
-				Text(cocktailData.name)
+				HStack {
+					Text(cocktailData.name)
+					HStack(spacing: 0) {
+						ForEach(cocktailData.ingredients) { ingredientQuantity in
+							IngredientImage(data: ingredientQuantity.ingredient, size: 32)
+						}
+					}
+				}
 			}
 				.isDetailLink(true)
 		}
@@ -178,11 +178,25 @@ private struct BuildIngredients: View {
 	let availableIngredientEntries: [IngredientEntry]
 	let observedIngredients: ObservableIngredients
 	let possibleIngredients: Set<IngredientData>?
+	let insertBlank: Bool
 
 	var body: some View {
-		ForEach(availableIngredientEntries) { entry in
-			IngredientListEntry(data: IngredientData.keyValues[entry.id]!, entry: .constant(entry), observededIngredients: self.observedIngredients, hasCocktail: self.possibleIngredients?.contains(IngredientData.keyValues[entry.id]!) ?? true) //TODO filter []! != nil
+		List {
+			ForEach(availableIngredientEntries) { entry in
+				IngredientListEntry(data: IngredientData.keyValues[entry.id]!, entry: .constant(entry), observededIngredients: self.observedIngredients, hasCocktail: self.possibleIngredients?.contains(IngredientData.keyValues[entry.id]!) ?? true) //TODO filter []! != nil
+			}
+			if insertBlank {
+				Text("")
+			}
 		}
+			.navigationBarTitle("Ingredients")
+			.navigationBarItems(trailing:
+				Button(action: {
+					self.observedIngredients.selected?.removeAll()
+				}, label: {
+					Text("Clear all")
+				})
+			)
 	}
 }
 
