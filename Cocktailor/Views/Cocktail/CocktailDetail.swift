@@ -30,10 +30,11 @@ struct CocktailDetail: View {
 								Text(ingredientAndQuantity.ingredient.name.localizedCapitalized)
 									.padding(.trailing)
 								Spacer()
-								Text(ingredientAndQuantity.quantity.value.description)
-									+
-									Text(" \(ingredientAndQuantity.quantity.type.rawValue)")
-										.foregroundColor(.secondary)
+								Text(ingredientQuantity.quantity.value.description)
+									.foregroundColor(.primary)
+								+
+								Text(" \(ingredientQuantity.quantity.type.rawValue) ")
+									.foregroundColor(.secondary)
 							}
 						}
 					}
@@ -46,6 +47,7 @@ struct CocktailDetail: View {
 			.sheet(item: $selectedIngredient) { selectedIngredient in
 				IngredientEntryDetail(data: selectedIngredient)
 					.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
+					.accentColor(.primary)
 			}
 	}
 }

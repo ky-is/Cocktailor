@@ -23,6 +23,7 @@ struct ContentView: View {
 					Text("Explore")
 				}
 		}
+			.accentColor(.primary)
 	}
 }
 

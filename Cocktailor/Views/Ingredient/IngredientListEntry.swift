@@ -44,6 +44,7 @@ struct IngredientListEntry: View {
 		}
 			.sheet(isPresented: $showInfo) {
 				IngredientDetail(data: self.data, entry: self.$entry)
+					.accentColor(.primary)
 			}
 	}
 }
