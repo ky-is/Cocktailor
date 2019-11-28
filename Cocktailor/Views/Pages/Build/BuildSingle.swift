@@ -15,11 +15,13 @@ struct BuildSingle: View {
 				NavigationView {
 					BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: true)
 				}
+					.transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .trailing)))
 			} else {
 				NavigationView {
 					BuildCocktailsDetailList(displayCocktails: displayCocktails, insertBlank: true)
 					BuildCocktailPlaceholder()
 				}
+					.transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
 			}
 			Picker("", selection: $showCocktails.animation()) {
 				Text(observedIngredients.selected!.count > 0 ? "Ingredient".pluralize(observedIngredients.selected!.count) : "Any Ingredients")
