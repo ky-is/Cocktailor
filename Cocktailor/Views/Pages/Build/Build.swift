@@ -69,6 +69,7 @@ struct Build: View {
 				return false
 			}
 		}
+		displayCocktails.sort { $0.id < $1.id }
 		let hasFilteredCocktail = displayCocktails.count < CocktailData.keyValues.values.count
 		return GeometryReader { geometry in
 			if geometry.size.width > 1112 {
