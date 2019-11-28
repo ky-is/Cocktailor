@@ -50,10 +50,10 @@ final class IngredientData: Hashable, Identifiable {
 			cream,
 			creamHeavy,
 			egg,
+			eggWhite,
+			eggYolk,
 			gin,
 			gingerBeer,
-//			IngredientData(id: "eggyolk", name: "egg yolk", parent: egg, showSeparateFromParent: false),
-//			IngredientData(id: "eggwhite", name: "egg white", parent: egg, showSeparateFromParent: false),
 			irishCream,
 			juiceCranberry,
 			juiceGrapefruit,
@@ -124,8 +124,9 @@ final class IngredientData: Hashable, Identifiable {
 		self.parent = parent
 		self.showSeparateFromParent = showSeparateFromParent
 		self.tags = tags ?? []
-		if parent != nil {
-			parent?.children.append(self)
+		if let parent = parent {
+			parent.children.append(self)
+			substitutions.append(Substitute(ingredient: parent, score: 1))
 		}
 	}
 
@@ -175,6 +176,8 @@ let coffee = IngredientData(id: "coffee", name: "coffee", icon: .drop, category:
 let cream = IngredientData(id: "cream", name: "cream", icon: .drop, category: .dairy, color: .white, wikipedia: "Cream")
 let creamHeavy = IngredientData(id: "creamHeavy", name: "heavy cream", nicknames: ["whipping cream"], icon: .drop, category: .dairy, color: .white, wikipedia: "Cream#Types")
 let egg = IngredientData(id: "egg", name: "egg", icon: .drop, category: .dairy, color: .white)
+let eggYolk = IngredientData(id: "eggYolk", name: "egg yolk", icon: .drop, category: .dairy, color: .yellow, parent: egg, showSeparateFromParent: false)
+let eggWhite = IngredientData(id: "eggWhite", name: "egg white", icon: .drop, category: .dairy, color: .white, parent: egg, showSeparateFromParent: false)
 let gin = IngredientData(id: "gin", name: "gin", icon: .liquor, category: .liquor, alcohol: 0.40, color: .green, region: "Worldwide", wikipedia: "Gin")
 let gingerBeer = IngredientData(id: "gingerBeer", name: "ginger beer", icon: .fizz, category: .mixer, color: .green)
 let herbMint = IngredientData(id: "herbMint", name: "mint", icon: .liquor, category: .garnish, color: .green, wikipedia: "Mint")
