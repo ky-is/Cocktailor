@@ -68,7 +68,7 @@ struct CocktailImage: View {
 	init(data: CocktailData, size: CGFloat) {
 		self.data = data
 		self.size = size
-		fillIngredients = data.ingredients.filter({ $0.quantity.type == .parts }).sorted(by: { $0.quantity.value < $1.quantity.value })
+		fillIngredients = data.ingredients.filter({ $0.quantity.type == .part }).sorted(by: { $0.quantity.value < $1.quantity.value })
 		ingredientSpacing = size >= 128 ? 1 : 0.5
 		liquidHeightWithoutSpacing = size - ingredientSpacing * CGFloat(fillIngredients.count - 1)
 	}

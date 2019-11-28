@@ -53,14 +53,14 @@ struct IngredientListEntry_Previews: PreviewProvider {
 		Group {
 			NavigationView {
 				List {
-					IngredientListEntry(data: IngredientData.keyValues["lemon"]!, entry: .constant(nil), observededIngredients: ObservableIngredients.inactive, hasCocktail: true)
+					IngredientListEntry(data: lemon, entry: .constant(nil), observededIngredients: ObservableIngredients.inactive, hasCocktail: true)
 						.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
 				}
 					.navigationBarTitle("My Bar")
 			}
 			NavigationView {
 				List {
-					IngredientListEntry(data: IngredientData.keyValues["lemon"]!, entry: .constant(nil), observededIngredients: ObservableIngredients.active, hasCocktail: true)
+					IngredientListEntry(data: lemon, entry: .constant(nil), observededIngredients: ObservableIngredients.active, hasCocktail: true)
 						.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
 				}
 					.navigationBarTitle("Build")
