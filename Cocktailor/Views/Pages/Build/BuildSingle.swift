@@ -11,16 +11,15 @@ struct BuildSingle: View {
 
 	var body: some View {
 		ZStack(alignment: .bottom) {
-			NavigationView {
-				Group {
-					if !showCocktails {
-						BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: true)
-					} else {
-						BuildCocktailsDetailList(displayCocktails: displayCocktails, insertBlank: true)
-						BuildCocktailPlaceholder()
-					}
+			if !showCocktails {
+				NavigationView {
+					BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: true)
 				}
-				.transition(.slide)
+			} else {
+				NavigationView {
+					BuildCocktailsDetailList(displayCocktails: displayCocktails, insertBlank: true)
+					BuildCocktailPlaceholder()
+				}
 			}
 			Picker("", selection: $showCocktails.animation()) {
 				Text(observedIngredients.selected!.count > 0 ? "Ingredient".pluralize(observedIngredients.selected!.count) : "Any Ingredients")
@@ -28,11 +27,11 @@ struct BuildSingle: View {
 				Text(hasFilteredCocktail ? "Cocktail".pluralize(displayCocktails.count) : "All Cocktails")
 					.tag(true)
 			}
-			.padding(.horizontal)
-			.frame(height: 48)
-			.background(BlurView(style: .systemChromeMaterial))
-			.labelsHidden()
-			.pickerStyle(SegmentedPickerStyle())
+				.padding(.horizontal)
+				.frame(height: 48)
+				.background(BlurView(style: .systemChromeMaterial))
+				.labelsHidden()
+				.pickerStyle(SegmentedPickerStyle())
 		}
 	}
 }
