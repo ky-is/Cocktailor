@@ -189,6 +189,7 @@ let liqueurBlackcurrant = IngredientData(id: "liquerBlackcurrant", name: "blackc
 //let liqueurCherry = IngredientData(id: "liqueurCherry", name: "cherry liqueur", icon: .liquor, category: .liqueur, alcohol: 0.24)
 let liqueurChocolate = IngredientData(id: "liqueurChocolate", name: "chocolate liqueur", nicknames: ["crème de cacao"], icon: .liqueur, category: .liqueur, alcohol: 0.25, color: .brown)
 let liqueurCoffee = IngredientData(id: "liqueurCoffee", name: "coffee liqueur", nicknames: ["Kahlúa"], icon: .liqueur, category: .liqueur, alcohol: 0.20, color: .black, region: "Mexico")
+let liqueurElderflower = IngredientData(id: "liqueurElderflower", name: "elderflower liqueur", nicknames: ["St-Germain"], icon: .liqueur, category: .liqueur, alcohol: 0.20, color: .yellow, wikipedia: "St-Germain_(liqueur)")
 let liqueurOrange = IngredientData(id: "liqueurOrange", name: "orange liqueur", nicknames: ["Curaçao", "Triple Sec", "Cointreau", "Grand Marnier"], icon: .liqueur, category: .liqueur, alcohol: 0.40, color: .orange, region: "Netherlands/France")
 let mezcal = IngredientData(id: "mezcal", name: "mezcal", icon: .liquor, category: .liquor, alcohol: 0.40, color: .brown, region: "Mexico", wikipedia: "Mezcal")
 let prosecco = IngredientData(id: "prosecco", name: "prosecco", icon: .liquor, category: .wine, alcohol: 0.11, color: .clear, region: "Italy", wikipedia: "Prosecco")

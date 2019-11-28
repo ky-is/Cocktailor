@@ -85,6 +85,7 @@ final class CocktailData: Hashable, Identifiable {
 	static let keyValues: [String: CocktailData] = {
 		let items = [
 			bramble,
+			brambleBourbon,
 			caipirinha,
 			darkAndStormy,
 			greyhound,
@@ -149,6 +150,7 @@ final class CocktailData: Hashable, Identifiable {
 }
 
 let bramble = CocktailData(id: "bramble", name: "Bramble", alcohol: 0.22, ingredients: [IQ(gin, 2), IQ(lemon, 3/4), IQ(syrupSimple, 1/2), IQ(liqueurBlackberry, 3/4)], glass: .oldFashioned, equipment: [.barspoon], wikipedia: "Bramble_(cocktail)", related: [])
+let brambleBourbon = CocktailData(id: "bramble", name: "Bramble", alcohol: 0, ingredients: [IQ(whiskeyBourbon, 4), IQ(liqueurBlackcurrant, 1), IQ(liqueurElderflower, 2), IQ(lemon, 1)], glass: .oldFashioned, equipment: [.shaker], related: [bramble])
 let caipirinha = CocktailData(id: "caipirinha", name: "Caipirinha", alcohol: 0.33, ingredients: [IQ(cachaca, 2), IQ(lime, 4, .pieces), IQ(sugar, 2, .tsp)], ice: .cube, glass: .oldFashioned, equipment: [.muddler], wikipedia: "Caipirinha", related: [])
 let darkAndStormy = CocktailData(id: "darkAndStormy", name: "Dark and Stormy", alcohol: 0.12, ingredients: [IQ(rumDark, 3), IQ(gingerBeer, 5)], ice: .cube, glass: .collins, equipment: [.barspoon], wikipedia: "Dark_%27n%27_Stormy", related: [])
 let greyhound = CocktailData(id: "greyhound", name: "Greyhound", alcohol: 0.05, ingredients: [IQ(vodka, 6), IQ(juiceGrapefruit, 16)], ice: .cube, glass: .oldFashioned, equipment: [], wikipedia: "Greyhound_(cocktail)", related: [])
