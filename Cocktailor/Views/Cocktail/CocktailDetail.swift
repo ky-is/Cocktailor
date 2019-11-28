@@ -7,7 +7,7 @@ struct CocktailDetail: View {
 
 	var body: some View {
 		GeometryReader { geometry in
-			VStack {
+			ScrollView {
 				HStack {
 					ForEach(self.data.nicknames, id: \.self) {
 						Text($0)
@@ -21,13 +21,13 @@ struct CocktailDetail: View {
 					Text("Region: \(self.data.region!)")
 				}
 				VStack {
-					ForEach(self.data.ingredients) { ingredientAndQuantity in
+					ForEach(self.data.ingredients) { ingredientQuantity in
 						Button(action: {
-							self.selectedIngredient = ingredientAndQuantity.ingredient
+							self.selectedIngredient = ingredientQuantity.ingredient
 						}) {
-							HStack {
-								IngredientImage(data: ingredientAndQuantity.ingredient, size: 36)
-								Text(ingredientAndQuantity.ingredient.name.localizedCapitalized)
+							HStack(spacing: 0) {
+								IngredientImage(data: ingredientQuantity.ingredient, size: 36)
+								Text(ingredientQuantity.ingredient.name.localizedCapitalized)
 									.padding(.trailing)
 								Spacer()
 								Text(ingredientQuantity.quantity.value.description)
