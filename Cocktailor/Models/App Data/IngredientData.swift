@@ -55,6 +55,7 @@ final class IngredientData: Hashable, Identifiable {
 //			IngredientData(id: "eggwhite", name: "egg white", parent: egg, showSeparateFromParent: false),
 			irishCream,
 			juiceCranberry,
+			juiceGrapefruit,
 			juiceOrange,
 			juicePineapple,
 			lemon,
@@ -177,6 +178,7 @@ let gingerBeer = IngredientData(id: "gingerBeer", name: "ginger beer", icon: .fi
 let herbMint = IngredientData(id: "herbMint", name: "mint", icon: .liquor, category: .garnish, color: .green, wikipedia: "Mint")
 let irishCream = IngredientData(id: "irishCream", name: "Irish cream", icon: .liqueur, category: .liqueur, alcohol: 0.175, color: .black, region: "Ireland", wikipedia: "Irish_cream")
 let juiceCranberry = IngredientData(id: "juiceCranberry", name: "cranberry juice", icon: .drop, category: .juice, color: .red)
+let juiceGrapefruit = IngredientData(id: "juiceGrapefruit", name: "grapefruit juice", icon: .drop, category: .juice, color: .pink)
 let juiceOrange = IngredientData(id: "juiceOrange", name: "orange juice", icon: .drop, category: .juice, color: .orange)
 let juicePineapple = IngredientData(id: "juicePineapple", name: "pineapple juice", icon: .drop, category: .juice, color: .yellow)
 let lemon = IngredientData(id: "lemon", name: "lemon", icon: .drop, category: .fruit, color: .yellow)
