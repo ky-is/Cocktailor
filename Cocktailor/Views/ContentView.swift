@@ -13,11 +13,7 @@ struct ContentView: View {
 					Image(systemName: "wand.and.stars")
 					Text("Build")
 				}
-			NavigationView {
-				Text("")
-					.navigationBarTitle("Explore")
-			}
-				.navigationViewStyle(StackNavigationViewStyle())
+			Explore()
 				.tabItem {
 					Image(systemName: "eyeglasses")
 					Text("Explore")
