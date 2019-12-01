@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct BuildDoubleManual: View {
+struct BuildTripleColumnManual: View {
 	let availableIngredientEntries: [IngredientEntry]
 	let observedIngredients: ObservableIngredients
 	let displayCocktails: [CocktailData]
@@ -52,8 +52,8 @@ private struct BuildCocktailsManualList: View {
 	}
 }
 
-struct BuildDoubleManual_Previews: PreviewProvider {
+struct BuildTripleColumnManual_Previews: PreviewProvider {
 	static var previews: some View {
-		BuildDoubleManual(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), displayCocktails: Array(CocktailData.keyValues.values), hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
+		BuildTripleColumnManual(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), displayCocktails: Array(CocktailData.keyValues.values), hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
 	}
 }
