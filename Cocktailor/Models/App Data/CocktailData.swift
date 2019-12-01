@@ -18,6 +18,8 @@ enum BarGlasses: String {
 			return 114 / 1024
 		case .collins:
 			return 173 / 1024
+		case .highball:
+			return 242 / 1024
 		case .oldFashioned:
 			return 357 / 1024
 		case .wine:
@@ -33,6 +35,8 @@ enum BarGlasses: String {
 			return 400 / 1024
 		case .collins:
 			return 678 / 1024
+		case .highball:
+			return 602 / 1024
 		case .oldFashioned:
 			return 382 / 1024
 		case .wine:
@@ -105,6 +109,9 @@ final class CocktailData: Hashable, Identifiable {
 					} else if quantityAndUnit.hasSuffix("piece") {
 						suffixLength = 5
 						unit = .piece
+					} else if quantityAndUnit.hasSuffix("tsp") {
+						suffixLength = 3
+						unit = .tsp
 					} else {
 						if Double(quantityAndUnit) == nil {
 							fatalError("Unknown unit: \(quantityAndUnit)")
