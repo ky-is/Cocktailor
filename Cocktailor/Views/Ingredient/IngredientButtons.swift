@@ -83,11 +83,11 @@ struct IngredientImage: View {
 
 	var body: some View {
 		ZStack {
-			Image(data.icon.rawValue)
+			Image("Ingredients/\(data.icon.rawValue)")
 				.resizable()
 				.aspectRatio(contentMode: .fit)
 				.foregroundColor(data.color.opacity(0.75))
-			Image("\(data.icon.rawValue)-outline")
+			Image("Ingredients/\(data.icon.rawValue)-outline")
 				.resizable()
 				.aspectRatio(contentMode: .fit)
 				.foregroundColor(Color.secondary)

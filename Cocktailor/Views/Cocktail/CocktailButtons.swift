@@ -75,7 +75,7 @@ struct CocktailImage: View {
 
 	var body: some View {
 		ZStack(alignment: .top) {
-			Image(data.glass.rawValue)
+			Image("Glasses/\(data.glass.rawValue)")
 				.resizable()
 				.aspectRatio(contentMode: .fit)
 				.foregroundColor(.secondary)
@@ -92,7 +92,7 @@ struct CocktailImage: View {
 				.background(Color.systemBackground)
 				.position(x: size / 2, y: size * data.glass.liquidOffsetProportion + size * data.glass.liquidHeightProportion / 2)
 				.mask(
-					Image("\(data.glass.rawValue)-fill")
+					Image("Glasses/\(data.glass.rawValue)-fill")
 						.resizable()
 						.aspectRatio(contentMode: .fit)
 						.foregroundColor(.black)
