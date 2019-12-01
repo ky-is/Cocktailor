@@ -129,7 +129,7 @@ final class IngredientData: Hashable, Identifiable {
 }
 
 enum IngredientIcon: String {
-	case drop, fizz, grains, liquor, liqueur, aperitif //TODO herb
+	case aperitif, drop, fizz, grains, liqueur, liquor, wine //TODO herb
 }
 
 enum IngredientCategory: String {
