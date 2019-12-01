@@ -20,6 +20,7 @@ struct ContentView: View {
 				}
 		}
 			.accentColor(.primary)
+			.edgesIgnoringSafeArea(.top)
 	}
 }
 
