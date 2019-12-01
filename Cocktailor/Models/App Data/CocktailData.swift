@@ -144,7 +144,6 @@ final class CocktailData: Hashable, Identifiable {
 	let id: String
 	let name: String
 	let nicknames: [String]
-	let alcohol: Double
 	let ingredients: [IngredientQuantity]
 	let ice: IceStyle?
 	let garnish: Garnish?
@@ -160,7 +159,6 @@ final class CocktailData: Hashable, Identifiable {
 		self.id = id
 		self.name = name
 		self.nicknames = nicknames ?? []
-		self.alcohol = 0 //TODO calculate from ingredients
 		self.ingredients = ingredients
 		self.glass = glass
 		self.ice = ice
@@ -179,5 +177,9 @@ final class CocktailData: Hashable, Identifiable {
 
 	lazy var totalQuantity: Double = {
 		return fillIngredients.reduce(0) { $0 + $1.quantity.value }
+	}()
+
+	lazy var alcohol: Double = {
+		return fillIngredients.reduce(0) { $0 + $1.ingredient.alcohol * $1.quantity.value } / totalQuantity
 	}()
 }

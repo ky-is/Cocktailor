@@ -14,9 +14,7 @@ struct CocktailDetail: View {
 					}
 				}
 				CocktailImage(data: self.data, size: geometry.size.width / 2)
-				if self.data.alcohol > 0 {
-					Text("Alcohol: \(NumberFormatter.localizedString(from: NSNumber(value: self.data.alcohol), number: .percent))")
-				}
+				Text("Alcohol: \(NumberFormatter.localizedString(from: NSNumber(value: self.data.alcohol), number: .percent))")
 				if self.data.region != nil {
 					Text("Region: \(self.data.region!)")
 				}
