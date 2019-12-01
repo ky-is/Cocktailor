@@ -114,6 +114,7 @@ struct BuildCocktailListRowContent: View {
 			HStack(spacing: 0) {
 				CocktailImage(data: data, size: 80)
 				Text(data.name)
+					.frame(minWidth: 64)
 					.layoutPriority(0.5)
 			}
 			Spacer()

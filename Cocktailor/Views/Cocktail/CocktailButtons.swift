@@ -68,7 +68,7 @@ struct CocktailImage: View {
 	init(data: CocktailData, size: CGFloat) {
 		self.data = data
 		self.size = size
-		fillIngredients = data.ingredients.filter({ $0.quantity.type == .part }).sorted(by: { $0.quantity.value < $1.quantity.value })
+		fillIngredients = data.fillIngredients.sorted { $0.quantity.value < $1.quantity.value }
 		ingredientSpacing = size >= 128 ? 1 : 0.5
 		liquidHeightWithoutSpacing = size - ingredientSpacing * CGFloat(fillIngredients.count - 1)
 	}
@@ -105,7 +105,7 @@ struct CocktailImage: View {
 
 struct CocktailButtons_Previews: PreviewProvider {
 	static var previews: some View {
-		let data = moscowMule
+		let data = CocktailData.keyValues["bramble"]!
 		return VStack {
 			CocktailButtonFavorite(data: data, entry: .constant(nil))
 			CocktailButtonMade(data: data, entry: .constant(nil))

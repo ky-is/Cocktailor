@@ -81,6 +81,7 @@ struct IngredientEntryDetail: View {
 
 struct IngredientDetail_Previews: PreviewProvider {
 	static var previews: some View {
-		return IngredientDetail(data: lime, entry: .constant(nil))
+		let data = IngredientData.keyValues["mezcal"]!
+		return IngredientDetail(data: data, entry: .constant(nil))
 	}
 }

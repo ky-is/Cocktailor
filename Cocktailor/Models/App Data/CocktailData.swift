@@ -1,4 +1,5 @@
 import CoreGraphics
+import Foundation
 
 enum CocktailTag: String {
 	case aperitif
@@ -46,17 +47,17 @@ enum Garnish {
 	case lemon, lime, nutmeg
 }
 
-enum IceStyle {
-	case cube, crush
+enum IceStyle: String {
+	case blend, cube, crush
 }
 
-enum QuantityType: String {
-	case dash, part, piece, tsp
+enum QuantityUnit: String {
+	case cl, dash, part, piece, tsp
 }
 
 struct Quantity: Hashable {
 	let value: Double
-	let type: QuantityType
+	let unit: QuantityUnit
 }
 
 final class IngredientQuantity: Hashable, Identifiable {
@@ -64,10 +65,10 @@ final class IngredientQuantity: Hashable, Identifiable {
 	let ingredient: IngredientData
 	let quantity: Quantity
 
-	init(_ ingredient: IngredientData, _ quantity: Double, _ type: QuantityType = .part) {
+	init(_ ingredient: IngredientData, _ quantity: Double, _ unit: QuantityUnit = .part) {
 		self.id = ingredient.id
 		self.ingredient = ingredient
-		self.quantity = Quantity(value: quantity, type: type)
+		self.quantity = Quantity(value: quantity, unit: unit)
 	}
 
 	static func == (lhs: IngredientQuantity, rhs: IngredientQuantity) -> Bool {
@@ -83,27 +84,44 @@ private typealias IQ = IngredientQuantity
 
 final class CocktailData: Hashable, Identifiable {
 	static let keyValues: [String: CocktailData] = {
-		let items = [
-			bramble,
-			brambleBourbon,
-			caipirinha,
-			darkAndStormy,
-			greyhound,
-			irishCoffee,
-			longIslandIcedTea,
-			maiTai,
-			manhattan,
-			margarita,
-			mojito,
-			moscowMule,
-			painkiller,
-			paloma,
-			screwdriver,
-			whiskeySour,
-		]
 		var results = [String: CocktailData]()
-		for item in items {
-			results[item.id] = item
+		TSV.cocktailData("Cocktails") { columns, rows in
+			for row in rows {
+				let id = row[0]
+				let name = row[1]
+				let nicknames = row[2].components(separatedBy: ", ")
+				let glass = BarGlasses(rawValue: row[3])!
+				let iceString = row[tsv: 4]
+				let ice = iceString != nil ? IceStyle(rawValue: iceString!) : nil
+				let ingredients = row[6].components(separatedBy: " ")
+				let quantities = row[7].components(separatedBy: " ")
+				let ingredientsById = IngredientData.keyValues
+				let ingredientQuantities: [IngredientQuantity] = zip(ingredients, quantities).map { (ingredientID, quantityAndUnit) in
+					let ingredient = ingredientsById[ingredientID]!
+					let suffixLength: Int, unit: QuantityUnit
+					if quantityAndUnit.hasSuffix("cl") {
+						suffixLength = 2
+						unit = .cl
+					} else if quantityAndUnit.hasSuffix("piece") {
+						suffixLength = 5
+						unit = .piece
+					} else {
+						if Double(quantityAndUnit) == nil {
+							fatalError("Unknown unit: \(quantityAndUnit)")
+						}
+						suffixLength = 0
+						unit = .part
+					}
+					let quantity = Double(quantityAndUnit.dropLast(suffixLength))!
+					return IngredientQuantity(ingredient, quantity, unit)
+				}
+				let region = row[tsv: 9]
+				let year = row[tsv: 10]
+				let wikipedia = row[tsv: 11]
+				let tags = row[tsv: 12]?.components(separatedBy: ",")
+				let cocktail = CocktailData(id: id, name: name, nicknames: nicknames, ingredients: ingredientQuantities, ice: ice, garnish: nil, glass: glass, equipment: [], region: region, year: year, wikipedia: wikipedia, related: [], tags: [])
+				results[id] = cocktail
+			}
 		}
 		return results
 	}()
@@ -126,42 +144,33 @@ final class CocktailData: Hashable, Identifiable {
 	let glass: BarGlasses
 	let equipment: [BarEquipment]
 	let region: String?
+	let year: String?
 	let wikipedia: String?
 	var related: [CocktailData]
 	var tags: [CocktailTag]
-	let totalQuantity: Double
 
-	init(id: String, name: String, nicknames: [String]? = nil, alcohol: Double, ingredients: [IngredientQuantity], ice: IceStyle? = nil, garnish: Garnish? = nil, glass: BarGlasses, equipment: [BarEquipment], region: String? = nil, wikipedia: String? = nil, related: [CocktailData] = [], tags: [CocktailTag]? = nil) {
+	init(id: String, name: String, nicknames: [String]? = nil, ingredients: [IngredientQuantity], ice: IceStyle? = nil, garnish: Garnish? = nil, glass: BarGlasses, equipment: [BarEquipment], region: String? = nil, year: String? = nil, wikipedia: String? = nil, related: [CocktailData] = [], tags: [CocktailTag]? = nil) {
 		self.id = id
 		self.name = name
 		self.nicknames = nicknames ?? []
-		self.alcohol = alcohol
+		self.alcohol = 0 //TODO calculate from ingredients
 		self.ingredients = ingredients
 		self.glass = glass
 		self.ice = ice
 		self.garnish = garnish
 		self.equipment = equipment
 		self.region = region
+		self.year = year
 		self.wikipedia = wikipedia
 		self.related = related
 		self.tags = tags ?? []
-		self.totalQuantity = ingredients.filter({ $0.quantity.type == .part }).reduce(0) { $0 + $1.quantity.value }
 	}
-}
 
-let bramble = CocktailData(id: "bramble", name: "Bramble", alcohol: 0.22, ingredients: [IQ(gin, 2), IQ(lemon, 3/4), IQ(syrupSimple, 1/2), IQ(liqueurBlackberry, 3/4)], glass: .oldFashioned, equipment: [.barspoon], wikipedia: "Bramble_(cocktail)", related: [])
-let brambleBourbon = CocktailData(id: "bramble", name: "Bramble", alcohol: 0, ingredients: [IQ(whiskeyBourbon, 4), IQ(liqueurBlackcurrant, 1), IQ(liqueurElderflower, 2), IQ(lemon, 1)], glass: .oldFashioned, equipment: [.shaker], related: [bramble])
-let caipirinha = CocktailData(id: "caipirinha", name: "Caipirinha", alcohol: 0.33, ingredients: [IQ(cachaca, 2), IQ(lime, 4, .piece), IQ(sugar, 2, .tsp)], ice: .cube, glass: .oldFashioned, equipment: [.muddler], wikipedia: "Caipirinha", related: [])
-let darkAndStormy = CocktailData(id: "darkAndStormy", name: "Dark and Stormy", alcohol: 0.12, ingredients: [IQ(rumDark, 3), IQ(gingerBeer, 5)], ice: .cube, glass: .collins, equipment: [.barspoon], wikipedia: "Dark_%27n%27_Stormy", related: [])
-let greyhound = CocktailData(id: "greyhound", name: "Greyhound", alcohol: 0.05, ingredients: [IQ(vodka, 6), IQ(juiceGrapefruit, 16)], ice: .cube, glass: .oldFashioned, equipment: [], wikipedia: "Greyhound_(cocktail)", related: [])
-let irishCoffee = CocktailData(id: "irishCoffee", name: "Irish Coffee", alcohol: 0.09, ingredients: [IQ(whiskeyIrish, 4), IQ(sugarBrown, 2, .tsp), IQ(coffee, 9), IQ(cream, 3)], glass: .irishCoffee, equipment: [.barspoon], wikipedia: "Irish_coffee", related: [])
-let longIslandIcedTea = CocktailData(id: "longIslandIcedTea", name: "Long Island Iced Tea", alcohol: 0.20, ingredients: [IQ(gin, 2), IQ(tequila, 2), IQ(vodka, 2), IQ(rumLight, 2), IQ(liqueurOrange, 2), IQ(syrupSimple, 4), IQ(lemon, 3), IQ(sodaCola, 2, .dash)], ice: .cube, glass: .collins, equipment: [.barspoon], wikipedia: "Long_Island_iced_tea", related: [])
-let maiTai = CocktailData(id: "maiTai", name: "Mai Tai", alcohol: 0.26, ingredients: [IQ(rumLight, 4), IQ(rumDark, 2), IQ(liqueurOrange, 1.5), IQ(syrupAlmond, 1.5), IQ(lime, 1)], ice: .cube, glass: .collins, equipment: [.shaker, .strainer], wikipedia: "Mai_Tai", related: [])
-let manhattan = CocktailData(id: "manhattan", name: "Manhattan", alcohol: 0.27, ingredients: [IQ(whiskeyRye, 5), IQ(vermouthSweet, 2), IQ(bitters, 2, .dash)], ice: .cube, glass: .cocktail, equipment: [.mixingGlass, .barspoon], region: "New York", wikipedia: "Manhattan_(cocktail)", related: [])
-let margarita = CocktailData(id: "margarita", name: "Margarita", alcohol: 0.30, ingredients: [IQ(tequila, 1.75), IQ(liqueurOrange, 1), IQ(lime, 3/4, .piece)], glass: .cocktail, equipment: [.shaker, .strainer], wikipedia: "Margarita", related: []) //TODO .margarita
-let mojito = CocktailData(id: "mojito", name: "Mojito", alcohol: 0.09, ingredients: [IQ(rumLight, 4), IQ(syrupSimple, 4, .tsp), IQ(lime, 3), IQ(sodaClub, 6), IQ(herbMint, 12, .piece)], glass: .collins, equipment: [.muddler], region: "Cuba", wikipedia: "Mojito", related: [])
-let moscowMule = CocktailData(id: "moscowMule", name: "Moscow Mule", alcohol: 0.09, ingredients: [IQ(vodka, 2.25), IQ(lime, 1/4), IQ(gingerBeer, 6)], glass: .collins, equipment: [.barspoon], wikipedia: "Moscow_mule", related: [])
-let painkiller = CocktailData(id: "painkiller", name: "Painkiller", alcohol: 0.12, ingredients: [IQ(rumLight, 4), IQ(juicePineapple, 4), IQ(juiceOrange, 1), IQ(coconutCream, 1)], ice: .crush, garnish: .nutmeg, glass: .oldFashioned, equipment: [.shaker], wikipedia: "Painkiller_(cocktail)", related: []) //TODO .hurricane?
-let paloma = CocktailData(id: "paloma", name: "Paloma", alcohol: 0.07, ingredients: [IQ(tequila, 8), IQ(juiceGrapefruit, 4), IQ(lime, 2), IQ(syrupSimple, 3), IQ(sodaClub, 4)], ice: .cube, glass: .collins, equipment: [.shaker, .strainer], wikipedia: "Painkiller_(cocktail)", related: []) //TODO .hurricane?
-let screwdriver = CocktailData(id: "screwdriver", name: "Screwdriver", alcohol: 0.10, ingredients: [IQ(vodka, 2), IQ(juiceOrange, 4)], ice: .cube, glass: .collins, equipment: [.barspoon], wikipedia: "Screwdriver_(cocktail)", related: [])
-let whiskeySour = CocktailData(id: "whiskeySour", name: "Whiskey Sour", alcohol: 0.15, ingredients: [IQ(whiskeyBourbon, 6), IQ(lemon, 4), IQ(syrupSimple, 2), IQ(eggWhite, 1, .part)], ice: .cube, glass: .wine, equipment: [.shaker, .strainer], wikipedia: "Screwdriver_(cocktail)", related: [])
+	lazy var fillIngredients: [IngredientQuantity] = {
+		return ingredients.filter { $0.quantity.unit != .dash && $0.quantity.unit != .piece }
+	}()
+
+	lazy var totalQuantity: Double = {
+		return fillIngredients.reduce(0) { $0 + $1.quantity.value }
+	}()
+}

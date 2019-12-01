@@ -33,7 +33,7 @@ struct CocktailDetail: View {
 								Text(ingredientQuantity.quantity.value.description)
 									.foregroundColor(.primary)
 								+
-								Text(" \(ingredientQuantity.quantity.type.rawValue) ")
+								Text(" \(ingredientQuantity.quantity.unit.rawValue) ")
 									.foregroundColor(.secondary)
 							}
 						}
@@ -54,8 +54,9 @@ struct CocktailDetail: View {
 
 struct CocktailDetail_Previews: PreviewProvider {
 	static var previews: some View {
-		NavigationView {
-			CocktailDetail(data: bramble)
+		let data = CocktailData.keyValues["bramble"]!
+		return NavigationView {
+			CocktailDetail(data: data)
 		}
 	}
 }

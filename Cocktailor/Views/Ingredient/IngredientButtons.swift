@@ -98,13 +98,13 @@ struct IngredientImage: View {
 
 struct IngredientButtons_Previews: PreviewProvider {
 	static var previews: some View {
-		let data = lime
+		let data = IngredientData.keyValues["mezcal"]!
 		return VStack {
 			IngredientButtonFavorite(data: data, entry: .constant(nil))
 			IngredientButtonOwned(data: data, entry: .constant(nil)) {
 				IngredientButtonOwnedContent(data: data, selected: true, hasCocktail: true)
 			}
-			IngredientImage(data: lime, size: 128)
+			IngredientImage(data: data, size: 128)
 		}
 	}
 }

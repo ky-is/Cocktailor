@@ -51,17 +51,18 @@ struct IngredientListEntry: View {
 
 struct IngredientListEntry_Previews: PreviewProvider {
 	static var previews: some View {
-		Group {
+		let data = IngredientData.keyValues["mezcal"]!
+		return Group {
 			NavigationView {
 				List {
-					IngredientListEntry(data: lemon, entry: .constant(nil), observededIngredients: ObservableIngredients.inactive, hasCocktail: true)
+					IngredientListEntry(data: data, entry: .constant(nil), observededIngredients: ObservableIngredients.inactive, hasCocktail: true)
 						.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
 				}
 					.navigationBarTitle("My Bar")
 			}
 			NavigationView {
 				List {
-					IngredientListEntry(data: lemon, entry: .constant(nil), observededIngredients: ObservableIngredients.active, hasCocktail: true)
+					IngredientListEntry(data: data, entry: .constant(nil), observededIngredients: ObservableIngredients.active, hasCocktail: true)
 						.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
 				}
 					.navigationBarTitle("Build")
