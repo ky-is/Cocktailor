@@ -90,15 +90,29 @@ final class CocktailData: Hashable, Identifiable {
 	static let keyValues: [String: CocktailData] = {
 		var results = [String: CocktailData]()
 		TSV.cocktailData("Cocktails") { columns, rows in
+			let indexID = columns.firstIndex(of: "ID")!
+			let indexName = columns.firstIndex(of: "Name")!
+			let indexNicknames = columns.firstIndex(of: "Nicknames")!
+			let indexGlass = columns.firstIndex(of: "Glass")!
+			let indexIce = columns.firstIndex(of: "Ice")!
+			let indexEquipment = columns.firstIndex(of: "Equipment")!
+			let indexIngredients = columns.firstIndex(of: "Ingredients")!
+			let indexQuantities = columns.firstIndex(of: "Quantities")!
+			let indexRim = columns.firstIndex(of: "Rim")!
+			let indexGarnishes = columns.firstIndex(of: "Garnishes")!
+			let indexOriginRegion = columns.firstIndex(of: "Origin Region")!
+			let indexOriginYear = columns.firstIndex(of: "Origin Year")!
+			let indexWikipediaPath = columns.firstIndex(of: "Wikipedia Path")!
+			let indexTags = columns.firstIndex(of: "Tags")!
 			for row in rows {
-				let id = row[0]
-				let name = row[1]
-				let nicknames = row[2].components(separatedBy: ", ")
-				let glass = BarGlasses(rawValue: row[3])!
-				let iceString = row[tsv: 4]
+				let id = row[indexID]
+				let name = row[indexName]
+				let nicknames = row[indexNicknames].components(separatedBy: ", ")
+				let glass = BarGlasses(rawValue: row[indexGlass])!
+				let iceString = row[tsv: indexIce]
 				let ice = iceString != nil ? IceStyle(rawValue: iceString!) : nil
-				let ingredients = row[6].components(separatedBy: " ")
-				let quantities = row[7].components(separatedBy: " ")
+				let ingredients = row[indexIngredients].components(separatedBy: " ")
+				let quantities = row[indexQuantities].components(separatedBy: " ")
 				let ingredientsById = IngredientData.keyValues
 				let ingredientQuantities: [IngredientQuantity] = zip(ingredients, quantities).map { (ingredientID, quantityAndUnit) in
 					let ingredient = ingredientsById[ingredientID]!
@@ -106,6 +120,9 @@ final class CocktailData: Hashable, Identifiable {
 					if quantityAndUnit.hasSuffix("cl") {
 						suffixLength = 2
 						unit = .cl
+					} else if quantityAndUnit.hasSuffix("dash") {
+						suffixLength = 4
+						unit = .dash
 					} else if quantityAndUnit.hasSuffix("piece") {
 						suffixLength = 5
 						unit = .piece
@@ -113,19 +130,16 @@ final class CocktailData: Hashable, Identifiable {
 						suffixLength = 3
 						unit = .tsp
 					} else {
-						if Double(quantityAndUnit) == nil {
-							fatalError("Unknown unit: \(quantityAndUnit)")
-						}
 						suffixLength = 0
 						unit = .part
 					}
 					let quantity = Double(quantityAndUnit.dropLast(suffixLength))!
 					return IngredientQuantity(ingredient, quantity, unit)
 				}
-				let region = row[tsv: 9]
-				let year = row[tsv: 10]
-				let wikipedia = row[tsv: 11]
-				let tags = row[tsv: 12]?.components(separatedBy: ",")
+				let region = row[tsv: indexOriginRegion]
+				let year = row[tsv: indexOriginYear]
+				let wikipedia = row[tsv: indexWikipediaPath]
+				let tags = row[tsv: indexTags]?.components(separatedBy: ",")
 				let cocktail = CocktailData(id: id, name: name, nicknames: nicknames, ingredients: ingredientQuantities, ice: ice, garnish: nil, glass: glass, equipment: [], region: region, year: year, wikipedia: wikipedia, related: [], tags: [])
 				results[id] = cocktail
 			}

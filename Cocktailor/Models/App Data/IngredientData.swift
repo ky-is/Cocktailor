@@ -39,21 +39,33 @@ final class IngredientData: Hashable, Identifiable {
 	static let keyValues: [String: IngredientData] = {
 		var results = [String: IngredientData]()
 		TSV.cocktailData("Ingredients") { columns, rows in
+			let indexID = columns.firstIndex(of: "ID")!
+			let indexName = columns.firstIndex(of: "Name")!
+			let indexNicknames = columns.firstIndex(of: "Nicknames")!
+			let indexAlcohol = columns.firstIndex(of: "Alcohol %")!
+			let indexIcon = columns.firstIndex(of: "Icon")!
+			let indexCategory = columns.firstIndex(of: "Category")!
+			let indexColor = columns.firstIndex(of: "Color")!
+			let indexOriginRegion = columns.firstIndex(of: "Origin Region")!
+			let indexOriginYear = columns.firstIndex(of: "Origin Year")!
+			let indexParent = columns.firstIndex(of: "Parent")!
+			let indexWikipediaPath = columns.firstIndex(of: "Wikipedia Path")!
+			let indexTags = columns.firstIndex(of: "Tags")!
 			for row in rows {
-				let id = row[0]
-				let name = row[1]
-				let nicknames = row[2].components(separatedBy: ", ")
-				let alcohol = Double(row[3]) ?? 0
-				let icon = IngredientIcon(rawValue: row[4])!
-				let category = IngredientCategory(rawValue: row[5])!
-				let color = systemColor(row[6])
-				let region = row[tsv: 7]
-//				let year = row[tsv: 8]
-				let wikipedia = row[tsv: 9]
-				let parentID = row[tsv: 10]
+				let id = row[indexID]
+				let name = row[indexName]
+				let nicknames = row[indexNicknames].components(separatedBy: ", ")
+				let alcohol = Double(row[indexAlcohol]) ?? 0
+				let icon = IngredientIcon(rawValue: row[indexIcon])!
+				let category = IngredientCategory(rawValue: row[indexCategory])!
+				let color = systemColor(row[indexColor])
+				let region = row[tsv: indexOriginRegion]
+				let year = row[tsv: indexOriginYear]
+				let wikipedia = row[tsv: indexWikipediaPath]
+				let parentID = row[tsv: indexParent]
 				let parent = results[optional: parentID]
-				let tags = row[tsv: 11]?.components(separatedBy: ",")
-				let ingredient = IngredientData(id: id, name: name, nicknames: nicknames, icon: icon, category: category, alcohol: alcohol, color: color, region: region, wikipedia: wikipedia, parent: parent, tags: tags)
+				let tags = row[tsv: indexTags]?.components(separatedBy: ",")
+				let ingredient = IngredientData(id: id, name: name, nicknames: nicknames, icon: icon, category: category, alcohol: alcohol, color: color, region: region, year: year, wikipedia: wikipedia, parent: parent, tags: tags)
 				results[id] = ingredient
 			}
 		}
@@ -83,13 +95,14 @@ final class IngredientData: Hashable, Identifiable {
 	let alcohol: Double
 	let color: Color
 	let region: String?
+	let year: String?
 	let wikipedia: String?
 	let parent: IngredientData?
 	var children: [IngredientData] = []
 	var tags: [String]
 	var substitutions: [Substitute] = []
 
-	init(id: String, name: String, nicknames: [String]? = nil, icon: IngredientIcon, category: IngredientCategory, alcohol: Double = 0, color: Color, region: String? = nil, wikipedia: String? = nil, parent: IngredientData? = nil, tags: [String]? = nil) {
+	init(id: String, name: String, nicknames: [String]? = nil, icon: IngredientIcon, category: IngredientCategory, alcohol: Double = 0, color: Color, region: String? = nil, year: String? = nil, wikipedia: String? = nil, parent: IngredientData? = nil, tags: [String]? = nil) {
 		self.id = id
 		self.name = name
 		self.nicknames = nicknames ?? []
@@ -98,6 +111,7 @@ final class IngredientData: Hashable, Identifiable {
 		self.alcohol = alcohol
 		self.color = color
 		self.region = region
+		self.year = year
 		self.wikipedia = wikipedia
 		self.parent = parent
 		self.tags = tags ?? []
