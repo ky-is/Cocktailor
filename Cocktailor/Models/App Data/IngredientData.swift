@@ -85,12 +85,11 @@ final class IngredientData: Hashable, Identifiable {
 	let region: String?
 	let wikipedia: String?
 	let parent: IngredientData?
-	let showSeparateFromParent: Bool
 	var children: [IngredientData] = []
 	var tags: [String]
 	var substitutions: [Substitute] = []
 
-	init(id: String, name: String, nicknames: [String]? = nil, icon: IngredientIcon, category: IngredientCategory, alcohol: Double = 0, color: Color, region: String? = nil, wikipedia: String? = nil, parent: IngredientData? = nil, showSeparateFromParent: Bool = true, tags: [String]? = nil) {
+	init(id: String, name: String, nicknames: [String]? = nil, icon: IngredientIcon, category: IngredientCategory, alcohol: Double = 0, color: Color, region: String? = nil, wikipedia: String? = nil, parent: IngredientData? = nil, tags: [String]? = nil) {
 		self.id = id
 		self.name = name
 		self.nicknames = nicknames ?? []
@@ -101,7 +100,6 @@ final class IngredientData: Hashable, Identifiable {
 		self.region = region
 		self.wikipedia = wikipedia
 		self.parent = parent
-		self.showSeparateFromParent = showSeparateFromParent
 		self.tags = tags ?? []
 		if let parent = parent {
 			parent.children.append(self)
