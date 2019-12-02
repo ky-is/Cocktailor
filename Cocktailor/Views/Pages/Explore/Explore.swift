@@ -18,13 +18,25 @@ struct Explore: View {
 	}
 }
 
+private struct ExploreList: View {
+	let cocktails: [CocktailData]
+
+	var body: some View {
+		List {
+			Section(header: Text("All Cocktails")) {
+				BuildCocktailsDetailListEntries(cocktails: cocktails)
+			}
+		}
+			.navigationBarTitle("Explore")
+	}
+}
+
 private struct ExploreDoubleTripleColumn: View {
 	let cocktails: [CocktailData]
 
 	var body: some View {
 		NavigationView {
-			BuildCocktailsDetailList(displayCocktails: cocktails, insertBlank: false)
-				.navigationBarTitle("Explore")
+			ExploreList(cocktails: cocktails)
 			BuildCocktailPlaceholder()
 		}
 	}
@@ -35,8 +47,7 @@ private struct ExploreSingleColumn: View {
 
 	var body: some View {
 		NavigationView {
-			BuildCocktailsDetailList(displayCocktails: CocktailData.keyValues.values.sorted { $0.id < $1.id }, insertBlank: false)
-				.navigationBarTitle("Explore")
+			ExploreList(cocktails: cocktails)
 			BuildCocktailPlaceholder()
 		}
 	}

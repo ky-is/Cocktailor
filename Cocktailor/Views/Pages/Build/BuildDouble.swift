@@ -3,7 +3,7 @@ import SwiftUI
 struct BuildDoubleTripleColumn: View {
 	let availableIngredientEntries: [IngredientEntry]
 	let observedIngredients: ObservableIngredients
-	let displayCocktails: [CocktailData]
+	let cocktails: [CocktailData]
 	let hasFilteredCocktail: Bool
 	let possibleIngredients: Set<IngredientData>?
 
@@ -14,7 +14,7 @@ struct BuildDoubleTripleColumn: View {
 			}
 				.frame(width: 321)
 			NavigationView {
-				BuildCocktailsDetailList(displayCocktails: displayCocktails, insertBlank: false)
+				BuildCocktailsDetailList(cocktails: cocktails, insertBlank: false)
 				BuildCocktailPlaceholder()
 			}
 		}
@@ -23,6 +23,6 @@ struct BuildDoubleTripleColumn: View {
 
 struct BuildDoubleTripleColumn_Previews: PreviewProvider {
 	static var previews: some View {
-		BuildDoubleTripleColumn(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), displayCocktails: Array(CocktailData.keyValues.values), hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
+		BuildDoubleTripleColumn(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), cocktails: Array(CocktailData.keyValues.values), hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
 	}
 }

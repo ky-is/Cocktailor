@@ -3,7 +3,7 @@ import SwiftUI
 struct BuildTripleColumnManual: View {
 	let availableIngredientEntries: [IngredientEntry]
 	let observedIngredients: ObservableIngredients
-	let displayCocktails: [CocktailData]
+	let cocktails: [CocktailData]
 	let hasFilteredCocktail: Bool
 	let possibleIngredients: Set<IngredientData>?
 
@@ -17,7 +17,7 @@ struct BuildTripleColumnManual: View {
 			.frame(width: 321)
 			NavigationView {
 				HStack(spacing: 0) {
-					BuildCocktailsManualList(displayCocktails: displayCocktails, selectedCocktail: $selectedCocktail)
+					BuildCocktailsManualList(cocktails: cocktails, selectedCocktail: $selectedCocktail)
 						.frame(width: 321)
 					Divider()
 					Group {
@@ -37,11 +37,11 @@ struct BuildTripleColumnManual: View {
 }
 
 private struct BuildCocktailsManualList: View {
-	let displayCocktails: [CocktailData]
+	let cocktails: [CocktailData]
 	@Binding var selectedCocktail: CocktailData?
 
 	var body: some View {
-		List(displayCocktails, selection: $selectedCocktail) { cocktailData in
+		List(cocktails, selection: $selectedCocktail) { cocktailData in
 			Button(action: {
 				self.selectedCocktail = cocktailData
 			}) {
@@ -54,6 +54,6 @@ private struct BuildCocktailsManualList: View {
 
 struct BuildTripleColumnManual_Previews: PreviewProvider {
 	static var previews: some View {
-		BuildTripleColumnManual(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), displayCocktails: Array(CocktailData.keyValues.values), hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
+		BuildTripleColumnManual(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), cocktails: Array(CocktailData.keyValues.values), hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
 	}
 }

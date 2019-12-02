@@ -73,31 +73,39 @@ struct Build: View {
 		let hasFilteredCocktail = displayCocktails.count < CocktailData.keyValues.values.count
 		return GeometryReader { geometry in
 			if geometry.size.width > 1112 {
-				BuildDoubleTripleColumn(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, displayCocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
+				BuildDoubleTripleColumn(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, cocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
 			} else if geometry.size.width > 960 { // Needed to fix SplitView behavior on narrow screens which hide master.
-				BuildTripleColumnManual(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, displayCocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
+				BuildTripleColumnManual(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, cocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
 			} else if geometry.size.width > 512 {
-				BuildDoubleTripleColumn(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, displayCocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
+				BuildDoubleTripleColumn(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, cocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
 					.navigationViewStyle(StackNavigationViewStyle())
 			} else {
-				BuildSingle(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, displayCocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
+				BuildSingle(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, cocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
 			}
 		}
 	}
 }
 
+struct BuildCocktailsDetailListEntries: View {
+	let cocktails: [CocktailData]
+
+	var body: some View {
+		ForEach(cocktails) { cocktailData in
+			NavigationLink(destination: CocktailDetail(data: cocktailData)) {
+				BuildCocktailListRowContent(data: cocktailData)
+			}
+				.isDetailLink(true)
+		}
+	}
+}
+
 struct BuildCocktailsDetailList: View {
-	let displayCocktails: [CocktailData]
+	let cocktails: [CocktailData]
 	let insertBlank: Bool
 
 	var body: some View {
 		List {
-			ForEach(displayCocktails) { cocktailData in
-				NavigationLink(destination: CocktailDetail(data: cocktailData)) {
-					BuildCocktailListRowContent(data: cocktailData)
-				}
-					.isDetailLink(true)
-			}
+			BuildCocktailsDetailListEntries(cocktails: cocktails)
 			if insertBlank {
 				Text("")
 			}

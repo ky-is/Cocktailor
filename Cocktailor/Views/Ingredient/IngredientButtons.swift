@@ -70,6 +70,17 @@ struct IngredientButtonOwnedContent: View {
 			Image(systemName: selected ? "checkmark" : "circle")
 				.frame(width: 28)
 				.foregroundColor(selected ? .accentColor : .tertiary)
+			IngredientListItem(data: data, hasCocktail: hasCocktail)
+		}
+	}
+}
+
+struct IngredientListItem: View {
+	let data: IngredientData
+	let hasCocktail: Bool
+
+	var body: some View {
+		Group {
 			IngredientImage(data: data, size: 36)
 			Text(data.name.localizedCapitalized)
 				.foregroundColor(hasCocktail ? .primary : .secondary)
