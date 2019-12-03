@@ -114,6 +114,15 @@ struct BuildCocktailsDetailListEntries: View {
 	}
 }
 
+struct BuildEmptyCocktails: View {
+	var body: some View {
+		Text("No cocktails available, try adding some more ingredients!")
+			.foregroundColor(.secondary)
+			.multilineTextAlignment(.center)
+			.padding()
+	}
+}
+
 struct BuildCocktailsDetailList: View {
 	let cocktails: [CocktailData]
 	let missingOneCocktails: [CocktailData]
@@ -121,15 +130,11 @@ struct BuildCocktailsDetailList: View {
 
 	var body: some View {
 		List {
-		EmptyView()
 			Section(header: Text("Available")) {
 				if !cocktails.isEmpty {
 					BuildCocktailsDetailListEntries(cocktails: cocktails)
 				} else {
-					Text("No cocktails available, try adding some more ingredients!")
-						.foregroundColor(.secondary)
-						.multilineTextAlignment(.center)
-						.padding()
+					BuildEmptyCocktails()
 				}
 			}
 			if !missingOneCocktails.isEmpty {

@@ -18,7 +18,7 @@ struct BuildTripleColumnManual: View {
 				.frame(width: 321)
 			NavigationView {
 				HStack(spacing: 0) {
-					BuildCocktailsManualList(cocktails: cocktails, selectedCocktail: $selectedCocktail)
+					BuildCocktailsManualList(cocktails: cocktails, missingOneCocktails: missingOneCocktails, selectedCocktail: $selectedCocktail)
 						.frame(width: 321)
 					Divider()
 					Group {
@@ -37,18 +37,41 @@ struct BuildTripleColumnManual: View {
 	}
 }
 
-private struct BuildCocktailsManualList: View {
+private struct BuildCocktailsManualListEntries: View {
 	let cocktails: [CocktailData]
 	@Binding var selectedCocktail: CocktailData?
 
 	var body: some View {
-		List(cocktails, selection: $selectedCocktail) { cocktailData in
+		ForEach(cocktails) { cocktailData in
 			Button(action: {
 				self.selectedCocktail = cocktailData
 			}) {
 				BuildCocktailListRowContent(data: cocktailData)
 			}
 				.tag(cocktailData as CocktailData?)
+		}
+	}
+}
+
+private struct BuildCocktailsManualList: View {
+	let cocktails: [CocktailData]
+	let missingOneCocktails: [CocktailData]
+	@Binding var selectedCocktail: CocktailData?
+
+	var body: some View {
+		List {
+			Section(header: Text("Available")) {
+				if !cocktails.isEmpty {
+					BuildCocktailsManualListEntries(cocktails: cocktails, selectedCocktail: $selectedCocktail)
+				} else {
+					BuildEmptyCocktails()
+				}
+			}
+			if !missingOneCocktails.isEmpty {
+				Section(header: Text("Missing one")) {
+					BuildCocktailsManualListEntries(cocktails: missingOneCocktails, selectedCocktail: $selectedCocktail)
+				}
+			}
 		}
 	}
 }

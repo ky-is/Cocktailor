@@ -78,7 +78,6 @@ struct IngredientEntryDetail: View {
 	}
 }
 
-
 struct IngredientDetail_Previews: PreviewProvider {
 	static var previews: some View {
 		let data = IngredientData.keyValues["mezcal"]!
