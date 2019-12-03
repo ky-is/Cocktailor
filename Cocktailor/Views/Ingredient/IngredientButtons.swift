@@ -70,20 +70,33 @@ struct IngredientButtonOwnedContent: View {
 			Image(systemName: selected ? "checkmark" : "circle")
 				.frame(width: 28)
 				.foregroundColor(selected ? .accentColor : .tertiary)
-			IngredientListItem(data: data, hasCocktail: hasCocktail)
+			IngredientListItem(data: data, available: hasCocktail, substitute: nil)
 		}
 	}
 }
 
 struct IngredientListItem: View {
 	let data: IngredientData
-	let hasCocktail: Bool
+	let available: Bool
+	let substitute: IngredientData?
 
 	var body: some View {
-		Group {
+		HStack {
 			IngredientImage(data: data, size: 36)
-			Text(data.name.localizedCapitalized)
-				.foregroundColor(hasCocktail ? .primary : .secondary)
+			VStack(alignment: .leading) {
+				Text(data.name.localizedCapitalized)
+					.font(.headline)
+					.foregroundColor(available ? .primary : .secondary)
+				if substitute != nil {
+					HStack {
+						Text("substitute ")
+						+
+						Text(substitute!.name)
+							.bold()
+					}
+						.font(.subheadline)
+				}
+			}
 		}
 	}
 }

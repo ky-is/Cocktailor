@@ -138,6 +138,17 @@ final class IngredientData: Hashable, Identifiable {
 			return cocktail.ingredients.contains { $0.ingredient.id == id }
 		}
 	}
+
+	func findSubstitute(ownedIngredientIDs: [String]) -> IngredientData? {
+		for substitution in substitutions {
+			let substituteID = substitution.ingredient.id
+			if ownedIngredientIDs.contains(substituteID) {
+				return IngredientData.keyValues[substituteID]
+			}
+		}
+		return nil
+	}
+
 }
 
 enum IngredientIcon: String {

@@ -3,10 +3,12 @@ import SwiftUI
 struct CocktailDetail: View {
 	let data: CocktailData
 
+	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.favorite, ascending: false)], predicate: NSPredicate(format: "owned == TRUE")) private var ownedIngredientEntries: FetchedResults<IngredientEntry>
 	@State private var selectedIngredient: IngredientData?
 
 	var body: some View {
-		GeometryReader { geometry in
+		let ownedIngredientIDs = ownedIngredientEntries.map { $0.id }
+		return GeometryReader { geometry in
 			ScrollView {
 				HStack {
 					ForEach(self.data.nicknames, id: \.self) {
@@ -20,21 +22,7 @@ struct CocktailDetail: View {
 				}
 				VStack {
 					ForEach(self.data.ingredients) { ingredientQuantity in
-						Button(action: {
-							self.selectedIngredient = ingredientQuantity.ingredient
-						}) {
-							HStack(spacing: 0) {
-								IngredientImage(data: ingredientQuantity.ingredient, size: 36)
-								Text(ingredientQuantity.ingredient.name.localizedCapitalized)
-									.padding(.trailing)
-								Spacer()
-								Text(ingredientQuantity.quantity.value.description)
-									.foregroundColor(.primary)
-								+
-								Text(" \(ingredientQuantity.quantity.unit.rawValue) ")
-									.foregroundColor(.secondary)
-							}
-						}
+						CocktailDetailRow(selectedIngredient: self.$selectedIngredient, data: ingredientQuantity, ownedIngredientIDs: ownedIngredientIDs)
 					}
 				}
 					.padding()
@@ -47,6 +35,30 @@ struct CocktailDetail: View {
 					.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
 					.accentColor(.primary)
 			}
+	}
+}
+
+private struct CocktailDetailRow: View {
+	@Binding var selectedIngredient: IngredientData?
+	let data: IngredientQuantity
+	let ownedIngredientIDs: [String]
+
+	var body: some View {
+		let isOwned = ownedIngredientIDs.contains(data.id)
+		let substitute = isOwned ? nil : data.ingredient.findSubstitute(ownedIngredientIDs: ownedIngredientIDs)
+		return Button(action: {
+			self.selectedIngredient = substitute ?? self.data.ingredient
+		}) {
+			return HStack(spacing: 0) {
+				IngredientListItem(data: data.ingredient, available: isOwned, substitute: substitute)
+				Spacer()
+				Text(data.quantity.value.description)
+					.foregroundColor(.primary)
+				+
+				Text(" \(data.quantity.unit.rawValue) ")
+					.foregroundColor(.secondary)
+			}
+		}
 	}
 }
 
