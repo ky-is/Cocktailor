@@ -7,8 +7,9 @@ extension Binding {
 }
 
 extension String {
-	func pluralize(_ count: Int) -> String {
-		return "\(count) \(self)\(count == 1 ? "" : "s")"
+	func pluralize(_ count: Int, withNumber: Bool = true) -> String {
+		let pluralString = self + (count == 1 ? "" : "s")
+		return withNumber ? "\(count) \(pluralString)" : pluralString
 	}
 }
 
