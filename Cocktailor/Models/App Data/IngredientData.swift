@@ -139,14 +139,28 @@ final class IngredientData: Hashable, Identifiable {
 		}
 	}
 
-	func findSubstitute(ownedIngredientIDs: [String]) -> IngredientData? {
+	func usableIn<T>(available ingredientIDs: T) -> IngredientData? where T: Collection, T.Element == String {
+		if ingredientIDs.contains(id) {
+			return self
+		}
+		if let parentID = parent?.id, ingredientIDs.contains(parentID) {
+			return parent
+		}
+		return nil
+	}
+
+	func findSubstitute<T>(available ingredientIDs: T) -> IngredientData? where T: Collection, T.Element == String {
 		for substitution in substitutions {
 			let substituteID = substitution.ingredient.id
-			if ownedIngredientIDs.contains(substituteID) {
+			if ingredientIDs.contains(substituteID) {
 				return IngredientData.keyValues[substituteID]
 			}
 		}
 		return nil
+	}
+
+	func bestIngredient<T>(available ingredientIDs: T) -> IngredientData? where T: Collection, T.Element == String {
+		return usableIn(available: ingredientIDs) ?? findSubstitute(available: ingredientIDs)
 	}
 
 }

@@ -20,23 +20,9 @@ struct Build: View {
 		var foundIngredients = [IngredientData]()
 		for ingredientQuantity in cocktail.ingredients {
 			let ingredient = ingredientQuantity.ingredient
-			if missingSelectedIngredients.contains(ingredient.id) {
+			if let usableIngredient = ingredient.bestIngredient(available: missingSelectedIngredients) {
 				missingSelectedIngredients.remove(ingredient.id)
-				foundIngredients.append(ingredient)
-			} else {
-				var hasSubstitute = false
-				for substitution in ingredient.substitutions {
-					let substituteIngredient = missingSelectedIngredients.remove(substitution.ingredient.id)
-					if substituteIngredient != nil {
-						hasSubstitute = true
-						missingSelectedIngredients.remove(ingredient.id)
-						foundIngredients.append(substitution.ingredient)
-						break
-					}
-				}
-				if !hasSubstitute {
-					foundIngredients.append(ingredient)
-				}
+				foundIngredients.append(usableIngredient)
 			}
 		}
 		return missingSelectedIngredients.isEmpty ? foundIngredients : nil
@@ -44,23 +30,14 @@ struct Build: View {
 
 	var body: some View {
 		let availableIngredientEntries = ingredientEntries.filter { $0.owned && IngredientData.keyValues[$0.id] != nil }
-		let availableIDs = availableIngredientEntries.map { $0.id }
+		let ownedIngredientIDs = availableIngredientEntries.map { $0.id }
 		var displayCocktails = [CocktailData]()
 		var missingOneCocktails = [CocktailData]()
 		CocktailData.keyValues.values.forEach { cocktail in
 			var missingCount = 0
 			for ingredientQuantity in cocktail.ingredients {
-				let ingredientID = ingredientQuantity.id
-				var foundViableIngredient = availableIDs.contains(ingredientID)
-				if !foundViableIngredient {
-					for substitutionID in ingredientQuantity.ingredient.substitutionIDs {
-						if availableIDs.contains(substitutionID) {
-							foundViableIngredient = true
-							break
-						}
-					}
-				}
-				if !foundViableIngredient {
+				let usableIngredient = ingredientQuantity.ingredient.bestIngredient(available: ownedIngredientIDs)
+				if usableIngredient == nil {
 					missingCount += 1
 					if missingCount > 1 {
 						break

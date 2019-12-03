@@ -25,10 +25,10 @@ private struct ExploreList: View {
 
 	var body: some View {
 		let allCocktails = CocktailData.keyValues.values
-		let ownedIDs = ownedIngredientEntries.map { $0.id }
+		let ownedIngredientIDs = ownedIngredientEntries.map { $0.id }
 		let cocktailsAndMissingCounts = allCocktails
 			.map { cocktail -> (cocktail: CocktailData, missingIngredientCount: Int) in
-				let missingIngredientCount = cocktail.ingredients.reduce(0) { ownedIDs.contains($1.id) ? $0 : $0 + 1 }
+				let missingIngredientCount = cocktail.ingredients.reduce(0) { $1.ingredient.usableIn(available: ownedIngredientIDs) == nil ? $0 + 1 : $0 }
 				return (cocktail, missingIngredientCount)
 			}
 			.filter { $0.missingIngredientCount > 0 }
@@ -37,11 +37,11 @@ private struct ExploreList: View {
 		for cocktailAndMissingCount in cocktailsAndMissingCounts {
 			let missingIngredientCount = cocktailAndMissingCount.missingIngredientCount
 			let cocktailScore = 1 / (Double(missingIngredientCount) / mostMissingIngredients)
-			for ingredient in cocktailAndMissingCount.cocktail.ingredients {
-				let ingredientID = ingredient.id
-				guard !ownedIDs.contains(ingredientID) else {
+			for ingredientQuantity in cocktailAndMissingCount.cocktail.ingredients {
+				guard ingredientQuantity.ingredient.usableIn(available: ownedIngredientIDs) == nil else {
 					continue
 				}
+				let ingredientID = ingredientQuantity.id
 				if missingIngredientScoresByID[ingredientID] != nil {
 					missingIngredientScoresByID[ingredientID]!.count += 1
 					missingIngredientScoresByID[ingredientID]!.score += cocktailScore
@@ -58,7 +58,7 @@ private struct ExploreList: View {
 //						let ingredient = IngredientData.keyValues[ingredientScore.key]! //TODO
 						NavigationLink(destination: IngredientEntryDetail(data: IngredientData.keyValues[ingredientScore.key]!)) {
 							HStack {
-								IngredientListItem(data: IngredientData.keyValues[ingredientScore.key]!, hasCocktail: true)
+								IngredientListItem(data: IngredientData.keyValues[ingredientScore.key]!, available: true, substitute: nil)
 								Spacer()
 								HStack {
 									Text("used in ")

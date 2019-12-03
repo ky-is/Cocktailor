@@ -44,8 +44,8 @@ private struct CocktailDetailRow: View {
 	let ownedIngredientIDs: [String]
 
 	var body: some View {
-		let isOwned = ownedIngredientIDs.contains(data.id)
-		let substitute = isOwned ? nil : data.ingredient.findSubstitute(ownedIngredientIDs: ownedIngredientIDs)
+		let isOwned = data.ingredient.usableIn(available: ownedIngredientIDs) != nil
+		let substitute = isOwned ? nil : data.ingredient.findSubstitute(available: ownedIngredientIDs)
 		return Button(action: {
 			self.selectedIngredient = substitute ?? self.data.ingredient
 		}) {
