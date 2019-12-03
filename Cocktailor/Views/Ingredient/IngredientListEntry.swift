@@ -8,8 +8,6 @@ struct IngredientListEntry: View {
 
 	@State private var showInfo = false
 
-	@Environment(\.managedObjectContext) private var managedObjectContext
-
 	var body: some View {
 		HStack {
 			if observededIngredients.selected != nil {

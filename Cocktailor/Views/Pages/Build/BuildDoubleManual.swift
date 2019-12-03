@@ -14,7 +14,7 @@ struct BuildTripleColumnManual: View {
 			NavigationView {
 				BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: false)
 			}
-			.frame(width: 321)
+				.frame(width: 321)
 			NavigationView {
 				HStack(spacing: 0) {
 					BuildCocktailsManualList(cocktails: cocktails, selectedCocktail: $selectedCocktail)
@@ -28,10 +28,10 @@ struct BuildTripleColumnManual: View {
 								.navigationBarTitle("Cocktails")
 						}
 					}
-					.frame(maxWidth: .greatestFiniteMagnitude)
+						.frame(maxWidth: .greatestFiniteMagnitude)
 				}
 			}
-			.navigationViewStyle(StackNavigationViewStyle())
+				.navigationViewStyle(StackNavigationViewStyle())
 		}
 	}
 }
@@ -47,7 +47,7 @@ private struct BuildCocktailsManualList: View {
 			}) {
 				BuildCocktailListRowContent(data: cocktailData)
 			}
-			.tag(cocktailData as CocktailData?)
+				.tag(cocktailData as CocktailData?)
 		}
 	}
 }
