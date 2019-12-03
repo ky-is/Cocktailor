@@ -35,6 +35,7 @@ extension Dictionary {
 		return self[key]
 	}
 }
+
 extension Collection where Element == String {
 	subscript(tsv index: Index) -> String? {
 		guard indices.contains(index) else {
@@ -44,3 +45,10 @@ extension Collection where Element == String {
 		return value.isEmpty ? nil : value
 	}
 }
+
+#if DEBUG
+extension PreviewDevice {
+	static let iPadPro11 = PreviewDevice(rawValue: "iPad Pro (11-inch)")
+	static let iPadPro13 = PreviewDevice(rawValue: "iPad Pro (12.9-inch)")
+}
+#endif

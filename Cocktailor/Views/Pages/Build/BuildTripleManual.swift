@@ -15,7 +15,7 @@ struct BuildTripleColumnManual: View {
 			NavigationView {
 				BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: false)
 			}
-				.frame(width: 321)
+				.frame(width: 321) //TODO iPadPro13 376
 			NavigationView {
 				HStack(spacing: 0) {
 					BuildCocktailsManualList(cocktails: cocktails, missingOneCocktails: missingOneCocktails, selectedCocktail: $selectedCocktail)
@@ -79,5 +79,6 @@ private struct BuildCocktailsManualList: View {
 struct BuildTripleColumnManual_Previews: PreviewProvider {
 	static var previews: some View {
 		BuildTripleColumnManual(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), cocktails: Array(CocktailData.keyValues.values), missingOneCocktails: [], hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
+			.previewDevice(.iPadPro11)
 	}
 }

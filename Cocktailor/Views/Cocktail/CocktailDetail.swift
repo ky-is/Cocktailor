@@ -67,6 +67,7 @@ struct CocktailDetail_Previews: PreviewProvider {
 		let data = CocktailData.keyValues["bramble"]!
 		return NavigationView {
 			CocktailDetail(data: data)
+				.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
 		}
 	}
 }

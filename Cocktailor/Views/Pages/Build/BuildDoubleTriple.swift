@@ -13,7 +13,7 @@ struct BuildDoubleTripleColumn: View {
 			NavigationView {
 				BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: false)
 			}
-				.frame(width: 321)
+				.frame(width: 321) //TODO iPadPro13 376
 			NavigationView {
 				BuildCocktailsDetailList(cocktails: cocktails, missingOneCocktails: missingOneCocktails, insertBlank: false)
 				BuildCocktailPlaceholder()
@@ -25,5 +25,6 @@ struct BuildDoubleTripleColumn: View {
 struct BuildDoubleTripleColumn_Previews: PreviewProvider {
 	static var previews: some View {
 		BuildDoubleTripleColumn(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), cocktails: Array(CocktailData.keyValues.values), missingOneCocktails: [], hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
+			.previewDevice(.iPadPro11)
 	}
 }
