@@ -68,7 +68,7 @@ private struct ExploreList: View {
 										+
 										Text(" cocktail".pluralize(ingredientScore.value.count, withNumber: false))
 								}
-								.font(.caption)
+									.font(.caption)
 							}
 						}
 					}

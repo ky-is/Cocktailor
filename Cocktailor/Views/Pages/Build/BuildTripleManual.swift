@@ -70,6 +70,7 @@ private struct BuildCocktailsManualList: View {
 			if !missingOneCocktails.isEmpty {
 				Section(header: Text("Missing one")) {
 					BuildCocktailsManualListEntries(cocktails: missingOneCocktails, selectedCocktail: $selectedCocktail)
+						.foregroundColor(.secondary)
 				}
 			}
 		}

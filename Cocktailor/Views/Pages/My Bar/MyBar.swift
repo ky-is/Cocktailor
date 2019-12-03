@@ -15,7 +15,7 @@ struct MyBar: View {
 		let ownedCount = ownedEntries.count
 		return NavigationView {
 			List(displayIngredients) { data in
-				IngredientListEntry(data: data, entry: .constant(ingredientEntriesByID[data.id]), observededIngredients: ObservableIngredients.inactive, hasCocktail: true)
+				IngredientListEntry(data: data, entry: .constant(ingredientEntriesByID[data.id]), observedIngredients: ObservableIngredients.inactive, hasCocktail: true)
 			}
 				.navigationBarTitle("Ingredient".pluralize(ownedCount))
 				.navigationBarItems(trailing:

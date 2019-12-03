@@ -117,6 +117,7 @@ struct BuildCocktailsDetailList: View {
 			if !missingOneCocktails.isEmpty {
 				Section(header: Text("Missing one")) {
 					BuildCocktailsDetailListEntries(cocktails: missingOneCocktails)
+						.foregroundColor(.secondary)
 				}
 			}
 			if insertBlank {
@@ -165,7 +166,7 @@ struct BuildIngredients: View {
 	var body: some View {
 		List {
 			ForEach(availableIngredientEntries) { entry in
-				IngredientListEntry(data: IngredientData.keyValues[entry.id]!, entry: .constant(entry), observededIngredients: self.observedIngredients, hasCocktail: self.possibleIngredients?.contains(IngredientData.keyValues[entry.id]!) ?? true) //TODO filter []! != nil
+				IngredientListEntry(data: IngredientData.keyValues[entry.id]!, entry: .constant(entry), observedIngredients: self.observedIngredients, hasCocktail: self.possibleIngredients?.contains(IngredientData.keyValues[entry.id]!) ?? true) //TODO filter []! != nil
 			}
 			if insertBlank {
 				Text("")

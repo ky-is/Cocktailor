@@ -3,22 +3,22 @@ import SwiftUI
 struct IngredientListEntry: View {
 	let data: IngredientData
 	@Binding var entry: IngredientEntry?
-	@ObservedObject var observededIngredients: ObservableIngredients
+	@ObservedObject var observedIngredients: ObservableIngredients
 	let hasCocktail: Bool
 
 	@State private var showInfo = false
 
 	var body: some View {
 		HStack {
-			if observededIngredients.selected != nil {
+			if observedIngredients.selected != nil {
 				Button(action: {
-					if self.observededIngredients.selected!.contains(self.data.id) {
-						self.observededIngredients.selected!.remove(self.data.id)
+					if self.observedIngredients.selected!.contains(self.data.id) {
+						self.observedIngredients.selected!.remove(self.data.id)
 					} else {
-						self.observededIngredients.selected!.insert(self.data.id)
+						self.observedIngredients.selected!.insert(self.data.id)
 					}
 				}) {
-					IngredientButtonOwnedContent(data: data, selected: observededIngredients.selected!.contains(self.data.id), hasCocktail: hasCocktail)
+					IngredientButtonOwnedContent(data: data, selected: observedIngredients.selected!.contains(self.data.id), hasCocktail: hasCocktail)
 				}
 					.buttonStyle(BorderlessButtonStyle())
 			} else {
@@ -53,14 +53,14 @@ struct IngredientListEntry_Previews: PreviewProvider {
 		return Group {
 			NavigationView {
 				List {
-					IngredientListEntry(data: data, entry: .constant(nil), observededIngredients: ObservableIngredients.inactive, hasCocktail: true)
+					IngredientListEntry(data: data, entry: .constant(nil), observedIngredients: ObservableIngredients.inactive, hasCocktail: true)
 						.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
 				}
 					.navigationBarTitle("My Bar")
 			}
 			NavigationView {
 				List {
-					IngredientListEntry(data: data, entry: .constant(nil), observededIngredients: ObservableIngredients.active, hasCocktail: true)
+					IngredientListEntry(data: data, entry: .constant(nil), observedIngredients: ObservableIngredients.active, hasCocktail: true)
 						.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
 				}
 					.navigationBarTitle("Build")

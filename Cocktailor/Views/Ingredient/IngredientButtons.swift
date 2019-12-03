@@ -85,7 +85,6 @@ struct IngredientListItem: View {
 			IngredientImage(data: data, size: 36)
 			VStack(alignment: .leading) {
 				Text(data.name.localizedCapitalized)
-					.font(.headline)
 					.foregroundColor(available ? .primary : .secondary)
 				if substitute != nil {
 					HStack {
