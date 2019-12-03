@@ -51,19 +51,19 @@ struct Build: View {
 			var missingCount = 0
 			for ingredientQuantity in cocktail.ingredients {
 				let ingredientID = ingredientQuantity.id
-				if !availableIDs.contains(ingredientID) {
-					var hasSubstitute = false
+				var foundViableIngredient = availableIDs.contains(ingredientID)
+				if !foundViableIngredient {
 					for substitutionID in ingredientQuantity.ingredient.substitutionIDs {
 						if availableIDs.contains(substitutionID) {
-							hasSubstitute = true
+							foundViableIngredient = true
 							break
 						}
 					}
-					if !hasSubstitute {
-						missingCount += 1
-						if missingCount > 1 {
-							break
-						}
+				}
+				if !foundViableIngredient {
+					missingCount += 1
+					if missingCount > 1 {
+						break
 					}
 				}
 			}
