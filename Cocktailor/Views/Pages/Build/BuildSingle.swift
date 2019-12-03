@@ -4,6 +4,7 @@ struct BuildSingle: View {
 	let availableIngredientEntries: [IngredientEntry]
 	@ObservedObject var observedIngredients: ObservableIngredients
 	let cocktails: [CocktailData]
+	let missingOneCocktails: [CocktailData]
 	let hasFilteredCocktail: Bool
 	let possibleIngredients: Set<IngredientData>?
 
@@ -18,7 +19,7 @@ struct BuildSingle: View {
 					.transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .trailing)))
 			} else {
 				NavigationView {
-					BuildCocktailsDetailList(cocktails: cocktails, insertBlank: true)
+					BuildCocktailsDetailList(cocktails: cocktails, missingOneCocktails: missingOneCocktails, insertBlank: true)
 					BuildCocktailPlaceholder()
 				}
 					.transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
@@ -40,6 +41,6 @@ struct BuildSingle: View {
 
 struct BuildSingle_Previews: PreviewProvider {
 	static var previews: some View {
-		BuildSingle(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), cocktails: Array(CocktailData.keyValues.values), hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
+		BuildSingle(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), cocktails: Array(CocktailData.keyValues.values), missingOneCocktails: [], hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
 	}
 }

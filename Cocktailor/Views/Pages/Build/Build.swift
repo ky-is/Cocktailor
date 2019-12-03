@@ -15,10 +15,40 @@ struct Build: View {
 	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.favorite, ascending: false), NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)]) private var ingredientEntries: FetchedResults<IngredientEntry>
 	@ObservedObject private var observedIngredients = ObservableIngredients.active
 
+	private func cocktailHasSelectedIngredients(_ cocktail: CocktailData, selectedIngredients: Set<String>) -> [IngredientData]? {
+		var missingSelectedIngredients = Set(selectedIngredients)
+		var foundIngredients = [IngredientData]()
+		for ingredientQuantity in cocktail.ingredients {
+			let ingredient = ingredientQuantity.ingredient
+			if missingSelectedIngredients.contains(ingredient.id) {
+				missingSelectedIngredients.remove(ingredient.id)
+				foundIngredients.append(ingredient)
+			} else {
+				var hasSubstitute = false
+				for substitution in ingredient.substitutions {
+					let substituteIngredient = missingSelectedIngredients.remove(substitution.ingredient.id)
+					if substituteIngredient != nil {
+						hasSubstitute = true
+						missingSelectedIngredients.remove(ingredient.id)
+						foundIngredients.append(substitution.ingredient)
+						break
+					}
+				}
+				if !hasSubstitute {
+					foundIngredients.append(ingredient)
+				}
+			}
+		}
+		return missingSelectedIngredients.isEmpty ? foundIngredients : nil
+	}
+
 	var body: some View {
 		let availableIngredientEntries = ingredientEntries.filter { $0.owned && IngredientData.keyValues[$0.id] != nil }
 		let availableIDs = availableIngredientEntries.map { $0.id }
-		var displayCocktails = CocktailData.keyValues.values.filter { cocktail in
+		var displayCocktails = [CocktailData]()
+		var missingOneCocktails = [CocktailData]()
+		CocktailData.keyValues.values.forEach { cocktail in
+			var missingCount = 0
 			for ingredientQuantity in cocktail.ingredients {
 				let ingredientID = ingredientQuantity.id
 				if !availableIDs.contains(ingredientID) {
@@ -30,57 +60,42 @@ struct Build: View {
 						}
 					}
 					if !hasSubstitute {
-						return false
+						missingCount += 1
+						if missingCount > 1 {
+							break
+						}
 					}
 				}
 			}
-			return true
+			if missingCount == 0 {
+				displayCocktails.append(cocktail)
+			} else if missingCount == 1 {
+				missingOneCocktails.append(cocktail)
+			}
 		}
 		var possibleIngredients = Set<IngredientData>()
 		if let selectedIngredients = observedIngredients.selected {
-			displayCocktails = displayCocktails.filter { cocktail in
-				var missingSelectedIngredients = Set(selectedIngredients)
-				var foundIngredients = [IngredientData]()
-				for ingredientQuantity in cocktail.ingredients {
-					let ingredient = ingredientQuantity.ingredient
-					if missingSelectedIngredients.contains(ingredient.id) {
-						missingSelectedIngredients.remove(ingredient.id)
-						foundIngredients.append(ingredient)
-					} else {
-						var hasSubstitute = false
-						for substitution in ingredient.substitutions {
-							let substituteIngredient = missingSelectedIngredients.remove(substitution.ingredient.id)
-							if substituteIngredient != nil {
-								hasSubstitute = true
-								missingSelectedIngredients.remove(ingredient.id)
-								foundIngredients.append(substitution.ingredient)
-								break
-							}
-						}
-						if !hasSubstitute {
-							foundIngredients.append(ingredient)
-						}
-					}
-				}
-				if missingSelectedIngredients.isEmpty {
-					foundIngredients.forEach { possibleIngredients.insert($0) }
+			displayCocktails = displayCocktails.filter {
+				if let found = cocktailHasSelectedIngredients($0, selectedIngredients: selectedIngredients) {
+					found.forEach { possibleIngredients.insert($0) }
 					return true
 				}
 				return false
 			}
+			missingOneCocktails = missingOneCocktails.filter { cocktailHasSelectedIngredients($0, selectedIngredients: selectedIngredients) != nil }
 		}
 		displayCocktails.sort { $0.id < $1.id }
 		let hasFilteredCocktail = displayCocktails.count < CocktailData.keyValues.values.count
 		return GeometryReader { geometry in
 			if geometry.size.width > 1112 {
-				BuildDoubleTripleColumn(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, cocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
+				BuildDoubleTripleColumn(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, cocktails: displayCocktails, missingOneCocktails: missingOneCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
 			} else if geometry.size.width > 960 { // Needed to fix SplitView behavior on narrow screens which hide master.
-				BuildTripleColumnManual(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, cocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
+				BuildTripleColumnManual(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, cocktails: displayCocktails, missingOneCocktails: missingOneCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
 			} else if geometry.size.width > 512 {
-				BuildDoubleTripleColumn(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, cocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
+				BuildDoubleTripleColumn(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, cocktails: displayCocktails, missingOneCocktails: missingOneCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
 					.navigationViewStyle(StackNavigationViewStyle())
 			} else {
-				BuildSingle(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, cocktails: displayCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
+				BuildSingle(availableIngredientEntries: availableIngredientEntries, observedIngredients: self.observedIngredients, cocktails: displayCocktails, missingOneCocktails: missingOneCocktails, hasFilteredCocktail: hasFilteredCocktail, possibleIngredients: hasFilteredCocktail ? possibleIngredients : nil)
 			}
 		}
 	}
@@ -101,11 +116,27 @@ struct BuildCocktailsDetailListEntries: View {
 
 struct BuildCocktailsDetailList: View {
 	let cocktails: [CocktailData]
+	let missingOneCocktails: [CocktailData]
 	let insertBlank: Bool
 
 	var body: some View {
 		List {
-			BuildCocktailsDetailListEntries(cocktails: cocktails)
+		EmptyView()
+			Section(header: Text("Available")) {
+				if !cocktails.isEmpty {
+					BuildCocktailsDetailListEntries(cocktails: cocktails)
+				} else {
+					Text("No cocktails available, try adding some more ingredients!")
+						.foregroundColor(.secondary)
+						.multilineTextAlignment(.center)
+						.padding()
+				}
+			}
+			if !missingOneCocktails.isEmpty {
+				Section(header: Text("Missing one")) {
+					BuildCocktailsDetailListEntries(cocktails: missingOneCocktails)
+				}
+			}
 			if insertBlank {
 				Text("")
 			}

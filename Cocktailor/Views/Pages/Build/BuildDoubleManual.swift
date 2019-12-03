@@ -4,6 +4,7 @@ struct BuildTripleColumnManual: View {
 	let availableIngredientEntries: [IngredientEntry]
 	let observedIngredients: ObservableIngredients
 	let cocktails: [CocktailData]
+	let missingOneCocktails: [CocktailData]
 	let hasFilteredCocktail: Bool
 	let possibleIngredients: Set<IngredientData>?
 
@@ -54,6 +55,6 @@ private struct BuildCocktailsManualList: View {
 
 struct BuildTripleColumnManual_Previews: PreviewProvider {
 	static var previews: some View {
-		BuildTripleColumnManual(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), cocktails: Array(CocktailData.keyValues.values), hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
+		BuildTripleColumnManual(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), cocktails: Array(CocktailData.keyValues.values), missingOneCocktails: [], hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
 	}
 }
