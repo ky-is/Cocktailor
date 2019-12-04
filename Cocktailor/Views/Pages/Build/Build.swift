@@ -107,16 +107,16 @@ struct BuildCocktailsDetailList: View {
 
 	var body: some View {
 		List {
-			Section(header: Text("Available")) {
-				if !cocktails.isEmpty {
-					BuildCocktailsDetailListEntries(cocktails: cocktails)
+			SectionVibrant(label: "Available") {
+				if !self.cocktails.isEmpty {
+					BuildCocktailsDetailListEntries(cocktails: self.cocktails)
 				} else {
 					BuildEmptyCocktails()
 				}
 			}
 			if !missingOneCocktails.isEmpty {
-				Section(header: Text("Missing one")) {
-					BuildCocktailsDetailListEntries(cocktails: missingOneCocktails)
+				SectionVibrant(label: "Missing one") {
+					BuildCocktailsDetailListEntries(cocktails: self.missingOneCocktails)
 						.foregroundColor(.secondary)
 				}
 			}

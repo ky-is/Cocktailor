@@ -60,16 +60,16 @@ private struct BuildCocktailsManualList: View {
 
 	var body: some View {
 		List {
-			Section(header: Text("Available")) {
-				if !cocktails.isEmpty {
-					BuildCocktailsManualListEntries(cocktails: cocktails, selectedCocktail: $selectedCocktail)
+			SectionVibrant(label: "Available") {
+				if !self.cocktails.isEmpty {
+					BuildCocktailsManualListEntries(cocktails: self.cocktails, selectedCocktail: self.$selectedCocktail)
 				} else {
 					BuildEmptyCocktails()
 				}
 			}
 			if !missingOneCocktails.isEmpty {
-				Section(header: Text("Missing one")) {
-					BuildCocktailsManualListEntries(cocktails: missingOneCocktails, selectedCocktail: $selectedCocktail)
+				SectionVibrant(label: "Missing one") {
+					BuildCocktailsManualListEntries(cocktails: self.missingOneCocktails, selectedCocktail: self.$selectedCocktail)
 						.foregroundColor(.secondary)
 				}
 			}

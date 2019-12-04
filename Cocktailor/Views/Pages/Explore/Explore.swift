@@ -53,14 +53,14 @@ private struct ExploreList: View {
 		let bestIngredientIDs = missingIngredientScoresByID.sorted(by: { $0.value.score > $1.value.score }).prefix(3)
 		return List {
 			if !bestIngredientIDs.isEmpty {
-				Section(header: Text("Next ingredients")) {
+				SectionVibrant(label: "Next ingredients") {
 					ForEach(bestIngredientIDs, id: \.key) { ingredientScore in
 						ExploreIngredientRow(ingredientID: ingredientScore.key, count: ingredientScore.value.count)
 					}
 				}
 			}
-			Section(header: Text("All cocktails")) {
-				BuildCocktailsDetailListEntries(cocktails: cocktails)
+			SectionVibrant(label: "All cocktails") {
+				BuildCocktailsDetailListEntries(cocktails: self.cocktails)
 			}
 		}
 			.navigationBarTitle("Explore")
@@ -77,7 +77,7 @@ private struct ExploreIngredientRow: View {
 	}
 
 	var body: some View {
-		HStack {
+		HStack(spacing: 0) {
 			IngredientButtonOwned(data: data, entry: .constant(nil), hasCocktail: true, withContent: false)
 				.buttonStyle(BorderlessButtonStyle())
 			NavigationLink(destination: IngredientEntryDetail(data: data)) {

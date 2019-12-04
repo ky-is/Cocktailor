@@ -85,7 +85,7 @@ struct IngredientListItem: View {
 	let substitute: IngredientData?
 
 	var body: some View {
-		HStack {
+		Group {
 			IngredientImage(data: data, size: 36)
 			VStack(alignment: .leading) {
 				Text(data.name.localizedCapitalized)

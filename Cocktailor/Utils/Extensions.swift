@@ -46,6 +46,10 @@ extension Collection where Element == String {
 	}
 }
 
+extension EdgeInsets {
+	static let zero = Self(top: 0, leading: 0, bottom: 0, trailing: 0)
+}
+
 #if DEBUG
 extension PreviewDevice {
 	static let iPadPro11 = PreviewDevice(rawValue: "iPad Pro (11-inch)")
