@@ -68,7 +68,7 @@ struct CocktailImage: View {
 	init(data: CocktailData, size: CGFloat) {
 		self.data = data
 		self.size = size
-		fillIngredients = data.fillIngredients.sorted { $0.quantity.value < $1.quantity.value }
+		fillIngredients = data.fillIngredients.sorted { $0.quantity.ounces < $1.quantity.ounces }
 		ingredientSpacing = size >= 128 ? 1 : 0.5
 		liquidHeightWithoutSpacing = size - ingredientSpacing * CGFloat(fillIngredients.count - 1)
 	}
@@ -86,7 +86,7 @@ struct CocktailImage: View {
 						ingredientQuantity.ingredient.color
 							.opacity(0.75)
 					}
-						.frame(height: CGFloat(ingredientQuantity.quantity.value / self.data.totalQuantity) * self.data.glass.liquidHeightProportion * self.liquidHeightWithoutSpacing)
+						.frame(height: CGFloat(ingredientQuantity.quantity.ounces / self.data.totalQuantity) * self.data.glass.liquidHeightProportion * self.liquidHeightWithoutSpacing)
 				}
 			}
 				.background(Color.systemBackground)

@@ -57,11 +57,37 @@ enum IceStyle: String {
 
 enum QuantityUnit: String {
 	case cl, dash, ml, part, oz, piece, tsp
+
+	var volume: Double {
+		switch self {
+		case .cl:
+			return 0.33814
+		case .dash:
+			return 0.021
+		case .ml:
+			return 0.033814
+		case .part:
+			return 1
+		case .oz:
+			return 1
+		case .tsp:
+			return 1/6
+		default:
+			return 0
+		}
+	}
 }
 
 struct Quantity: Hashable {
 	let value: Double
 	let unit: QuantityUnit
+	let ounces: Double
+
+	init(value: Double, unit: QuantityUnit) {
+		self.value = value
+		self.unit = unit
+		self.ounces = value * unit.volume
+	}
 }
 
 final class IngredientQuantity: Hashable, Identifiable {
@@ -192,14 +218,14 @@ final class CocktailData: Hashable, Identifiable {
 	}
 
 	lazy var fillIngredients: [IngredientQuantity] = {
-		return ingredients.filter { $0.quantity.unit != .dash && $0.quantity.unit != .piece }
+		return ingredients.filter { $0.quantity.unit != .piece }
 	}()
 
 	lazy var totalQuantity: Double = {
-		return fillIngredients.reduce(0) { $0 + $1.quantity.value }
+		return fillIngredients.reduce(0) { $0 + $1.quantity.ounces }
 	}()
 
 	lazy var alcohol: Double = {
-		return fillIngredients.reduce(0) { $0 + $1.ingredient.alcohol * $1.quantity.value } / totalQuantity
+		return fillIngredients.reduce(0) { $0 + $1.ingredient.alcohol * $1.quantity.ounces } / totalQuantity
 	}()
 }
