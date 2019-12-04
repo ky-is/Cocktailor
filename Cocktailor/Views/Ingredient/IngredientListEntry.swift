@@ -6,6 +6,7 @@ struct IngredientListEntry: View {
 	@ObservedObject var observedIngredients: ObservableIngredients
 	let hasCocktail: Bool
 
+	@Environment(\.presentationMode) private var presentationMode
 	@State private var showInfo = false
 
 	var body: some View {
@@ -39,7 +40,8 @@ struct IngredientListEntry: View {
 				.frame(width: 28)
 		}
 			.sheet(isPresented: $showInfo) {
-				IngredientDetail(data: self.data, entry: self.$entry)
+				IngredientDetail(data: self.data, entry: self.$entry, isModal: true)
+					.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
 					.accentColor(.primary)
 			}
 	}

@@ -3,6 +3,9 @@ import SwiftUI
 struct IngredientDetail: View {
 	let data: IngredientData
 	@Binding var entry: IngredientEntry?
+	let isModal: Bool
+
+	@Environment(\.presentationMode) private var presentationMode
 
 	var body: some View {
 		NavigationView {
@@ -47,15 +50,26 @@ struct IngredientDetail: View {
 			}
 				.padding()
 				.navigationBarTitle(data.name.localizedCapitalized)
-				.navigationBarItems(trailing:
-					HStack {
+				.navigationBarItems(
+					leading:
 						Group {
-							IngredientButtonFavorite(data: data, entry: $entry)
-							IngredientButtonOwned(data: data, entry: $entry, hasCocktail: true, withContent: true)
+							if isModal {
+								Button(action: {
+									self.presentationMode.wrappedValue.dismiss()
+								}) {
+									Text("Dismiss")
+								}
+							}
+						},
+					trailing:
+						HStack {
+							Group {
+								IngredientButtonFavorite(data: data, entry: $entry)
+								IngredientButtonOwned(data: data, entry: $entry, hasCocktail: true, withContent: true)
+							}
+								.frame(width: 24)
+								.padding(.leading)
 						}
-							.frame(width: 24)
-							.padding(.leading)
-					}
 				)
 		}
 			.navigationViewStyle(StackNavigationViewStyle())
@@ -75,13 +89,13 @@ struct IngredientEntryDetail: View {
 	}
 
 	var body: some View {
-		IngredientDetail(data: data, entry: .constant(ingredientEntries.first))
+		IngredientDetail(data: data, entry: .constant(ingredientEntries.first), isModal: false)
 	}
 }
 
 struct IngredientDetail_Previews: PreviewProvider {
 	static var previews: some View {
 		let data = IngredientData.keyValues["mezcal"]!
-		return IngredientDetail(data: data, entry: .constant(nil))
+		return IngredientDetail(data: data, entry: .constant(nil), isModal: false)
 	}
 }
