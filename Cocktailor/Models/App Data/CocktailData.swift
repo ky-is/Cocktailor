@@ -56,7 +56,7 @@ enum IceStyle: String {
 }
 
 enum QuantityUnit: String {
-	case cl, dash, part, piece, tsp
+	case cl, dash, ml, part, oz, piece, tsp
 }
 
 struct Quantity: Hashable {
@@ -123,6 +123,12 @@ final class CocktailData: Hashable, Identifiable {
 					} else if quantityAndUnit.hasSuffix("dash") {
 						suffixLength = 4
 						unit = .dash
+					} else if quantityAndUnit.hasSuffix("ml") {
+						suffixLength = 2
+						unit = .ml
+					} else if quantityAndUnit.hasSuffix("oz") {
+						suffixLength = 2
+						unit = .oz
 					} else if quantityAndUnit.hasSuffix("piece") {
 						suffixLength = 5
 						unit = .piece
