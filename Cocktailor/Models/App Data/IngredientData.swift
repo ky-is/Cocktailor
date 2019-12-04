@@ -162,7 +162,6 @@ final class IngredientData: Hashable, Identifiable {
 	func bestIngredient<T>(available ingredientIDs: T) -> IngredientData? where T: Collection, T.Element == String {
 		return usableIn(available: ingredientIDs) ?? findSubstitute(available: ingredientIDs)
 	}
-
 }
 
 enum IngredientIcon: String {

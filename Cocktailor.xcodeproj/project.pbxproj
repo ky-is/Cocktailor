@@ -22,13 +22,13 @@
 		247D970C2389C1C90008C22F /* IngredientData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247D970B2389C1C90008C22F /* IngredientData.swift */; };
 		247D970F2389EDEB0008C22F /* MyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247D970E2389EDEB0008C22F /* MyBar.swift */; };
 		24807177239059BE00702356 /* Explore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24807176239059BE00702356 /* Explore.swift */; };
-		24807179239215D300702356 /* Cocktail Data - Cocktails.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 24807178239215D200702356 /* Cocktail Data - Cocktails.tsv */; };
 		2480717D2392ED1800702356 /* TSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2480717C2392ED1800702356 /* TSV.swift */; };
-		248071812392EE6400702356 /* Cocktail Data - Ingredients.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 248071802392EE6400702356 /* Cocktail Data - Ingredients.tsv */; };
-		248071832392F02E00702356 /* Cocktail Data - Ingredient Substitutes.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 248071822392F02E00702356 /* Cocktail Data - Ingredient Substitutes.tsv */; };
 		249B0B03238E4A840099BC72 /* BuildSingle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B0B02238E4A840099BC72 /* BuildSingle.swift */; };
 		249B0B05238E4AA30099BC72 /* BuildDoubleTriple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B0B04238E4AA30099BC72 /* BuildDoubleTriple.swift */; };
 		249B0B07238E4ACF0099BC72 /* BuildTripleManual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249B0B06238E4ACF0099BC72 /* BuildTripleManual.swift */; };
+		24B8A7A2239784B400156DEE /* Cocktail Data - Ingredients.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 24B8A79F239784B400156DEE /* Cocktail Data - Ingredients.tsv */; };
+		24B8A7A3239784B400156DEE /* Cocktail Data - Cocktails.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 24B8A7A0239784B400156DEE /* Cocktail Data - Cocktails.tsv */; };
+		24B8A7A4239784B400156DEE /* Cocktail Data - Ingredient Substitutes.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 24B8A7A1239784B400156DEE /* Cocktail Data - Ingredient Substitutes.tsv */; };
 		24DA426E238DF3B400402159 /* CocktailButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DA426D238DF3B400402159 /* CocktailButtons.swift */; };
 		24DDCE9D239744C200C1EB15 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DDCE9C239744C200C1EB15 /* Views.swift */; };
 		24EC8D45238A5AD70004CF42 /* CocktailData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC8D44238A5AD70004CF42 /* CocktailData.swift */; };
@@ -56,13 +56,13 @@
 		247D970B2389C1C90008C22F /* IngredientData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientData.swift; sourceTree = "<group>"; };
 		247D970E2389EDEB0008C22F /* MyBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBar.swift; sourceTree = "<group>"; };
 		24807176239059BE00702356 /* Explore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explore.swift; sourceTree = "<group>"; };
-		24807178239215D200702356 /* Cocktail Data - Cocktails.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Cocktail Data - Cocktails.tsv"; path = "../App Data/Cocktail Data - Cocktails.tsv"; sourceTree = "<group>"; };
 		2480717C2392ED1800702356 /* TSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSV.swift; sourceTree = "<group>"; };
-		248071802392EE6400702356 /* Cocktail Data - Ingredients.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Cocktail Data - Ingredients.tsv"; path = "../App Data/Cocktail Data - Ingredients.tsv"; sourceTree = "<group>"; };
-		248071822392F02E00702356 /* Cocktail Data - Ingredient Substitutes.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Cocktail Data - Ingredient Substitutes.tsv"; path = "../App Data/Cocktail Data - Ingredient Substitutes.tsv"; sourceTree = "<group>"; };
 		249B0B02238E4A840099BC72 /* BuildSingle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSingle.swift; sourceTree = "<group>"; };
 		249B0B04238E4AA30099BC72 /* BuildDoubleTriple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildDoubleTriple.swift; sourceTree = "<group>"; };
 		249B0B06238E4ACF0099BC72 /* BuildTripleManual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildTripleManual.swift; sourceTree = "<group>"; };
+		24B8A79F239784B400156DEE /* Cocktail Data - Ingredients.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Cocktail Data - Ingredients.tsv"; sourceTree = "<group>"; };
+		24B8A7A0239784B400156DEE /* Cocktail Data - Cocktails.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Cocktail Data - Cocktails.tsv"; sourceTree = "<group>"; };
+		24B8A7A1239784B400156DEE /* Cocktail Data - Ingredient Substitutes.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Cocktail Data - Ingredient Substitutes.tsv"; sourceTree = "<group>"; };
 		24DA426D238DF3B400402159 /* CocktailButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailButtons.swift; sourceTree = "<group>"; };
 		24DDCE9C239744C200C1EB15 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		24EC8D44238A5AD70004CF42 /* CocktailData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailData.swift; sourceTree = "<group>"; };
@@ -184,9 +184,9 @@
 			isa = PBXGroup;
 			children = (
 				2480717C2392ED1800702356 /* TSV.swift */,
-				248071802392EE6400702356 /* Cocktail Data - Ingredients.tsv */,
-				248071822392F02E00702356 /* Cocktail Data - Ingredient Substitutes.tsv */,
-				24807178239215D200702356 /* Cocktail Data - Cocktails.tsv */,
+				24B8A7A0239784B400156DEE /* Cocktail Data - Cocktails.tsv */,
+				24B8A79F239784B400156DEE /* Cocktail Data - Ingredients.tsv */,
+				24B8A7A1239784B400156DEE /* Cocktail Data - Ingredient Substitutes.tsv */,
 			);
 			path = "External Data";
 			sourceTree = "<group>";
@@ -315,11 +315,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				240B51AD2381E07600FA1D02 /* LaunchScreen.storyboard in Resources */,
-				248071812392EE6400702356 /* Cocktail Data - Ingredients.tsv in Resources */,
-				24807179239215D300702356 /* Cocktail Data - Cocktails.tsv in Resources */,
 				240B519B2381B46F00FA1D02 /* Preview Assets.xcassets in Resources */,
-				248071832392F02E00702356 /* Cocktail Data - Ingredient Substitutes.tsv in Resources */,
+				24B8A7A4239784B400156DEE /* Cocktail Data - Ingredient Substitutes.tsv in Resources */,
+				24B8A7A3239784B400156DEE /* Cocktail Data - Cocktails.tsv in Resources */,
 				240B51982381B46F00FA1D02 /* Assets.xcassets in Resources */,
+				24B8A7A2239784B400156DEE /* Cocktail Data - Ingredients.tsv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
