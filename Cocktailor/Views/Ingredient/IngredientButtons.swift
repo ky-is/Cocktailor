@@ -30,10 +30,11 @@ struct IngredientButtonFavorite: View {
 	}
 }
 
-struct IngredientButtonOwned<Content: View>: View {
+struct IngredientButtonOwned: View {
 	let data: IngredientData
 	@Binding var entry: IngredientEntry?
-	let content: (() -> Content)?
+	let hasCocktail: Bool
+	let withContent: Bool
 
 	@Environment(\.managedObjectContext) private var managedObjectContext
 
@@ -55,7 +56,7 @@ struct IngredientButtonOwned<Content: View>: View {
 
 	var body: some View {
 		Button(action: toggleOwned) {
-			content?()
+			IngredientButtonOwnedContent(data: data, selected: entry?.owned ?? false, hasCocktail: hasCocktail, withContent: withContent)
 		}
 	}
 }
@@ -64,13 +65,16 @@ struct IngredientButtonOwnedContent: View {
 	let data: IngredientData
 	let selected: Bool
 	let hasCocktail: Bool
+	let withContent: Bool
 
 	var body: some View {
 		Group {
 			Image(systemName: selected ? "checkmark" : "circle")
 				.frame(width: 28)
 				.foregroundColor(selected ? .accentColor : .tertiary)
-			IngredientListItem(data: data, available: hasCocktail, substitute: nil)
+			if withContent {
+				IngredientListItem(data: data, available: hasCocktail, substitute: nil)
+			}
 		}
 	}
 }
@@ -124,9 +128,7 @@ struct IngredientButtons_Previews: PreviewProvider {
 		let data = IngredientData.keyValues["mezcal"]!
 		return VStack {
 			IngredientButtonFavorite(data: data, entry: .constant(nil))
-			IngredientButtonOwned(data: data, entry: .constant(nil)) {
-				IngredientButtonOwnedContent(data: data, selected: true, hasCocktail: true)
-			}
+			IngredientButtonOwned(data: data, entry: .constant(nil), hasCocktail: true, withContent: true)
 			IngredientImage(data: data, size: 128)
 		}
 	}

@@ -55,22 +55,7 @@ private struct ExploreList: View {
 			if !bestIngredientIDs.isEmpty {
 				Section(header: Text("Next ingredients")) {
 					ForEach(bestIngredientIDs, id: \.key) { ingredientScore in
-//						let ingredient = IngredientData.keyValues[ingredientScore.key]! //TODO
-						NavigationLink(destination: IngredientEntryDetail(data: IngredientData.keyValues[ingredientScore.key]!)) {
-							HStack {
-								IngredientListItem(data: IngredientData.keyValues[ingredientScore.key]!, available: true, substitute: nil)
-								Spacer()
-								HStack {
-									Text("used in ")
-										+
-										Text(ingredientScore.value.count.description)
-											.bold()
-										+
-										Text(" cocktail".pluralize(ingredientScore.value.count, withNumber: false))
-								}
-									.font(.caption)
-							}
-						}
+						ExploreIngredientRow(ingredientID: ingredientScore.key, count: ingredientScore.value.count)
 					}
 				}
 			}
@@ -79,6 +64,36 @@ private struct ExploreList: View {
 			}
 		}
 			.navigationBarTitle("Explore")
+	}
+}
+
+private struct ExploreIngredientRow: View {
+	let data: IngredientData
+	let count: Int
+
+	init(ingredientID: String, count: Int) {
+		self.data = IngredientData.keyValues[ingredientID]!
+		self.count = count
+	}
+
+	var body: some View {
+		HStack {
+			IngredientButtonOwned(data: data, entry: .constant(nil), hasCocktail: true, withContent: false)
+				.buttonStyle(BorderlessButtonStyle())
+			NavigationLink(destination: IngredientEntryDetail(data: data)) {
+				IngredientListItem(data: data, available: true, substitute: nil)
+					.layoutPriority(2)
+				Spacer()
+				HStack {
+					Text(count.description)
+						.bold()
+					+
+					Text(" cocktail".pluralize(count, withNumber: false))
+				}
+					.font(.caption)
+					.fixedSize()
+			}
+		}
 	}
 }
 

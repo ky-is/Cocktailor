@@ -51,9 +51,10 @@ struct IngredientDetail: View {
 					HStack {
 						Group {
 							IngredientButtonFavorite(data: data, entry: $entry)
-							IngredientButtonOwned<Text?>(data: data, entry: $entry, content: nil)
+							IngredientButtonOwned(data: data, entry: $entry, hasCocktail: true, withContent: true)
 						}
 							.frame(width: 24)
+							.padding(.leading)
 					}
 				)
 		}

@@ -18,13 +18,11 @@ struct IngredientListEntry: View {
 						self.observedIngredients.selected!.insert(self.data.id)
 					}
 				}) {
-					IngredientButtonOwnedContent(data: data, selected: observedIngredients.selected!.contains(self.data.id), hasCocktail: hasCocktail)
+					IngredientButtonOwnedContent(data: data, selected: observedIngredients.selected!.contains(self.data.id), hasCocktail: hasCocktail, withContent: true)
 				}
 					.buttonStyle(BorderlessButtonStyle())
 			} else {
-				IngredientButtonOwned(data: data, entry: $entry) {
-					IngredientButtonOwnedContent(data: self.data, selected: self.entry?.owned ?? false, hasCocktail: self.hasCocktail)
-				}
+				IngredientButtonOwned(data: data, entry: $entry, hasCocktail: self.hasCocktail, withContent: true)
 					.buttonStyle(BorderlessButtonStyle())
 			}
 			Button(action: {
