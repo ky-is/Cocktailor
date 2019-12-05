@@ -49,6 +49,7 @@ final class IngredientData: Hashable, Identifiable {
 			let indexOriginRegion = columns.firstIndex(of: "Origin Region")!
 			let indexOriginYear = columns.firstIndex(of: "Origin Year")!
 			let indexParent = columns.firstIndex(of: "Parent")!
+			let indexHidden = columns.firstIndex(of: "Hidden")!
 			let indexWikipediaPath = columns.firstIndex(of: "Wikipedia Path")!
 			let indexTags = columns.firstIndex(of: "Tags")!
 			for row in rows {
@@ -64,8 +65,9 @@ final class IngredientData: Hashable, Identifiable {
 				let wikipedia = row[tsv: indexWikipediaPath]
 				let parentID = row[tsv: indexParent]
 				let parent = results[optional: parentID]
+				let hidden = row[tsv: indexHidden] == "TRUE"
 				let tags = row[tsv: indexTags]?.components(separatedBy: ",")
-				let ingredient = IngredientData(id: id, name: name, nicknames: nicknames, icon: icon, category: category, alcohol: alcohol, color: color, region: region, year: year, wikipedia: wikipedia, parent: parent, tags: tags)
+				let ingredient = IngredientData(id: id, name: name, nicknames: nicknames, icon: icon, category: category, alcohol: alcohol, color: color, region: region, year: year, wikipedia: wikipedia, parent: parent, hidden: hidden, tags: tags)
 				results[id] = ingredient
 			}
 		}
@@ -87,6 +89,10 @@ final class IngredientData: Hashable, Identifiable {
 		return results
 	}()
 
+	static let ownableIngredients: [IngredientData] = {
+		return keyValues.values.filter { !$0.hidden }
+	}()
+
 	let id: String
 	let name: String
 	let nicknames: [String]
@@ -98,11 +104,12 @@ final class IngredientData: Hashable, Identifiable {
 	let year: String?
 	let wikipedia: String?
 	let parent: IngredientData?
+	let hidden: Bool
 	var children: [IngredientData] = []
 	var tags: [String]
 	var substitutions: [Substitute] = []
 
-	init(id: String, name: String, nicknames: [String]? = nil, icon: IngredientIcon, category: IngredientCategory, alcohol: Double = 0, color: Color, region: String? = nil, year: String? = nil, wikipedia: String? = nil, parent: IngredientData? = nil, tags: [String]? = nil) {
+	init(id: String, name: String, nicknames: [String]? = nil, icon: IngredientIcon, category: IngredientCategory, alcohol: Double = 0, color: Color, region: String? = nil, year: String? = nil, wikipedia: String? = nil, parent: IngredientData? = nil, hidden: Bool, tags: [String]? = nil) {
 		self.id = id
 		self.name = name
 		self.nicknames = nicknames ?? []
@@ -114,6 +121,7 @@ final class IngredientData: Hashable, Identifiable {
 		self.year = year
 		self.wikipedia = wikipedia
 		self.parent = parent
+		self.hidden = hidden
 		self.tags = tags ?? []
 		if let parent = parent {
 			parent.children.append(self)
@@ -143,8 +151,12 @@ final class IngredientData: Hashable, Identifiable {
 		if ingredientIDs.contains(id) {
 			return self
 		}
-		if let parentID = parent?.id, ingredientIDs.contains(parentID) {
-			return parent
+		if let parentID = parent?.id {
+			if ingredientIDs.contains(parentID) {
+				return parent
+			}
+		} else if hidden {
+			return self
 		}
 		return nil
 	}
