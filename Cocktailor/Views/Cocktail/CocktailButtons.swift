@@ -145,7 +145,7 @@ struct CocktailButtons_Previews: PreviewProvider {
 			CocktailButtonFavorite(data: data, entry: .constant(nil))
 			CocktailButtonMade(data: data, entry: .constant(nil))
 			CocktailImage(data: data, size: 80)
-			CocktailImage(data: data, size: 512)
+			CocktailImage(data: data, size: 384)
 		}
 	}
 }

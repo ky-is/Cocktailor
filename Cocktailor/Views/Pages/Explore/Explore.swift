@@ -84,6 +84,7 @@ private struct ExploreIngredientRow: View {
 				IngredientListItem(data: data, available: true, substitute: nil)
 					.layoutPriority(2)
 				Spacer()
+					.frame(minWidth: 10)
 				HStack {
 					Text(count.description)
 						.bold()

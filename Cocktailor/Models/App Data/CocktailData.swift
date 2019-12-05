@@ -10,7 +10,7 @@ enum BarEquipment {
 }
 
 enum BarGlasses: String {
-	case cocktail, collins, highball, hurricane, irishCoffee, margarita, oldFashioned, wine
+	case cocktail, collins, highball, hurricane, irishCoffee, margarita, oldFashioned, wine //TODO flute
 
 	var liquidOffsetProportion: CGFloat {
 		switch self {

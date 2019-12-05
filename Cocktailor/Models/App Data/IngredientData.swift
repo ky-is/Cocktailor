@@ -1,5 +1,13 @@
 import SwiftUI
 
+enum IngredientIcon: String {
+	case aperitif, drop, fizz, grains, liqueur, liquor, wine //TODO herb
+}
+
+enum IngredientCategory: String {
+	case aperitif, dairy, fruit, garnish, herb, juice, liqueur, liquor, mixer, sweetener, wine
+}
+
 struct Substitute {
 	let ingredient: IngredientData
 	let score: Double
@@ -174,12 +182,4 @@ final class IngredientData: Hashable, Identifiable {
 	func bestIngredient<T>(available ingredientIDs: T) -> IngredientData? where T: Collection, T.Element == String {
 		return usableIn(available: ingredientIDs) ?? findSubstitute(available: ingredientIDs)
 	}
-}
-
-enum IngredientIcon: String {
-	case aperitif, drop, fizz, grains, liqueur, liquor, wine //TODO herb
-}
-
-enum IngredientCategory: String {
-	case aperitif, dairy, fruit, garnish, herb, juice, liqueur, liquor, mixer, sweetener, wine
 }
