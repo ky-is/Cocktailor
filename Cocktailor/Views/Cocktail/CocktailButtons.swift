@@ -107,43 +107,44 @@ struct CocktailImage: View {
 }
 
 private struct CocktailDrops: View {
-	let dropCircumference: CGFloat
+	let dropWidth: CGFloat
+	let dropHeight: CGFloat
 
 	private let dropIngredients: [IngredientQuantity]
 
 	init(data: CocktailData, size: CGFloat) {
-		self.dropCircumference = size / 20
+		self.dropWidth = size / 16
+		self.dropHeight = size / 12
 		dropIngredients = data.liquidIngredients.filter { $0.quantity.unit == .dash }
 	}
 
 	var body: some View {
-		var index = -1
-		return Group {
+		HStack(spacing: dropWidth / 4) {
 			ForEach(dropIngredients) { ingredientQuantity in
 				Group {
-					ForEach(0..<Int(ingredientQuantity.quantity.value), id: \.self) { _ -> AnyView in
-						index += 1
-						let direction = CGFloat((index % 2) == 0 ? -1 : 1)
-						return AnyView(
-							Circle()
+					ForEach(0..<Int(ingredientQuantity.quantity.value), id: \.self) { _ in
+						ZStack {
+							Ellipse()
 								.fill(ingredientQuantity.ingredient.color)
-								.frame(width: self.dropCircumference, height: self.dropCircumference)
-								.offset(x: direction * CGFloat(index) * self.dropCircumference / 1.5 + (direction > 0 ? .zero : direction * self.dropCircumference * 2/3))
-						)
+							Ellipse()
+								.stroke(Color.secondarySystemBackground, lineWidth: self.dropHeight / 8)
+						}
+							.frame(width: self.dropWidth, height: self.dropHeight)
 					}
 				}
 			}
 		}
-			.offset(y: dropCircumference / 8)
+			.offset(y: -dropHeight / 2)
 	}
 }
 
 struct CocktailButtons_Previews: PreviewProvider {
 	static var previews: some View {
-		let data = CocktailData.keyValues["oldFashioned"]!
+		let data = CocktailData.keyValues["bloodyMary"]!
 		return VStack {
 			CocktailButtonFavorite(data: data, entry: .constant(nil))
 			CocktailButtonMade(data: data, entry: .constant(nil))
+			CocktailImage(data: data, size: 80)
 			CocktailImage(data: data, size: 512)
 		}
 	}
