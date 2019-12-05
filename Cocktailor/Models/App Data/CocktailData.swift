@@ -217,15 +217,18 @@ final class CocktailData: Hashable, Identifiable {
 		self.tags = tags ?? []
 	}
 
-	lazy var fillIngredients: [IngredientQuantity] = {
+	lazy var liquidIngredients: [IngredientQuantity] = {
 		return ingredients.filter { $0.quantity.unit != .piece }
+	}()
+	lazy var volumeIngredients: [IngredientQuantity] = {
+		return liquidIngredients.filter { $0.quantity.unit != .dash }
 	}()
 
 	lazy var totalQuantity: Double = {
-		return fillIngredients.reduce(0) { $0 + $1.quantity.ounces }
+		return volumeIngredients.reduce(0) { $0 + $1.quantity.ounces }
 	}()
 
 	lazy var alcohol: Double = {
-		return fillIngredients.reduce(0) { $0 + $1.ingredient.alcohol * $1.quantity.ounces } / totalQuantity
+		return liquidIngredients.reduce(0) { $0 + $1.ingredient.alcohol * $1.quantity.ounces } / totalQuantity
 	}()
 }

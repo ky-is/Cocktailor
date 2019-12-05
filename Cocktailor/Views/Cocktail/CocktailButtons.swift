@@ -61,16 +61,16 @@ struct CocktailImage: View {
 	let data: CocktailData
 	let size: CGFloat
 
-	private let fillIngredients: [IngredientQuantity]
-	private let ingredientSpacing: CGFloat
-	private let liquidHeightWithoutSpacing: CGFloat
+	private let volumeIngredients: [IngredientQuantity]
+	private let volumeSpacing: CGFloat
+	private let volumeHeightWithoutSpacing: CGFloat
 
 	init(data: CocktailData, size: CGFloat) {
 		self.data = data
 		self.size = size
-		fillIngredients = data.fillIngredients.sorted { $0.quantity.ounces < $1.quantity.ounces }
-		ingredientSpacing = size >= 128 ? 1 : 0.5
-		liquidHeightWithoutSpacing = size - ingredientSpacing * CGFloat(fillIngredients.count - 1)
+		volumeIngredients = data.volumeIngredients.sorted { $0.quantity.ounces < $1.quantity.ounces }
+		volumeSpacing = size >= 128 ? 1 : 0.5
+		volumeHeightWithoutSpacing = size - volumeSpacing * CGFloat(volumeIngredients.count - 1)
 	}
 
 	var body: some View {
@@ -79,15 +79,18 @@ struct CocktailImage: View {
 				.resizable()
 				.aspectRatio(contentMode: .fit)
 				.foregroundColor(.secondary)
-			VStack(spacing: ingredientSpacing) {
-				ForEach(fillIngredients) { ingredientQuantity in
-					ZStack {
-						Color.secondarySystemBackground
-						ingredientQuantity.ingredient.color
-							.opacity(0.75)
+			ZStack(alignment: .top) {
+				VStack(spacing: volumeSpacing) {
+					ForEach(volumeIngredients) { ingredientQuantity in
+						ZStack {
+							Color.secondarySystemBackground
+							ingredientQuantity.ingredient.color
+								.opacity(0.75)
+						}
+							.frame(height: CGFloat(ingredientQuantity.quantity.ounces / self.data.totalQuantity) * self.data.glass.liquidHeightProportion * self.volumeHeightWithoutSpacing)
 					}
-						.frame(height: CGFloat(ingredientQuantity.quantity.ounces / self.data.totalQuantity) * self.data.glass.liquidHeightProportion * self.liquidHeightWithoutSpacing)
 				}
+				CocktailDrops(data: data, size: size)
 			}
 				.background(Color.systemBackground)
 				.position(x: size / 2, y: size * data.glass.liquidOffsetProportion + size * data.glass.liquidHeightProportion / 2)
@@ -103,9 +106,41 @@ struct CocktailImage: View {
 	}
 }
 
+private struct CocktailDrops: View {
+	let dropCircumference: CGFloat
+
+	private let dropIngredients: [IngredientQuantity]
+
+	init(data: CocktailData, size: CGFloat) {
+		self.dropCircumference = size / 20
+		dropIngredients = data.liquidIngredients.filter { $0.quantity.unit == .dash }
+	}
+
+	var body: some View {
+		var index = -1
+		return Group {
+			ForEach(dropIngredients) { ingredientQuantity in
+				Group {
+					ForEach(0..<Int(ingredientQuantity.quantity.value), id: \.self) { _ -> AnyView in
+						index += 1
+						let direction = CGFloat((index % 2) == 0 ? -1 : 1)
+						return AnyView(
+							Circle()
+								.fill(ingredientQuantity.ingredient.color)
+								.frame(width: self.dropCircumference, height: self.dropCircumference)
+								.offset(x: direction * CGFloat(index) * self.dropCircumference / 1.5 + (direction > 0 ? .zero : direction * self.dropCircumference * 2/3))
+						)
+					}
+				}
+			}
+		}
+			.offset(y: dropCircumference / 8)
+	}
+}
+
 struct CocktailButtons_Previews: PreviewProvider {
 	static var previews: some View {
-		let data = CocktailData.keyValues["bramble"]!
+		let data = CocktailData.keyValues["oldFashioned"]!
 		return VStack {
 			CocktailButtonFavorite(data: data, entry: .constant(nil))
 			CocktailButtonMade(data: data, entry: .constant(nil))
