@@ -60,7 +60,7 @@ private struct BuildCocktailsManualList: View {
 
 	var body: some View {
 		List {
-			SectionVibrant(label: "Available") {
+			SectionVibrant(label: "\(cocktails.count) available") {
 				if !self.cocktails.isEmpty {
 					BuildCocktailsManualListEntries(cocktails: self.cocktails, selectedCocktail: self.$selectedCocktail)
 				} else {
@@ -68,7 +68,7 @@ private struct BuildCocktailsManualList: View {
 				}
 			}
 			if !missingOneCocktails.isEmpty {
-				SectionVibrant(label: "Missing one") {
+				SectionVibrant(label: "\(missingOneCocktails.count) missing one") {
 					BuildCocktailsManualListEntries(cocktails: self.missingOneCocktails, selectedCocktail: self.$selectedCocktail)
 						.foregroundColor(.secondary)
 				}

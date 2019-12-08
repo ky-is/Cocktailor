@@ -107,7 +107,7 @@ struct BuildCocktailsDetailList: View {
 
 	var body: some View {
 		List {
-			SectionVibrant(label: "Available") {
+			SectionVibrant(label: "\(cocktails.count) available") {
 				if !self.cocktails.isEmpty {
 					BuildCocktailsDetailListEntries(cocktails: self.cocktails)
 				} else {
@@ -115,7 +115,7 @@ struct BuildCocktailsDetailList: View {
 				}
 			}
 			if !missingOneCocktails.isEmpty {
-				SectionVibrant(label: "Missing one") {
+				SectionVibrant(label: "\(missingOneCocktails.count) missing one") {
 					BuildCocktailsDetailListEntries(cocktails: self.missingOneCocktails)
 						.foregroundColor(.secondary)
 				}
@@ -172,7 +172,7 @@ struct BuildIngredients: View {
 				Text("")
 			}
 		}
-			.navigationBarTitle("Ingredients")
+			.navigationBarTitle("Ingredient".pluralize(availableIngredientEntries.count))
 			.navigationBarItems(trailing:
 				Group {
 					if !(self.observedIngredients.selected?.isEmpty ?? true) {
