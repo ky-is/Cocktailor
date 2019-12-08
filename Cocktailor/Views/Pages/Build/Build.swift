@@ -87,11 +87,16 @@ struct Build: View {
 
 struct BuildCocktailsDetailListEntries: View {
 	let cocktails: [CocktailData]
+	let insertBlank: Bool
 
 	var body: some View {
 		ForEach(cocktails) { cocktailData in
-			NavigationLink(destination: CocktailDetail(data: cocktailData)) {
+			NavigationLink(destination:
+				CocktailDetail(data: cocktailData)
+					.padding(.bottom, self.insertBlank ? 36 : 0)
+			) {
 				BuildCocktailListRowContent(data: cocktailData)
+
 			}
 				.isDetailLink(true)
 		}
@@ -116,14 +121,14 @@ struct BuildCocktailsDetailList: View {
 		List {
 			SectionVibrant(label: "\(cocktails.count) available") {
 				if !self.cocktails.isEmpty {
-					BuildCocktailsDetailListEntries(cocktails: self.cocktails)
+					BuildCocktailsDetailListEntries(cocktails: self.cocktails, insertBlank: self.insertBlank)
 				} else {
 					BuildEmptyCocktails()
 				}
 			}
 			if !missingOneCocktails.isEmpty {
 				SectionVibrant(label: "\(missingOneCocktails.count) missing one") {
-					BuildCocktailsDetailListEntries(cocktails: self.missingOneCocktails)
+					BuildCocktailsDetailListEntries(cocktails: self.missingOneCocktails, insertBlank: self.insertBlank)
 						.foregroundColor(.secondary)
 				}
 			}

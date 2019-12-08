@@ -60,7 +60,7 @@ private struct ExploreList: View {
 				}
 			}
 			SectionVibrant(label: "All cocktails") {
-				BuildCocktailsDetailListEntries(cocktails: self.cocktails)
+				BuildCocktailsDetailListEntries(cocktails: self.cocktails, insertBlank: false)
 			}
 		}
 			.navigationBarTitle("Explore")
