@@ -50,11 +50,11 @@ private struct ExploreList: View {
 				}
 			}
 		}
-		let bestIngredientIDs = missingIngredientScoresByID.sorted(by: { $0.value.score > $1.value.score }).prefix(3)
+		let topIngredientIDs = missingIngredientScoresByID.filter({ $0.value.score > 1 }).sorted(by: { $0.value.score > $1.value.score }).prefix(4)
 		return List {
-			if !bestIngredientIDs.isEmpty {
+			if !topIngredientIDs.isEmpty {
 				SectionVibrant(label: "Next ingredients") {
-					ForEach(bestIngredientIDs, id: \.key) { ingredientScore in
+					ForEach(topIngredientIDs, id: \.key) { ingredientScore in
 						ExploreIngredientRow(ingredientID: ingredientScore.key, count: ingredientScore.value.count)
 					}
 				}

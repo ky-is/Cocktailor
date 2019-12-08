@@ -166,6 +166,11 @@ final class IngredientData: Hashable, Identifiable {
 		} else if hidden {
 			return self
 		}
+		for child in children {
+			if ingredientIDs.contains(child.id) {
+				return child
+			}
+		}
 		return nil
 	}
 
