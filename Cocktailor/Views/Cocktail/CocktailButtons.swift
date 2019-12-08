@@ -4,13 +4,10 @@ struct CocktailButtonFavorite: View {
 	let data: CocktailData
 	@Binding var entry: CocktailEntry?
 
-	@Environment(\.managedObjectContext) private var managedObjectContext
-
 	private func toggleFavorite() {
-		managedObjectContext.perform {
-			let entry = self.entry ?? CocktailEntry(context: self.managedObjectContext)
+		DataModel.perform {
+			let entry = self.entry ?? CocktailEntry(id: self.data.id)
 			entry.dateFavorited = entry.dateFavorited == nil ? Date() : nil
-			DataModel.saveContext()
 		}
 	}
 
@@ -29,19 +26,12 @@ struct CocktailButtonMade: View {
 	@Environment(\.managedObjectContext) private var managedObjectContext
 
 	private func toggleMade() {
-		managedObjectContext.perform {
-			let entry: CocktailEntry
-			if let oldEntry = self.entry {
-				entry = oldEntry
-			} else {
-				entry = CocktailEntry(context: self.managedObjectContext)
-				entry.id = self.data.id
-			}
+		DataModel.perform {
+			let entry = self.entry ?? CocktailEntry(id: self.data.id)
 			let made = CocktailMade(context: self.managedObjectContext)
 			made.servings = 1 //TODO
 			made.date = Date()
 			made.cocktailEntry = entry
-			try? self.managedObjectContext.save()
 		}
 	}
 

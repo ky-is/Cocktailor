@@ -20,6 +20,11 @@ final class DataModel {
 		return container
 	}()
 
+	static func perform(block: @escaping () -> Void) {
+		persistentContainer.viewContext.perform(block)
+		saveContext()
+	}
+
 	static func saveContext() {
 		let context = persistentContainer.viewContext
 		if context.hasChanges {
@@ -32,4 +37,11 @@ final class DataModel {
 		}
 	}
 
+}
+
+extension CocktailEntry {
+	convenience init(id: String) {
+		self.init(context: DataModel.persistentContainer.viewContext)
+		self.id = id
+	}
 }
