@@ -56,3 +56,9 @@ extension PreviewDevice {
 	static let iPadPro13 = PreviewDevice(rawValue: "iPad Pro (12.9-inch)")
 }
 #endif
+
+extension UIApplication {
+	func endEditing() {
+		sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+	}
+}

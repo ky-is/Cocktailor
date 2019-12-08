@@ -70,6 +70,9 @@ struct CocktailDetailContent: View {
 				}
 					.modifier(SoftwareKeyboardModifier(offset: self.$scrollOffset.animation()))
 			}
+				.onTapGesture {
+					UIApplication.shared.endEditing()
+				}
 		}
 			.navigationBarTitle(data.name)
 			.navigationBarItems(trailing:
