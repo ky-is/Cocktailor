@@ -112,14 +112,14 @@ struct IngredientImage: View {
 		ZStack {
 			Image("Ingredients/\(data.icon.rawValue)")
 				.resizable()
-				.aspectRatio(contentMode: .fit)
+				.aspectRatio(contentMode: .fill)
 				.foregroundColor(data.color.opacity(0.75))
 			Image("Ingredients/\(data.icon.rawValue)-outline")
 				.resizable()
 				.aspectRatio(contentMode: .fit)
-				.foregroundColor(Color.secondary)
+				.foregroundColor(.secondary)
 		}
-			.frame(height: size)
+			.frame(width: size * 0.8, height: size)
 	}
 }
 

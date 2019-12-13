@@ -119,21 +119,21 @@ struct BuildCocktailsDetailList: View {
 
 	var body: some View {
 		List {
-			SectionVibrant(label: "\(cocktails.count) available") {
-				if !self.cocktails.isEmpty {
+			if cocktails.isEmpty && missingOneCocktails.isEmpty {
+				BuildEmptyCocktails()
+			} else {
+				SectionVibrant(label: "\(cocktails.count) available") {
 					BuildCocktailsDetailListEntries(cocktails: self.cocktails, insertBlank: self.insertBlank)
-				} else {
-					BuildEmptyCocktails()
 				}
-			}
-			if !missingOneCocktails.isEmpty {
-				SectionVibrant(label: "\(missingOneCocktails.count) missing one") {
-					BuildCocktailsDetailListEntries(cocktails: self.missingOneCocktails, insertBlank: self.insertBlank)
-						.foregroundColor(.secondary)
+				if !missingOneCocktails.isEmpty {
+					SectionVibrant(label: "\(missingOneCocktails.count) missing one") {
+						BuildCocktailsDetailListEntries(cocktails: self.missingOneCocktails, insertBlank: self.insertBlank)
+							.foregroundColor(.secondary)
+					}
 				}
-			}
-			if insertBlank {
-				Text("")
+				if insertBlank {
+					Text("")
+				}
 			}
 		}
 			.navigationBarTitle("Cocktails")

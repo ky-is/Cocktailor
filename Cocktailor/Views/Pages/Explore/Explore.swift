@@ -50,7 +50,7 @@ private struct ExploreList: View {
 				}
 			}
 		}
-		let topIngredientIDs = missingIngredientScoresByID.filter({ $0.value.score > 1 }).sorted(by: { $0.value.score > $1.value.score }).prefix(4)
+		let topIngredientIDs = missingIngredientScoresByID.filter({ $0.value.score > 1 }).sorted(by: { $0.value.score > $1.value.score }).prefix(5)
 		return List {
 			if !topIngredientIDs.isEmpty {
 				SectionVibrant(label: "Next ingredients") {
@@ -59,7 +59,7 @@ private struct ExploreList: View {
 					}
 				}
 			}
-			SectionVibrant(label: "All cocktails") {
+			SectionVibrant(label: "\(cocktails.count) cocktails") {
 				BuildCocktailsDetailListEntries(cocktails: self.cocktails, insertBlank: false)
 			}
 		}

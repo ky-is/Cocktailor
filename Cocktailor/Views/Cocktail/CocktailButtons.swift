@@ -103,13 +103,13 @@ private struct CocktailDrops: View {
 	private let dropIngredients: [IngredientQuantity]
 
 	init(data: CocktailData, size: CGFloat) {
-		self.dropWidth = size / 16
-		self.dropHeight = size / 12
+		self.dropWidth = size / 13
+		self.dropHeight = size / 11
 		dropIngredients = data.liquidIngredients.filter { $0.quantity.unit == .dash }
 	}
 
 	var body: some View {
-		HStack(spacing: dropWidth / 4) {
+		HStack(spacing: dropWidth / 4.5) {
 			ForEach(dropIngredients) { ingredientQuantity in
 				Group {
 					ForEach(0..<Int(ingredientQuantity.quantity.value), id: \.self) { _ in

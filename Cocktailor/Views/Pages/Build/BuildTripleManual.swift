@@ -60,17 +60,17 @@ private struct BuildCocktailsManualList: View {
 
 	var body: some View {
 		List {
-			SectionVibrant(label: "\(cocktails.count) available") {
-				if !self.cocktails.isEmpty {
+			if cocktails.isEmpty && missingOneCocktails.isEmpty {
+				BuildEmptyCocktails()
+			} else {
+				SectionVibrant(label: "\(cocktails.count) available") {
 					BuildCocktailsManualListEntries(cocktails: self.cocktails, selectedCocktail: self.$selectedCocktail)
-				} else {
-					BuildEmptyCocktails()
 				}
-			}
-			if !missingOneCocktails.isEmpty {
-				SectionVibrant(label: "\(missingOneCocktails.count) missing one") {
-					BuildCocktailsManualListEntries(cocktails: self.missingOneCocktails, selectedCocktail: self.$selectedCocktail)
-						.foregroundColor(.secondary)
+				if !missingOneCocktails.isEmpty {
+					SectionVibrant(label: "\(missingOneCocktails.count) missing one") {
+						BuildCocktailsManualListEntries(cocktails: self.missingOneCocktails, selectedCocktail: self.$selectedCocktail)
+							.foregroundColor(.secondary)
+					}
 				}
 			}
 		}

@@ -34,7 +34,7 @@ struct MultilineTextView: UIViewRepresentable {
 	func makeUIView(context: Context) -> UITextView {
 		let view = UITextView()
 		view.backgroundColor = .clear
-		view.font = .systemFont(ofSize: 24)
+		view.font = .systemFont(ofSize: 20)
 		view.delegate = context.coordinator
 		return view
 	}
