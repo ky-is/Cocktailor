@@ -14,6 +14,8 @@ struct BuildDoubleTripleColumn: View {
 				BuildIngredients(availableIngredientEntries: availableIngredientEntries, observedIngredients: observedIngredients, possibleIngredients: possibleIngredients, insertBlank: false)
 			}
 				.frame(width: 321) //TODO iPadPro13 376
+			Divider()
+				.padding(.top, -64)
 			NavigationView {
 				BuildCocktailsDetailList(cocktails: cocktails, missingOneCocktails: missingOneCocktails, insertBlank: false)
 				BuildCocktailPlaceholder()

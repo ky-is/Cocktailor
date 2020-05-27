@@ -17,20 +17,19 @@ struct BuildTripleColumnManual: View {
 			}
 				.frame(width: 321) //TODO iPadPro13 376
 			NavigationView {
-				HStack(spacing: 0) {
-					BuildCocktailsManualList(cocktails: cocktails, missingOneCocktails: missingOneCocktails, selectedCocktail: $selectedCocktail)
-						.frame(width: 321)
-					Divider()
-					Group {
-						if selectedCocktail != nil {
-							CocktailDetail(data: selectedCocktail!)
-						} else {
-							BuildCocktailPlaceholder()
-								.navigationBarTitle("Cocktails")
-						}
+				BuildCocktailsManualList(cocktails: cocktails, missingOneCocktails: missingOneCocktails, selectedCocktail: $selectedCocktail)
+					.navigationBarTitle("Cocktails")
+			}
+				.frame(width: 321)
+			NavigationView {
+				Group {
+					if selectedCocktail != nil {
+						CocktailDetail(data: selectedCocktail!)
+					} else {
+						BuildCocktailPlaceholder()
 					}
-						.frame(maxWidth: .greatestFiniteMagnitude)
 				}
+					.frame(maxWidth: .greatestFiniteMagnitude)
 			}
 				.navigationViewStyle(StackNavigationViewStyle())
 		}
