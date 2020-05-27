@@ -12,7 +12,7 @@ struct CocktailDetail: View {
 	}
 
 	var body: some View {
-		let ownedIngredientIDs = ownedIngredientEntries.map { $0.id }
+		let ownedIngredientIDs = ownedIngredientEntries.map(\.id)
 		return CocktailDetailContent(data: data, ownedIngredientIDs: ownedIngredientIDs, cocktailEntry: .constant(cocktailEntries.first))
 	}
 }

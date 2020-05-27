@@ -146,12 +146,12 @@ final class IngredientData: Hashable, Identifiable {
 	}
 
 	var substitutionIDs: [String] {
-		return substitutions.map { $0.ingredient.id }
+		return substitutions.map(\.ingredient.id)
 	}
 
 	func getCocktails() -> [CocktailData] {
 		return CocktailData.keyValues.values.filter { cocktail in
-			return cocktail.ingredients.contains { $0.ingredient.id == id }
+			cocktail.ingredients.contains(\.ingredient.id, ==, id)
 		}
 	}
 

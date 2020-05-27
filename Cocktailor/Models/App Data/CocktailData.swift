@@ -140,7 +140,7 @@ final class CocktailData: Hashable, Identifiable {
 				let ingredients = row[indexIngredients].components(separatedBy: " ")
 				let quantities = row[indexQuantities].components(separatedBy: " ")
 				let ingredientsById = IngredientData.keyValues
-				let ingredientQuantities: [IngredientQuantity] = zip(ingredients, quantities).map { (ingredientID, quantityAndUnit) in
+				let ingredientQuantities: [IngredientQuantity] = zip(ingredients, quantities).map { ingredientID, quantityAndUnit in
 					let ingredient = ingredientsById[ingredientID]!
 					let suffixLength: Int, unit: QuantityUnit
 					if quantityAndUnit.hasSuffix("cl") {
@@ -218,17 +218,17 @@ final class CocktailData: Hashable, Identifiable {
 	}
 
 	lazy var liquidIngredients: [IngredientQuantity] = {
-		return ingredients.filter { $0.quantity.unit != .piece }
+		ingredients.filter(\.quantity.unit, !=, .piece)
 	}()
 	lazy var volumeIngredients: [IngredientQuantity] = {
-		return liquidIngredients.filter { $0.quantity.unit != .dash }
+		liquidIngredients.filter(\.quantity.unit, !=, .dash)
 	}()
 
 	lazy var totalQuantity: Double = {
-		return volumeIngredients.reduce(0) { $0 + $1.quantity.ounces }
+		volumeIngredients.reduce(0, +, \.quantity.ounces)
 	}()
 
 	lazy var alcohol: Double = {
-		return liquidIngredients.reduce(0) { $0 + $1.ingredient.alcohol * $1.quantity.ounces } / totalQuantity
+		liquidIngredients.reduce(0) { $0 + $1.ingredient.alcohol * $1.quantity.ounces } / totalQuantity
 	}()
 }

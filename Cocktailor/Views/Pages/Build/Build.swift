@@ -32,7 +32,7 @@ struct Build: View {
 
 	var body: some View {
 		let availableIngredientEntries = ingredientEntries.filter { $0.owned && IngredientData.keyValues[$0.id] != nil }
-		let ownedIngredientIDs = availableIngredientEntries.map { $0.id }
+		let ownedIngredientIDs = availableIngredientEntries.map(\.id)
 		var possibleCocktails = [CocktailData]()
 		var missingOneCocktails = [CocktailData]()
 		CocktailData.keyValues.values.forEach { cocktail in
@@ -63,7 +63,7 @@ struct Build: View {
 					}
 					return false
 				}
-				.sorted { $0.id < $1.id }
+				.sorted(\.id, <)
 			missingOneCocktails = missingOneCocktails.filter { availableIngredientsFor(cocktail: $0, ifItHasAll: selectedIngredients, availableIngredients: ownedIngredientIDs) != nil }
 		} else {
 			displayCocktails = possibleCocktails

@@ -4,14 +4,14 @@ struct MyBar: View {
 	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)]) private var ingredientEntries: FetchedResults<IngredientEntry>
 
 	@Environment(\.managedObjectContext) private var managedObjectContext
-	private let displayIngredients = IngredientData.ownableIngredients.sorted { $0.id < $1.id }
+	private let displayIngredients = IngredientData.ownableIngredients.sorted(\.id, <)
 
 	var body: some View {
 		var ingredientEntriesByID = [String: IngredientEntry]()
 		for ingredientEntry in ingredientEntries {
 			ingredientEntriesByID[ingredientEntry.id] = ingredientEntry
 		}
-		let ownedEntries = ingredientEntries.filter { $0.owned }
+		let ownedEntries = ingredientEntries.filter(\.owned)
 		let ownedCount = ownedEntries.count
 		return NavigationView {
 			List(displayIngredients) { data in

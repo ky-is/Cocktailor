@@ -2,7 +2,7 @@ import SwiftUI
 
 struct Explore: View {
 	var body: some View {
-		let cocktails = CocktailData.keyValues.values.sorted { $0.id < $1.id }
+		let cocktails = CocktailData.keyValues.values.sorted(\.id, <)
 		return GeometryReader { geometry in
 			if geometry.size.width > 1112 {
 				ExploreDoubleTripleColumn(cocktails: cocktails)
@@ -25,13 +25,13 @@ private struct ExploreList: View {
 
 	var body: some View {
 		let allCocktails = CocktailData.keyValues.values
-		let ownedIngredientIDs = ownedIngredientEntries.map { $0.id }
-		let cocktailsAndMissingCounts = allCocktails
-			.map { cocktail -> (cocktail: CocktailData, missingIngredientCount: Int) in
+		let ownedIngredientIDs = ownedIngredientEntries.map(\.id)
+		let cocktailsAndMissingCounts: [(cocktail: CocktailData, missingIngredientCount: Int)] = allCocktails
+			.map { cocktail in
 				let missingIngredientCount = cocktail.ingredients.reduce(0) { $1.ingredient.usableIn(available: ownedIngredientIDs) == nil ? $0 + 1 : $0 }
 				return (cocktail, missingIngredientCount)
 			}
-			.filter { $0.missingIngredientCount > 0 }
+			.filter(\.missingIngredientCount, >, 0)
 		let mostMissingIngredients = Double(cocktailsAndMissingCounts.reduce(1) { min($0, $1.missingIngredientCount) })
 		var missingIngredientScoresByID = [String: (count: Int, score: Double)]()
 		for cocktailAndMissingCount in cocktailsAndMissingCounts {
@@ -50,7 +50,10 @@ private struct ExploreList: View {
 				}
 			}
 		}
-		let topIngredientIDs = missingIngredientScoresByID.filter({ $0.value.score > 1 }).sorted(by: { $0.value.score > $1.value.score }).prefix(5)
+		let topIngredientIDs = missingIngredientScoresByID
+			.filter(\.value.score, >, 1)
+			.sorted(\.value.score, >)
+			.prefix(5)
 		return List {
 			if !topIngredientIDs.isEmpty {
 				SectionVibrant(label: "Next ingredients") {

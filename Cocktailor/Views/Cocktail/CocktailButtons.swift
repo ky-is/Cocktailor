@@ -58,7 +58,7 @@ struct CocktailImage: View {
 	init(data: CocktailData, size: CGFloat) {
 		self.data = data
 		self.size = size
-		volumeIngredients = data.volumeIngredients.sorted { $0.quantity.ounces < $1.quantity.ounces }
+		volumeIngredients = data.volumeIngredients.sorted(\.quantity.ounces, <)
 		volumeSpacing = size >= 128 ? 1 : 0.5
 		volumeHeightWithoutSpacing = size - volumeSpacing * CGFloat(volumeIngredients.count - 1)
 	}
@@ -105,7 +105,7 @@ private struct CocktailDrops: View {
 	init(data: CocktailData, size: CGFloat) {
 		self.dropWidth = size / 13
 		self.dropHeight = size / 11
-		dropIngredients = data.liquidIngredients.filter { $0.quantity.unit == .dash }
+		dropIngredients = data.liquidIngredients.filter(\.quantity.unit, ==, .dash)
 	}
 
 	var body: some View {
