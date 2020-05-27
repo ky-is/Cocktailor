@@ -1,6 +1,6 @@
 import Foundation
 
-final class TSV {
+struct TSV {
 	static func cocktailData(_ name: String, process: ([String], [[String]]) -> Void) {
 		if let filepath = Bundle.main.path(forResource: "Cocktail Data - \(name)", ofType: "tsv") {
 			do {

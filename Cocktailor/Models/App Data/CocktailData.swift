@@ -78,7 +78,7 @@ enum QuantityUnit: String {
 	}
 }
 
-struct Quantity: Hashable {
+struct Quantity {
 	let value: Double
 	let unit: QuantityUnit
 	let ounces: Double
@@ -90,7 +90,7 @@ struct Quantity: Hashable {
 	}
 }
 
-final class IngredientQuantity: Hashable, Identifiable {
+struct IngredientQuantity: Identifiable {
 	let id: String
 	let ingredient: IngredientData
 	let quantity: Quantity
@@ -99,14 +99,6 @@ final class IngredientQuantity: Hashable, Identifiable {
 		self.id = ingredient.id
 		self.ingredient = ingredient
 		self.quantity = Quantity(value: quantity, unit: unit)
-	}
-
-	static func == (lhs: IngredientQuantity, rhs: IngredientQuantity) -> Bool {
-		lhs.id == rhs.id
-	}
-
-	func hash(into hasher: inout Hasher) {
-		hasher.combine(id)
 	}
 }
 
