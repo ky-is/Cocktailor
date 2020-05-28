@@ -1,17 +1,5 @@
 import SwiftUI
 
-private struct HeaderView: View {
-	let label: String
-
-	var body: some View {
-		ZStack(alignment: .leading) {
-			BlurView(style: .systemChromeMaterial)
-			Text(label)
-				.padding(.horizontal)
-		}
-	}
-}
-
 struct SectionVibrant<Content: View>: View {
 	let label: String
 	let content: () -> Content
@@ -27,5 +15,17 @@ struct SectionVibrant<Content: View>: View {
 				.padding(.horizontal)
 		}
 			.listRowInsets(.zero)
+	}
+}
+
+private struct HeaderView: View {
+	let label: String
+
+	var body: some View {
+		ZStack(alignment: .leading) {
+			BlurView(style: .systemChromeMaterial)
+			Text(label)
+				.padding(.horizontal)
+		}
 	}
 }

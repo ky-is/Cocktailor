@@ -6,18 +6,27 @@ struct MyBar: View {
 	private let displayIngredients = IngredientData.ownableIngredients.sorted(\.id, <)
 
 	var body: some View {
-		let ingredientEntriesByID = ingredientEntries.keyed(by: \.id)
-		return NavigationView {
-			List(displayIngredients) { data in
-				IngredientListEntry(data: data, entry: ingredientEntriesByID[data.id], observedIngredients: ObservableIngredients.inactive, hasCocktail: true)
-			}
-				.modifier(MyBarNavigationModifier(ownedEntries: ingredientEntries.filter(\.owned)))
+		NavigationView {
+			AllIngredientsList(ingredientEntriesByID: ingredientEntries.keyed(by: \.id))
+				.modifier(AllIngredientsListModifier(ownedEntries: ingredientEntries.filter(\.owned)))
 		}
 			.navigationViewStyle(StackNavigationViewStyle())
 	}
 }
 
-private struct MyBarNavigationModifier: ViewModifier {
+private struct AllIngredientsList: View {
+	let ingredientEntriesByID: [String: IngredientEntry]
+
+	private let displayIngredients = IngredientData.ownableIngredients.sorted(\.id, <)
+
+	var body: some View {
+		List(displayIngredients) { data in
+			IngredientListEntry(data: data, entry: self.ingredientEntriesByID[data.id], observedIngredients: ObservableIngredients.inactive, hasCocktail: true)
+		}
+	}
+}
+
+private struct AllIngredientsListModifier: ViewModifier {
 	let ownedEntries: [IngredientEntry]
 
 	@Environment(\.managedObjectContext) private var context
