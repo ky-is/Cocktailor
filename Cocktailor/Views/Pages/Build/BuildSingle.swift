@@ -2,7 +2,7 @@ import SwiftUI
 
 struct BuildSingle: View {
 	let availableIngredientEntries: [IngredientEntry]
-	@ObservedObject var observedIngredients: ObservableIngredients
+	let observedIngredients: ObservableIngredients
 	let cocktails: [CocktailData]
 	let missingOneCocktails: [CocktailData]
 	let hasFilteredCocktail: Bool
@@ -24,18 +24,29 @@ struct BuildSingle: View {
 				}
 					.transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
 			}
-			Picker("", selection: $showCocktails.animation()) {
-				Text(observedIngredients.selected!.count > 0 ? "Ingredient".pluralize(observedIngredients.selected!.count) : "Any Ingredients")
-					.tag(false)
-				Text(hasFilteredCocktail ? "Cocktail".pluralize(cocktails.count) : "All Cocktails")
-					.tag(true)
-			}
-				.padding(.horizontal)
-				.frame(height: 48)
-				.background(BlurView(style: .systemChromeMaterial))
-				.labelsHidden()
-				.pickerStyle(SegmentedPickerStyle())
+			ModePicker(showCocktails: $showCocktails, observedIngredients: observedIngredients, cocktails: cocktails, hasFilteredCocktail: hasFilteredCocktail)
 		}
+	}
+}
+
+private struct ModePicker: View {
+	@Binding var showCocktails: Bool
+	@ObservedObject var observedIngredients: ObservableIngredients
+	let cocktails: [CocktailData]
+	let hasFilteredCocktail: Bool
+
+	var body: some View {
+		Picker("", selection: $showCocktails.animation()) {
+			Text(observedIngredients.selected!.count > 0 ? "Ingredient".pluralize(observedIngredients.selected!.count) : "Any Ingredients")
+				.tag(false)
+			Text(hasFilteredCocktail ? "Cocktail".pluralize(cocktails.count) : "All Cocktails")
+				.tag(true)
+		}
+			.padding(.horizontal)
+			.frame(height: 48)
+			.background(BlurView(style: .systemChromeMaterial))
+			.labelsHidden()
+			.pickerStyle(SegmentedPickerStyle())
 	}
 }
 

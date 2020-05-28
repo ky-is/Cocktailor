@@ -2,29 +2,23 @@ import SwiftUI
 
 struct IngredientButtonFavorite: View {
 	let data: IngredientData
-	@Binding var entry: IngredientEntry?
+	@ObservedObject var entry: IngredientEntry
 
-	@Environment(\.managedObjectContext) private var managedObjectContext
+	@Environment(\.managedObjectContext) private var context
 
-	private func toggleFavorite() {
-		if let entry = entry {
-			managedObjectContext.perform {
-				entry.favorite.toggle()
-				DataModel.saveContext()
-			}
-		} else {
-			managedObjectContext.perform {
-				let entry = IngredientEntry(context: self.managedObjectContext)
-				entry.id = self.data.id
-				entry.favorite = true
-				DataModel.saveContext()
-			}
-		}
+	init(data: IngredientData, entry: IngredientEntry?) {
+		self.data = data
+		self.entry = entry ?? IngredientEntry(id: data.id, insertInto: nil)
 	}
 
 	var body: some View {
-		Button(action: toggleFavorite) {
-			Image(systemName: entry?.favorite ?? false ? "star.fill" : "star")
+		Button(action: {
+			self.context.performAndSave {
+				self.context.insert(self.entry)
+				self.entry.favorite.toggle()
+			}
+		}) {
+			Image(systemName: entry.favorite ? "star.fill" : "star")
 				.foregroundColor(.yellow)
 		}
 	}
@@ -32,36 +26,32 @@ struct IngredientButtonFavorite: View {
 
 struct IngredientButtonOwned: View {
 	let data: IngredientData
-	@Binding var entry: IngredientEntry?
+	@ObservedObject var entry: IngredientEntry
 	let hasCocktail: Bool
 	let withContent: Bool
 
-	@Environment(\.managedObjectContext) private var managedObjectContext
+	@Environment(\.managedObjectContext) private var context
 
-	private func toggleOwned() {
-		if let entry = entry {
-			managedObjectContext.perform {
-				entry.owned.toggle()
-				try? self.managedObjectContext.save()
-			}
-		} else {
-			managedObjectContext.perform {
-				let entry = IngredientEntry(context: self.managedObjectContext)
-				entry.id = self.data.id
-				entry.owned = true
-				try? self.managedObjectContext.save()
-			}
-		}
+	init(data: IngredientData, entry: IngredientEntry?, hasCocktail: Bool, withContent: Bool) {
+		self.data = data
+		self.entry = entry ?? IngredientEntry(id: data.id, insertInto: nil)
+		self.hasCocktail = hasCocktail
+		self.withContent = withContent
 	}
 
 	var body: some View {
-		Button(action: toggleOwned) {
-			IngredientButtonOwnedContent(data: data, selected: entry?.owned ?? false, hasCocktail: hasCocktail, withContent: withContent)
+		Button(action: {
+			self.context.performAndSave {
+				self.context.insert(self.entry)
+				self.entry.owned.toggle()
+			}
+		}) {
+			IngredientButtonSelectedContent(data: data, selected: entry.owned, hasCocktail: hasCocktail, withContent: withContent)
 		}
 	}
 }
 
-struct IngredientButtonOwnedContent: View {
+struct IngredientButtonSelectedContent: View {
 	let data: IngredientData
 	let selected: Bool
 	let hasCocktail: Bool
@@ -124,11 +114,12 @@ struct IngredientImage: View {
 }
 
 struct IngredientButtons_Previews: PreviewProvider {
+	static let data = IngredientData.keyValues["mezcal"]!
+
 	static var previews: some View {
-		let data = IngredientData.keyValues["mezcal"]!
-		return VStack {
-			IngredientButtonFavorite(data: data, entry: .constant(nil))
-			IngredientButtonOwned(data: data, entry: .constant(nil), hasCocktail: true, withContent: true)
+		VStack {
+			IngredientButtonFavorite(data: data, entry: nil)
+			IngredientButtonOwned(data: data, entry: nil, hasCocktail: true, withContent: true)
 			IngredientImage(data: data, size: 128)
 		}
 	}

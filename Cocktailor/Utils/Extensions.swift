@@ -85,3 +85,11 @@ extension Sequence {
 		return sorted { operation($0[keyPath: keyPath], $1[keyPath: keyPath]) }
 	}
 }
+
+extension Sequence where Element: Hashable {
+	func keyed<Value>(by keyPath: KeyPath<Element, Value>) -> [Value: Element] {
+		var accumulator: [Value: Element] = [:]
+		forEach { accumulator[$0[keyPath: keyPath]] = $0 }
+		return accumulator
+	}
+}

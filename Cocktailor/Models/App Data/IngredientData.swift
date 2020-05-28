@@ -38,7 +38,7 @@ func systemColor(_ string: String) -> Color {
 	case "clear":
 		return .clear
 	default:
-		print("UNKNOWN COLOR", string)
+		print(#function, "UNKNOWN", string)
 		return .clear
 	}
 }
@@ -85,7 +85,7 @@ final class IngredientData: Hashable, Identifiable {
 				let bID = row[1]
 				guard let ingredientA = results[aID], let ingredientB = results[bID] else {
 					#if DEBUG
-					print("Missing ingredient for substitution", aID, bID)
+					print(#function, "SUB", aID, bID)
 					#endif
 					continue
 				}
@@ -98,7 +98,7 @@ final class IngredientData: Hashable, Identifiable {
 	}()
 
 	static let ownableIngredients: [IngredientData] = {
-		return keyValues.values.filter { !$0.hidden }
+		keyValues.values.filter { !$0.hidden }
 	}()
 
 	let id: String

@@ -3,7 +3,7 @@ import SwiftUI
 struct CocktailDetail: View {
 	let data: CocktailData
 
-	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.favorite, ascending: false)], predicate: \IngredientEntry.owned == true) private var ownedIngredientEntries: FetchedResults<IngredientEntry>
+	@FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.favorite, ascending: false)], predicate: \IngredientEntry.owned == true) private var ownedIngredientEntries: FetchedResults<IngredientEntry>
 	@FetchRequest private var cocktailEntries: FetchedResults<CocktailEntry>
 
 	init(data: CocktailData) {
@@ -12,16 +12,16 @@ struct CocktailDetail: View {
 	}
 
 	var body: some View {
-		CocktailDetailContent(data: data, ownedIngredientIDs: ownedIngredientEntries.map(\.id), cocktailEntry: .constant(cocktailEntries.first))
+		CocktailDetailContent(data: data, ownedIngredientIDs: ownedIngredientEntries.map(\.id), cocktailEntry: cocktailEntries.first)
 	}
 }
 
 struct CocktailDetailContent: View {
 	let data: CocktailData
 	let ownedIngredientIDs: [String]
-	@Binding var cocktailEntry: CocktailEntry?
+	let cocktailEntry: CocktailEntry?
 
-	@Environment(\.managedObjectContext) private var managedObjectContext
+	@Environment(\.managedObjectContext) private var context
 	@State private var selectedIngredient: IngredientData?
 	@State private var scrollOffset: CGFloat = 0
 	@State private var newNote = ""
@@ -49,8 +49,8 @@ struct CocktailDetailContent: View {
 							}
 								.padding(.vertical)
 							MultilineTextView(placeholder: "Save a note", text: self.$newNote) { text in
-								DataModel.perform {
-									let cocktailEntry = self.cocktailEntry ?? CocktailEntry(id: self.data.id)
+								self.context.performAndSave {
+									let cocktailEntry = self.cocktailEntry ?? CocktailEntry(id: self.data.id, insertInto: self.context)
 									cocktailEntry.note = text
 								}
 							}
@@ -75,11 +75,11 @@ struct CocktailDetailContent: View {
 		}
 			.navigationBarTitle(data.name)
 			.navigationBarItems(trailing:
-				CocktailButtonFavorite(data: self.data, entry: .constant(cocktailEntry))
+				CocktailButtonFavorite(data: self.data, entry: cocktailEntry)
 			)
 			.sheet(item: $selectedIngredient) { selectedIngredient in
 				IngredientEntryDetail(data: selectedIngredient)
-					.environment(\.managedObjectContext, DataModel.persistentContainer.viewContext)
+					.environment(\.managedObjectContext, self.context)
 					.accentColor(.primary)
 			}
 	}

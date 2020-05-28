@@ -19,7 +19,7 @@ struct Explore: View {
 }
 
 private struct ExploreList: View {
-	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.favorite, ascending: false)], predicate: \IngredientEntry.owned == true) private var ownedIngredientEntries: FetchedResults<IngredientEntry>
+	@FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.favorite, ascending: false)], predicate: \IngredientEntry.owned == true) private var ownedIngredientEntries: FetchedResults<IngredientEntry>
 
 	let cocktails: [CocktailData]
 
@@ -81,7 +81,7 @@ private struct ExploreIngredientRow: View {
 
 	var body: some View {
 		HStack(spacing: 0) {
-			IngredientButtonOwned(data: data, entry: .constant(nil), hasCocktail: true, withContent: false)
+			IngredientButtonOwned(data: data, entry: nil, hasCocktail: true, withContent: false)
 				.buttonStyle(BorderlessButtonStyle())
 			NavigationLink(destination: IngredientEntryDetail(data: data)) {
 				IngredientListItem(data: data, available: true, substitute: nil)

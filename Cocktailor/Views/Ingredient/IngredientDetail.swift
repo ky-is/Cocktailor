@@ -2,7 +2,7 @@ import SwiftUI
 
 struct IngredientDetail: View {
 	let data: IngredientData
-	@Binding var entry: IngredientEntry?
+	let entry: IngredientEntry?
 	let isModal: Bool
 
 	@Environment(\.presentationMode) private var presentationMode
@@ -64,8 +64,8 @@ struct IngredientDetail: View {
 					trailing:
 						HStack {
 							Group {
-								IngredientButtonFavorite(data: data, entry: $entry)
-								IngredientButtonOwned(data: data, entry: $entry, hasCocktail: true, withContent: true)
+								IngredientButtonFavorite(data: data, entry: entry)
+								IngredientButtonOwned(data: data, entry: entry, hasCocktail: true, withContent: true)
 							}
 								.frame(width: 24)
 								.padding(.leading)
@@ -88,13 +88,13 @@ struct IngredientEntryDetail: View {
 	}
 
 	var body: some View {
-		IngredientDetail(data: data, entry: .constant(ingredientEntries.first), isModal: false)
+		IngredientDetail(data: data, entry: ingredientEntries.first, isModal: false)
 	}
 }
 
 struct IngredientDetail_Previews: PreviewProvider {
 	static var previews: some View {
 		let data = IngredientData.keyValues["mezcal"]!
-		return IngredientDetail(data: data, entry: .constant(nil), isModal: false)
+		return IngredientDetail(data: data, entry: nil, isModal: false)
 	}
 }

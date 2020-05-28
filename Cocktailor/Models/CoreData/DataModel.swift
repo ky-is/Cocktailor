@@ -9,31 +9,48 @@ struct DataModel {
 			}
 			container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 			container.viewContext.automaticallyMergesChangesFromParent = true
+
+//			try! container.viewContext.execute(NSBatchDeleteRequest(fetchRequest: IngredientEntry.fetchRequest())) //SAMPLE
 		}
 		return container
 	}()
 
-	static func perform(block: @escaping () -> Void) {
-		persistentContainer.viewContext.perform(block)
-		saveContext()
-	}
-
 	static func saveContext() {
 		let context = persistentContainer.viewContext
 		if context.hasChanges {
-			do {
-				try context.save()
-			} catch {
-				let nserror = error as NSError
-				fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-			}
+			context.safeSave()
 		}
 	}
 }
 
 extension CocktailEntry {
-	convenience init(id: String) {
-		self.init(context: DataModel.persistentContainer.viewContext)
+	convenience init(id: String, insertInto context: NSManagedObjectContext?) {
+		self.init(entity: Self.entity(), insertInto: context)
 		self.id = id
+	}
+}
+
+extension IngredientEntry {
+	convenience init(id: String, insertInto context: NSManagedObjectContext?) {
+		self.init(entity: Self.entity(), insertInto: context)
+		self.id = id
+	}
+}
+
+extension NSManagedObjectContext {
+	func safeSave() {
+		do {
+			try save()
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+		}
+	}
+
+	func performAndSave(block: @escaping () -> Void) {
+		perform {
+			block()
+			self.safeSave()
+		}
 	}
 }

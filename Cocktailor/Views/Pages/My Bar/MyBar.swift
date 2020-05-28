@@ -1,36 +1,41 @@
 import SwiftUI
 
 struct MyBar: View {
-	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)]) private var ingredientEntries: FetchedResults<IngredientEntry>
+	@FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)]) private var ingredientEntries: FetchedResults<IngredientEntry>
 
-	@Environment(\.managedObjectContext) private var managedObjectContext
 	private let displayIngredients = IngredientData.ownableIngredients.sorted(\.id, <)
 
 	var body: some View {
-		var ingredientEntriesByID = [String: IngredientEntry]()
-		for ingredientEntry in ingredientEntries {
-			ingredientEntriesByID[ingredientEntry.id] = ingredientEntry
-		}
-		let ownedEntries = ingredientEntries.filter(\.owned)
-		let ownedCount = ownedEntries.count
+		let ingredientEntriesByID = ingredientEntries.keyed(by: \.id)
 		return NavigationView {
 			List(displayIngredients) { data in
-				IngredientListEntry(data: data, entry: .constant(ingredientEntriesByID[data.id]), observedIngredients: ObservableIngredients.inactive, hasCocktail: true)
+				IngredientListEntry(data: data, entry: ingredientEntriesByID[data.id], observedIngredients: ObservableIngredients.inactive, hasCocktail: true)
 			}
-				.navigationBarTitle("Ingredient".pluralize(ownedCount))
-				.navigationBarItems(trailing: Group {
-					if ownedCount > 0 {
-						Button(action: {
-							self.managedObjectContext.perform {
-								ownedEntries.forEach { $0.owned = false }
-							}
-						}, label: {
-							Text("Clear owned")
-						})
-					}
-				})
+				.modifier(MyBarNavigationModifier(ownedEntries: ingredientEntries.filter(\.owned)))
 		}
 			.navigationViewStyle(StackNavigationViewStyle())
+	}
+}
+
+private struct MyBarNavigationModifier: ViewModifier {
+	let ownedEntries: [IngredientEntry]
+
+	@Environment(\.managedObjectContext) private var context
+
+	func body(content: Content) -> some View {
+		content
+			.navigationBarTitle("Ingredient".pluralize(ownedEntries.count))
+			.navigationBarItems(trailing: Group {
+				if !ownedEntries.isEmpty {
+					Button(action: {
+						self.context.performAndSave {
+							self.ownedEntries.forEach { $0.owned = false }
+						}
+					}, label: {
+						Text("Clear owned")
+					})
+				}
+			})
 	}
 }
 

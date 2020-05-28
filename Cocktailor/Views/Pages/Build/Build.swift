@@ -12,7 +12,7 @@ final class ObservableIngredients: ObservableObject {
 }
 
 struct Build: View {
-	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.favorite, ascending: false), NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)]) private var ingredientEntries: FetchedResults<IngredientEntry>
+	@FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.favorite, ascending: false), NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)]) private var ingredientEntries: FetchedResults<IngredientEntry>
 	@ObservedObject private var observedIngredients = ObservableIngredients.active
 
 	private func availableIngredientsFor(cocktail: CocktailData, ifItHasAll selectedIngredients: Set<String>, availableIngredients: [String]) -> Set<IngredientData>? {
@@ -119,21 +119,21 @@ struct BuildCocktailsDetailList: View {
 
 	var body: some View {
 		List {
-			if cocktails.isEmpty && missingOneCocktails.isEmpty {
-				BuildEmptyCocktails()
-			} else {
-				SectionVibrant(label: "\(cocktails.count) available") {
+			SectionVibrant(label: "\(cocktails.count) available") {
+				if self.cocktails.isEmpty {
+					BuildEmptyCocktails()
+				} else {
 					BuildCocktailsDetailListEntries(cocktails: self.cocktails, insertBlank: self.insertBlank)
 				}
-				if !missingOneCocktails.isEmpty {
-					SectionVibrant(label: "\(missingOneCocktails.count) missing one") {
-						BuildCocktailsDetailListEntries(cocktails: self.missingOneCocktails, insertBlank: self.insertBlank)
-							.foregroundColor(.secondary)
-					}
+			}
+			if !missingOneCocktails.isEmpty {
+				SectionVibrant(label: "\(missingOneCocktails.count) missing one") {
+					BuildCocktailsDetailListEntries(cocktails: self.missingOneCocktails, insertBlank: self.insertBlank)
+						.foregroundColor(.secondary)
 				}
-				if insertBlank {
-					Text("")
-				}
+			}
+			if insertBlank {
+				Text("")
 			}
 		}
 			.navigationBarTitle("Cocktails")
@@ -178,7 +178,7 @@ struct BuildIngredients: View {
 	var body: some View {
 		List {
 			ForEach(availableIngredientEntries) { entry in
-				IngredientListEntry(data: IngredientData.keyValues[entry.id]!, entry: .constant(entry), observedIngredients: self.observedIngredients, hasCocktail: self.possibleIngredients?.contains(IngredientData.keyValues[entry.id]!) ?? true) //TODO filter []! != nil
+				IngredientListEntry(data: IngredientData.keyValues[entry.id]!, entry: entry, observedIngredients: self.observedIngredients, hasCocktail: self.possibleIngredients?.contains(IngredientData.keyValues[entry.id]!) ?? true) //TODO filter []! != nil
 			}
 			if insertBlank {
 				Text("")
