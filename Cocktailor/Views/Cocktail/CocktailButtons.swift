@@ -97,30 +97,27 @@ struct CocktailImage: View {
 }
 
 private struct CocktailDrops: View {
+	let dropIngredients: [IngredientQuantity]
 	let dropWidth: CGFloat
 	let dropHeight: CGFloat
 
-	private let dropIngredients: [IngredientQuantity]
-
 	init(data: CocktailData, size: CGFloat) {
+		self.dropIngredients = data.liquidIngredients.filter(\.quantity.unit, ==, .dash)
 		self.dropWidth = size / 13
 		self.dropHeight = size / 11
-		dropIngredients = data.liquidIngredients.filter(\.quantity.unit, ==, .dash)
 	}
 
 	var body: some View {
 		HStack(spacing: dropWidth / 4.5) {
 			ForEach(dropIngredients) { ingredientQuantity in
-				Group {
-					ForEach(0..<Int(ingredientQuantity.quantity.value), id: \.self) { _ in
-						ZStack {
-							Ellipse()
-								.fill(ingredientQuantity.ingredient.color)
+				ForEach(0..<Int(ingredientQuantity.quantity.value)) { _ in
+					Ellipse()
+						.fill(ingredientQuantity.ingredient.color)
+						.frame(width: self.dropWidth, height: self.dropHeight)
+						.overlay(
 							Ellipse()
 								.stroke(Color.secondarySystemBackground, lineWidth: self.dropHeight / 8)
-						}
-							.frame(width: self.dropWidth, height: self.dropHeight)
-					}
+						)
 				}
 			}
 		}

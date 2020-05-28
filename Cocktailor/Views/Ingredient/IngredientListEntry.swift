@@ -26,6 +26,7 @@ struct IngredientListEntry: View {
 				IngredientButtonOwned(data: data, entry: $entry, hasCocktail: self.hasCocktail, withContent: true)
 					.buttonStyle(BorderlessButtonStyle())
 			}
+			Spacer()
 			Button(action: {
 				self.showInfo.toggle()
 			}) {
@@ -34,7 +35,6 @@ struct IngredientListEntry: View {
 					.frame(width: 28)
 			}
 				.buttonStyle(BorderlessButtonStyle())
-			Spacer()
 			IngredientButtonFavorite(data: data, entry: $entry)
 				.buttonStyle(BorderlessButtonStyle())
 				.frame(width: 28)
@@ -48,9 +48,10 @@ struct IngredientListEntry: View {
 }
 
 struct IngredientListEntry_Previews: PreviewProvider {
+	static let data = IngredientData.keyValues["mezcal"]!
+
 	static var previews: some View {
-		let data = IngredientData.keyValues["mezcal"]!
-		return Group {
+		Group {
 			NavigationView {
 				List {
 					IngredientListEntry(data: data, entry: .constant(nil), observedIngredients: ObservableIngredients.inactive, hasCocktail: true)

@@ -185,17 +185,15 @@ struct BuildIngredients: View {
 			}
 		}
 			.navigationBarTitle("Ingredient".pluralize(availableIngredientEntries.count))
-			.navigationBarItems(trailing:
-				Group {
-					if !(self.observedIngredients.selected?.isEmpty ?? true) {
-						Button(action: {
-							self.observedIngredients.selected?.removeAll()
-						}, label: {
-							Text("Clear ingredients")
-						})
-					}
+			.navigationBarItems(trailing: Group {
+				if self.observedIngredients.selected?.nonEmpty != nil {
+					Button(action: {
+						self.observedIngredients.selected?.removeAll()
+					}, label: {
+						Text("Clear ingredients")
+					})
 				}
-			)
+			})
 	}
 }
 

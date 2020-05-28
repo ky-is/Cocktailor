@@ -18,19 +18,17 @@ struct MyBar: View {
 				IngredientListEntry(data: data, entry: .constant(ingredientEntriesByID[data.id]), observedIngredients: ObservableIngredients.inactive, hasCocktail: true)
 			}
 				.navigationBarTitle("Ingredient".pluralize(ownedCount))
-				.navigationBarItems(trailing:
-					Group {
-						if ownedCount > 0 {
-							Button(action: {
-								self.managedObjectContext.perform {
-									ownedEntries.forEach { $0.owned = false }
-								}
-							}, label: {
-								Text("Clear owned")
-							})
-						}
+				.navigationBarItems(trailing: Group {
+					if ownedCount > 0 {
+						Button(action: {
+							self.managedObjectContext.perform {
+								ownedEntries.forEach { $0.owned = false }
+							}
+						}, label: {
+							Text("Clear owned")
+						})
 					}
-				)
+				})
 		}
 			.navigationViewStyle(StackNavigationViewStyle())
 	}
