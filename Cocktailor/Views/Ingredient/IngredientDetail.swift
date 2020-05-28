@@ -84,8 +84,7 @@ struct IngredientEntryDetail: View {
 	init(data: IngredientData) {
 		self.data = data
 		let sortDescriptor = NSSortDescriptor(keyPath: \IngredientEntry.id, ascending: true)
-		let predicate = NSPredicate(format: "id == %@", data.id)
-		self._ingredientEntries = FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [sortDescriptor], predicate: predicate)
+		self._ingredientEntries = FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [sortDescriptor], predicate: \IngredientEntry.id == data.id)
 	}
 
 	var body: some View {

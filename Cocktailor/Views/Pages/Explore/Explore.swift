@@ -19,7 +19,7 @@ struct Explore: View {
 }
 
 private struct ExploreList: View {
-	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.favorite, ascending: false)], predicate: NSPredicate(format: "owned == TRUE")) private var ownedIngredientEntries: FetchedResults<IngredientEntry>
+	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.favorite, ascending: false)], predicate: \IngredientEntry.owned == true) private var ownedIngredientEntries: FetchedResults<IngredientEntry>
 
 	let cocktails: [CocktailData]
 

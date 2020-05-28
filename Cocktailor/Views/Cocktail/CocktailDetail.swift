@@ -3,17 +3,16 @@ import SwiftUI
 struct CocktailDetail: View {
 	let data: CocktailData
 
-	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.favorite, ascending: false)], predicate: NSPredicate(format: "owned == TRUE")) private var ownedIngredientEntries: FetchedResults<IngredientEntry>
+	@FetchRequest(entity: IngredientEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \IngredientEntry.favorite, ascending: false)], predicate: \IngredientEntry.owned == true) private var ownedIngredientEntries: FetchedResults<IngredientEntry>
 	@FetchRequest private var cocktailEntries: FetchedResults<CocktailEntry>
 
 	init(data: CocktailData) {
 		self.data = data
-		self._cocktailEntries = FetchRequest(entity: CocktailEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CocktailEntry.id, ascending: false)], predicate: NSPredicate(format: "id == %@", data.id))
+		self._cocktailEntries = FetchRequest(entity: CocktailEntry.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CocktailEntry.id, ascending: false)], predicate: \CocktailEntry.id == data.id)
 	}
 
 	var body: some View {
-		let ownedIngredientIDs = ownedIngredientEntries.map(\.id)
-		return CocktailDetailContent(data: data, ownedIngredientIDs: ownedIngredientIDs, cocktailEntry: .constant(cocktailEntries.first))
+		CocktailDetailContent(data: data, ownedIngredientIDs: ownedIngredientEntries.map(\.id), cocktailEntry: .constant(cocktailEntries.first))
 	}
 }
 

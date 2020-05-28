@@ -30,6 +30,7 @@
 		24B8A7A2239784B400156DEE /* Cocktail Data - Ingredients.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 24B8A79F239784B400156DEE /* Cocktail Data - Ingredients.tsv */; };
 		24B8A7A3239784B400156DEE /* Cocktail Data - Cocktails.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 24B8A7A0239784B400156DEE /* Cocktail Data - Cocktails.tsv */; };
 		24B8A7A4239784B400156DEE /* Cocktail Data - Ingredient Substitutes.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 24B8A7A1239784B400156DEE /* Cocktail Data - Ingredient Substitutes.tsv */; };
+		24C9A6BC24801ABC00E93852 /* Predicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C9A6BB24801ABC00E93852 /* Predicates.swift */; };
 		24DA426E238DF3B400402159 /* CocktailButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DA426D238DF3B400402159 /* CocktailButtons.swift */; };
 		24DDCE9D239744C200C1EB15 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DDCE9C239744C200C1EB15 /* Views.swift */; };
 		24DDCEA023975CA400C1EB15 /* ObservableFetchedResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DDCE9F23975CA400C1EB15 /* ObservableFetchedResults.swift */; };
@@ -66,6 +67,7 @@
 		24B8A79F239784B400156DEE /* Cocktail Data - Ingredients.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Cocktail Data - Ingredients.tsv"; sourceTree = "<group>"; };
 		24B8A7A0239784B400156DEE /* Cocktail Data - Cocktails.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Cocktail Data - Cocktails.tsv"; sourceTree = "<group>"; };
 		24B8A7A1239784B400156DEE /* Cocktail Data - Ingredient Substitutes.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Cocktail Data - Ingredient Substitutes.tsv"; sourceTree = "<group>"; };
+		24C9A6BB24801ABC00E93852 /* Predicates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predicates.swift; sourceTree = "<group>"; };
 		24DA426D238DF3B400402159 /* CocktailButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailButtons.swift; sourceTree = "<group>"; };
 		24DDCE9C239744C200C1EB15 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		24DDCE9F23975CA400C1EB15 /* ObservableFetchedResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableFetchedResults.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				243F4026238A4C04001C89FA /* Extensions.swift */,
 				24EC8D4D238B0FA10004CF42 /* UIViewRepresentable.swift */,
 				2459E107239CAD220031BC9B /* Modifiers.swift */,
+				24C9A6BB24801ABC00E93852 /* Predicates.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				249B0B05238E4AA30099BC72 /* BuildDoubleTriple.swift in Sources */,
 				24EC8D49238A62070004CF42 /* IngredientListEntry.swift in Sources */,
 				249B0B07238E4ACF0099BC72 /* BuildTripleManual.swift in Sources */,
+				24C9A6BC24801ABC00E93852 /* Predicates.swift in Sources */,
 				249B0B03238E4A840099BC72 /* BuildSingle.swift in Sources */,
 				24EC8D4E238B0FA10004CF42 /* UIViewRepresentable.swift in Sources */,
 				243F4029238A5318001C89FA /* IngredientDetail.swift in Sources */,
