@@ -24,9 +24,11 @@ struct BuildDoubleTripleColumn: View {
 	}
 }
 
+#if DEBUG
 struct BuildDoubleTripleColumn_Previews: PreviewProvider {
 	static var previews: some View {
 		BuildDoubleTripleColumn(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), cocktails: Array(CocktailData.keyValues.values), missingOneCocktails: [], hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
 			.previewDevice(.iPadPro11)
 	}
 }
+#endif

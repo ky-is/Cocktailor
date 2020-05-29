@@ -76,9 +76,11 @@ private struct BuildCocktailsManualList: View {
 	}
 }
 
+#if DEBUG
 struct BuildTripleColumnManual_Previews: PreviewProvider {
 	static var previews: some View {
 		BuildTripleColumnManual(availableIngredientEntries: [], observedIngredients: ObservableIngredients(selected: Set()), cocktails: Array(CocktailData.keyValues.values), missingOneCocktails: [], hasFilteredCocktail: true, possibleIngredients: Set(Array(IngredientData.keyValues.values)))
 			.previewDevice(.iPadPro11)
 	}
 }
+#endif
